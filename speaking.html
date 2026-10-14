@@ -1,0 +1,355 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprechen · Deutsch A1</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+/* Speaking page: one tool area with four tabs; the microphone button is the hero of each exercise */
+:root { --ok: #1f8a5b; --no: #c23a4b; --warn: #b26a00; --rec: #d4343f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ok: #5fd19c; --no: #ff8a98; --warn: #f0b456; --rec: #ff6b75; } }
+:root[data-theme="dark"] { --ok: #5fd19c; --no: #ff8a98; --warn: #f0b456; --rec: #ff6b75; }
+main.speak { max-width: 960px; margin: 0 auto; padding: 0 16px 64px; }
+.tabsx { display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+.tabsx button { font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--muted); padding: 10px 12px; }
+.tabsx button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: clamp(16px, 3vw, 28px); }
+.panel h2 { font: 800 24px var(--display); margin: 0 0 6px; }
+.panel > p.lead { color: var(--muted); margin: 0 0 18px; max-width: 70ch; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 14px; }
+.field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 600; color: var(--muted); min-width: 0; flex: 1 1 200px; }
+select, textarea, input[type=text] { font: inherit; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+textarea { width: 100%; min-height: 260px; resize: vertical; font-size: 14px; line-height: 1.5; }
+.btn { font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; padding: 9px 14px; border-radius: 9px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); text-decoration: none; display: inline-flex; gap: 6px; align-items: center; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.btn:focus-visible, .tabsx button:focus-visible, .mic:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
+.note { font-size: 14px; color: var(--muted); }
+.note.ok { color: var(--ok); font-weight: 600; }
+.steps { margin: 18px 0 0; padding-left: 20px; color: var(--muted); font-size: 14.5px; }
+.steps li { margin-bottom: 4px; }
+.warnbox { background: color-mix(in srgb, var(--warn) 12%, var(--paper)); border: 1px solid color-mix(in srgb, var(--warn) 40%, var(--line)); border-radius: 10px; padding: 10px 14px; font-size: 14px; margin-bottom: 16px; }
+/* dialogue */
+.dlg { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.line { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); }
+.line.me { background: var(--accent-soft); border-color: var(--accent-2); }
+.line.cur { box-shadow: 0 0 0 2px var(--accent); }
+.line.future { opacity: .45; }
+.who { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+.de { font-size: 17px; font-weight: 600; }
+.en { font-size: 14px; color: var(--muted); }
+.hidden-line { letter-spacing: .1em; color: var(--muted); }
+.res { margin-top: 8px; font-size: 14px; }
+.res .heard { color: var(--muted); }
+.w-ok { color: var(--ok); font-weight: 700; }
+.w-miss { color: var(--no); text-decoration: underline wavy; text-underline-offset: 3px; }
+.score { font-weight: 800; font-variant-numeric: tabular-nums; }
+.score.good { color: var(--ok); } .score.bad { color: var(--no); }
+/* mic */
+.mic { font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 99px; padding: 10px 18px; background: var(--rec); color: #fff; display: inline-flex; gap: 8px; align-items: center; }
+.mic[disabled] { opacity: .5; cursor: not-allowed; }
+.mic.on { animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--rec) 55%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
+@media (prefers-reduced-motion: reduce) { .mic.on { animation: none; outline: 3px solid var(--rec); outline-offset: 2px; } }
+/* word drill & questions */
+.drill { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 10px 0; }
+.drill .big { font: 800 clamp(28px, 6vw, 44px)/1.1 var(--display); }
+.drill .sub2 { color: var(--muted); }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.qcard { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 12px; }
+.qcard .q { font: 700 22px/1.25 var(--display); }
+.transcript { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: var(--paper); border: 1px dashed var(--line); min-height: 44px; }
+.typealt { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.typealt input { flex: 1 1 220px; }
+</style></head><body>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"><a href="index.html">Home</a><a href="wortschatz.html">Wortschatz</a><a href="grammar-book.html">Grammar Book</a><a href="study-guide.html">Study Guide</a><a href="speaking.html" class=on>Sprechen</a><a href="Momente_A1_Grammar_Book.pdf">PDF</a></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">Speaking practice</div><h1>Sprechen</h1><p>Have a voice conversation with an AI tutor, play the study-guide dialogues, check your pronunciation and answer questions out loud.</p></div></header>
+<main class="speak">
+  <div class="tabsx" role="tablist" id="tabs">
+    <button role="tab" data-tab="ai" aria-selected="true">Talk with AI</button>
+    <button role="tab" data-tab="dlg" aria-selected="false">Dialogue role-play</button>
+    <button role="tab" data-tab="words" aria-selected="false">Pronunciation</button>
+    <button role="tab" data-tab="qa" aria-selected="false">Answer questions</button>
+  </div>
+  <div id="noMic" class="warnbox" hidden>Speech recognition is not available in this browser. Use <b>Chrome</b> or <b>Edge</b> on a computer or Android phone to speak; you can still listen and type your answers here.</div>
+
+  <!-- AI -->
+  <section class="panel" data-panel="ai">
+    <h2>Talk with an AI tutor</h2>
+    <p class="lead">Pick a lesson and a practice type. Copy the prompt, open ChatGPT or Gemini, paste it, then switch on voice mode and start talking. Both apps have free plans with voice (with daily limits).</p>
+    <div class="row">
+      <label class="field">Lesson<select id="aiLesson"></select></label>
+      <label class="field">Practice type<select id="aiType">
+        <option value="chat">Conversation about me</option>
+        <option value="role">Role-play from the lesson</option>
+        <option value="drill">Vocabulary drill</option>
+        <option value="exam">A1 speaking exam (Goethe / telc)</option>
+      </select></label>
+      <label class="field">Corrections in<select id="aiLang"><option value="English">English</option><option value="German">simple German</option></select></label>
+    </div>
+    <label class="field" for="aiPrompt" style="flex:none">Prompt (you can edit it)</label>
+    <textarea id="aiPrompt" spellcheck="false"></textarea>
+    <div class="actions">
+      <button class="btn primary" id="aiCopy">Copy prompt</button>
+      <a class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener">Open ChatGPT ↗</a>
+      <a class="btn" href="https://gemini.google.com/" target="_blank" rel="noopener">Open Gemini ↗</a>
+      <span class="note" id="aiNote" role="status"></span>
+    </div>
+    <ol class="steps">
+      <li><b>On your phone</b> (best): open the ChatGPT or Gemini app, paste the prompt and send it, then tap the voice button (ChatGPT: the sound-wave icon; Gemini: “Live”).</li>
+      <li><b>On a computer:</b> paste the prompt at chatgpt.com, send it, then click the voice icon next to the message box.</li>
+      <li>Speak slowly. Say <i>“Hilfe”</i> when you are stuck, <i>“Noch einmal, bitte”</i> to hear it again.</li>
+      <li>At the end, ask for feedback: <i>“Bitte gib mir Feedback.”</i></li>
+    </ol>
+  </section>
+
+  <!-- Dialogue -->
+  <section class="panel" data-panel="dlg" hidden>
+    <h2>Dialogue role-play</h2>
+    <p class="lead">The site reads the other role out loud. When it is your turn, press the microphone and say your line. You pass a line with 80% of the words right.</p>
+    <div class="row">
+      <label class="field">Dialogue<select id="dModul"></select></label>
+      <label class="field">Your role<select id="dRole"></select></label>
+      <label class="field">Your lines<select id="dHide"><option value="show">Show my lines</option><option value="hide">Hide my lines (harder)</option></select></label>
+    </div>
+    <div class="actions"><button class="btn primary" id="dStart">Start dialogue</button><button class="btn" id="dListen">Listen to the whole dialogue</button><span class="note" id="dNote" role="status"></span></div>
+    <div class="dlg" id="dLines"></div>
+  </section>
+
+  <!-- Words -->
+  <section class="panel" data-panel="words" hidden>
+    <h2>Pronunciation trainer</h2>
+    <p class="lead">Listen to each word, then say it. The browser checks whether it understood you. Nouns: say them with the article.</p>
+    <div class="row">
+      <label class="field">Lesson<select id="wLesson"></select></label>
+      <label class="field">Words<select id="wSet"><option value="all">All words of the lesson</option><option value="learning">Only words in Learning (from the trainer)</option></select></label>
+    </div>
+    <div class="drill" id="wDrill"></div>
+  </section>
+
+  <!-- Questions -->
+  <section class="panel" data-panel="qa" hidden>
+    <h2>Answer questions about yourself</h2>
+    <p class="lead">The question is read out loud. Answer in a full sentence. Your answer is written down so you can check it, or send it to the AI tutor for corrections.</p>
+    <div class="row"><label class="field">Module<select id="qModul"></select></label></div>
+    <div id="qBox"></div>
+  </section>
+</main>
+<footer class="foot">Deutsch A1 · prepared for Delowar Hossain · based on the order of Momente A1.1 and A1.2 (Hueber)</footer>
+<script src="plan-data.js"></script>
+<script src="speak-data.js"></script>
+<script>
+(function () {
+const WEEKS = window.PLAN_WEEKS, MODS = window.SPEAK_MODULES;
+const LESSONS = WEEKS.flatMap(w => w.lessons.map(l => Object.assign({}, l, { modul: w.n, words: w.words.filter(x => x.id.split('-')[0] == l.n) })));
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } };
+
+// ---------- speech ----------
+const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!Rec) $('noMic').hidden = false;
+let deVoice = null;
+function pickVoice() { if (!('speechSynthesis' in window)) return; const v = speechSynthesis.getVoices(); deVoice = v.find(x => /^de(-|_)DE/i.test(x.lang) && /google|natural|online/i.test(x.name)) || v.find(x => /^de/i.test(x.lang)) || null; }
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text, rate = .9) {
+  return new Promise(res => {
+    if (!('speechSynthesis' in window)) return res();
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/\(.*?\)/g, '').replace(/___/g, '…').replace(/→/g, ','));
+    u.lang = 'de-DE'; u.rate = rate; if (deVoice) u.voice = deVoice;
+    u.onend = res; u.onerror = res; speechSynthesis.speak(u);
+    setTimeout(res, 15000);
+  });
+}
+let active = null;
+function listen(btn, onResult) { // one recognition at a time
+  if (!Rec) return;
+  if (active) { active.stop(); return; }
+  const r = new Rec(); r.lang = 'de-DE'; r.interimResults = true; r.maxAlternatives = 3; r.continuous = false;
+  let finals = [], interim = '';
+  r.onresult = e => {
+    interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const res = e.results[i];
+      if (res.isFinal) finals.push(Array.from(res).map(a => a.transcript)); else interim += res[0].transcript;
+    }
+    onResult({ alts: combine(finals), interim, final: false });
+  };
+  r.onerror = e => { onResult({ error: e.error }); };
+  r.onend = () => { active = null; btn.classList.remove('on'); btn.textContent = '🎤 Speak'; onResult({ alts: combine(finals), final: true }); };
+  active = r; btn.classList.add('on'); btn.textContent = '■ Stop'; if (window.speechSynthesis) speechSynthesis.cancel();
+  try { r.start(); } catch (e) { active = null; btn.classList.remove('on'); }
+}
+function combine(f) { if (!f.length) return []; const base = f.map(a => a[0]).join(' '); const alts = [base]; if (f.length === 1) f[0].slice(1).forEach(a => alts.push(a)); return alts; }
+
+// ---------- matching ----------
+const norm = s => s.toLowerCase().replace(/ß/g, 'ss').replace(/[!?.,;:…"'„“–—-]/g, ' ').replace(/\s+/g, ' ').trim();
+const NUM = { '0': 'null', '1': 'eins', '2': 'zwei', '3': 'drei', '4': 'vier', '5': 'fünf', '6': 'sechs', '7': 'sieben', '8': 'acht', '9': 'neun', '10': 'zehn', '12': 'zwölf', '15': 'fünfzehn', '20': 'zwanzig', '25': 'fünfundzwanzig', '89': 'neunundachtzig', '120': 'hundertzwanzig' };
+const toks = s => norm(s).split(' ').filter(Boolean).map(t => norm(NUM[t] || t));
+function compare(target, said) { // LCS over words → which target words were heard
+  const a = toks(target), b = toks(said);
+  const dp = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+  for (let i = a.length - 1; i >= 0; i--) for (let j = b.length - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const hit = new Array(a.length).fill(false); let i = 0, j = 0;
+  while (i < a.length && j < b.length) { if (a[i] === b[j]) { hit[i] = true; i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+  return { score: a.length ? Math.round(hit.filter(Boolean).length / a.length * 100) : 0, hit, words: target.replace(/[—]/g, ' ').split(/\s+/).filter(Boolean) };
+}
+function best(target, alts) { let b = null; alts.forEach(t => { const c = compare(target, t); if (!b || c.score > b.score) b = Object.assign(c, { said: t }); }); return b; }
+function markup(c) { // colour the target sentence word by word
+  let k = 0;
+  return c.words.map(w => { const n = toks(w).length; if (!n) return esc(w); const ok = c.hit.slice(k, k + n).every(Boolean); k += n; return `<span class="${ok ? 'w-ok' : 'w-miss'}">${esc(w)}</span>`; }).join(' ');
+}
+const errText = e => ({ 'not-allowed': 'Microphone access was blocked. Allow the microphone in the address bar and try again.', 'no-speech': 'I didn’t hear anything. Press Speak and talk a bit louder.', 'audio-capture': 'No microphone found.', network: 'Speech recognition needs an internet connection.' })[e] || 'Something went wrong with the microphone. Try again.';
+
+// ---------- tabs ----------
+function showTab(t) {
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
+  document.querySelectorAll('[data-panel]').forEach(p => p.hidden = p.dataset.panel !== t);
+  if (active) active.stop(); if (window.speechSynthesis) speechSynthesis.cancel();
+}
+$('tabs').onclick = e => { const b = e.target.closest('button'); if (b) { showTab(b.dataset.tab); history.replaceState(null, '', '#' + b.dataset.tab); } };
+
+// ---------- AI prompt ----------
+const lessonOpts = LESSONS.map(l => `<option value="${l.n}">Lektion ${l.n} · ${esc(l.title)} (${esc(l.topic.split(',')[0])})</option>`).join('');
+$('aiLesson').innerHTML = lessonOpts; $('wLesson').innerHTML = lessonOpts;
+const ROLEPLAY = { 1: 'meeting a new classmate at a German course', 2: 'a short job interview: name, job, age, family, address', 3: 'showing a family photo to a friend', 4: 'buying furniture at a flea market (you are the seller)', 5: 'asking what things are called and what they are made of in a shop', 6: 'a phone call to an office to make an appointment', 7: 'talking about hobbies at a party and giving compliments', 8: 'arranging to meet a friend this weekend', 9: 'ordering food and paying in a restaurant (you are the waiter)', 10: 'buying a train ticket and asking about delays at the station', 11: 'talking about what I did yesterday', 12: 'talking about my last holiday and festivals', 13: 'a tourist asking what there is to see in the city', 14: 'asking the way to the station (you are a person on the street)', 15: 'visiting a flat for rent (you are the landlord)', 16: 'calling a technician because the heating is broken', 17: 'talking about plans and wishes for the future', 18: 'a visit to the doctor (you are the doctor)', 19: 'flatmates discussing who does the housework', 20: 'describing new colleagues to a friend', 21: 'talking about rules in traffic and recycling in Germany', 22: 'buying clothes in a shop (you are the shop assistant)', 23: 'talking about the weather and weekend plans', 24: 'inviting a friend to a birthday party' };
+function buildPrompt() {
+  const l = LESSONS.find(x => x.n == $('aiLesson').value), type = $('aiType').value, lang = $('aiLang').value;
+  const words = l.words.map(w => w.de.split(' / ')[0]).filter(w => w.length < 30).slice(0, 25).join(', ');
+  const grammar = l.steps.map(s => s.title).join('; ');
+  const head = `You are my friendly German tutor in a spoken conversation. I am a beginner at level A1 and I study with the course book Momente A1, Lektion ${l.n} “${l.title}” (topic: ${l.topic}).\n\n`;
+  const task = {
+    chat: `Have a natural conversation with me about myself and the topic “${l.topic}”. Ask me one short question at a time and wait for my answer.`,
+    role: `Let's do a role-play: ${ROLEPLAY[l.n]}. You play the other person. Start the scene, keep it realistic and simple, and wait for my answer after each sentence.`,
+    drill: `Practise vocabulary with me: say an English word or a short question, I answer in German. Use the words below, one at a time. For nouns I must say the article. Wait for my answer each time.`,
+    exam: `Simulate the speaking part of the Goethe-Zertifikat A1 / telc Deutsch A1: part 1 introduce myself (Name, Alter, Land, Wohnort, Sprachen, Beruf, Hobby), part 2 ask and answer questions on a topic card, part 3 make a polite request and react. Be the examiner and guide me through each part.`
+  }[type];
+  return head + `Task: ${task}\n\nRules:\n- Speak only simple A1 German: short sentences, slowly and clearly.\n- One question or sentence at a time, then wait for me.\n- Use this grammar where natural: ${grammar}.\n- Use these words from the lesson: ${words}.\n- When I make a mistake: first say my sentence correctly in German, then explain it in one short sentence in ${lang}, then continue.\n- If I say “Hilfe”, give me the English translation and an example answer I can repeat.\n- After about 10 exchanges, or when I say “Feedback”, give me 3 things I did well and 3 things to practise.\n\nStart now: greet me in German and ask the first question.`;
+}
+function refreshPrompt() { $('aiPrompt').value = buildPrompt(); $('aiNote').textContent = ''; }
+['aiLesson', 'aiType', 'aiLang'].forEach(id => $(id).onchange = refreshPrompt);
+$('aiCopy').onclick = async () => {
+  const t = $('aiPrompt').value;
+  try { await navigator.clipboard.writeText(t); $('aiNote').textContent = 'Copied. Now open ChatGPT or Gemini and paste it.'; $('aiNote').className = 'note ok'; }
+  catch (e) { $('aiPrompt').focus(); $('aiPrompt').select(); $('aiNote').textContent = 'Press Ctrl+C (or Cmd+C) to copy the selected prompt.'; $('aiNote').className = 'note'; }
+};
+
+// ---------- dialogue role-play ----------
+$('dModul').innerHTML = MODS.map(m => `<option value="${m.modul}">Modul ${m.modul} · ${esc(m.title)}</option>`).join('');
+let dState = null;
+function setRoles() { const m = MODS.find(x => x.modul == $('dModul').value); $('dRole').innerHTML = m.roles.map((r, i) => `<option value="${esc(r)}" ${i === m.roles.length - 1 ? 'selected' : ''}>${esc(r)}</option>`).join(''); dState = null; renderDlg(); }
+function renderDlg() {
+  const m = MODS.find(x => x.modul == $('dModul').value), me = $('dRole').value, hide = $('dHide').value === 'hide';
+  const cur = dState ? dState.i : -1;
+  $('dLines').innerHTML = m.lines.map((l, i) => {
+    const mine = l.who === me, r = dState && dState.res[i];
+    const showText = !mine || !hide || (r && r.done) || !dState;
+    return `<div class="line ${mine ? 'me' : ''} ${i === cur ? 'cur' : ''} ${dState && i > cur ? 'future' : ''}">
+      <div class="who">${esc(l.who)}${mine ? '<br>(you)' : ''}</div>
+      <div><div class="de">${showText ? (r && r.c ? markup(r.c) : esc(l.de)) : '<span class="hidden-line">• • • say your line • • •</span>'}</div><div class="en">${esc(l.en)}</div>
+      ${mine && i === cur ? `<div class="actions"><button class="mic" id="dMic" ${Rec ? '' : 'disabled'}>🎤 Speak</button><button class="btn" id="dHear">🔊 Hear it</button><button class="btn" id="dSkip">Skip</button></div>` : ''}
+      ${r && (r.said || r.interim) ? `<div class="res"><span class="heard">Heard: “${esc(r.said || r.interim)}”</span>${r.c ? ` · <span class="score ${r.c.score >= 80 ? 'good' : 'bad'}">${r.c.score}%</span>${r.c.score >= 80 ? ' Gut gemacht!' : ' Try again: the red words were missing.'}` : ''}</div>` : ''}
+      ${r && r.err ? `<div class="res" style="color:var(--no)">${esc(r.err)}</div>` : ''}
+      </div></div>`;
+  }).join('');
+  const mic = $('dMic');
+  if (mic) {
+    mic.onclick = () => listen(mic, x => {
+      const r = dState.res[dState.i] = dState.res[dState.i] || {};
+      if (x.error) { r.err = errText(x.error); renderDlg(); return; }
+      r.err = ''; r.interim = x.interim;
+      if (x.final && x.alts.length) { r.c = best(m.lines[dState.i].de, x.alts); r.said = r.c.said; if (r.c.score >= 80) { r.done = true; renderDlg(); setTimeout(next, 900); return; } }
+      renderDlg();
+    });
+    $('dHear').onclick = () => speak(m.lines[dState.i].de, .8);
+    $('dSkip').onclick = () => { dState.res[dState.i] = Object.assign(dState.res[dState.i] || {}, { done: true }); next(); };
+  }
+  const c = document.querySelector('.line.cur'); if (c) c.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}
+async function next() {
+  const m = MODS.find(x => x.modul == $('dModul').value), me = $('dRole').value;
+  dState.i++;
+  while (dState && dState.i < m.lines.length && m.lines[dState.i].who !== me) {
+    renderDlg(); $('dNote').textContent = 'Listen…'; const run = dState.run; await speak(m.lines[dState.i].de); if (!dState || dState.run !== run) return; dState.i++;
+  }
+  if (!dState) return;
+  if (dState.i >= m.lines.length) {
+    const mine = m.lines.map((l, i) => l.who === me ? dState.res[i] : null).filter(Boolean);
+    const avg = mine.length ? Math.round(mine.reduce((s, r) => s + (r.c ? r.c.score : 0), 0) / mine.length) : 0;
+    $('dNote').textContent = `Dialogue finished. Your average: ${avg}%. Swap roles and try again!`; renderDlg(); return;
+  }
+  $('dNote').textContent = 'Your turn: press Speak.'; renderDlg();
+}
+$('dModul').onchange = setRoles; $('dRole').onchange = () => { dState = null; renderDlg(); }; $('dHide').onchange = renderDlg;
+$('dStart').onclick = () => { if (active) active.stop(); dState = { i: -1, res: {}, run: Math.random() }; $('dNote').textContent = ''; next(); };
+$('dListen').onclick = async () => { const m = MODS.find(x => x.modul == $('dModul').value); dState = null; renderDlg(); for (const l of m.lines) { $('dNote').textContent = l.who + ': ' + l.de; await speak(l.de); } $('dNote').textContent = ''; };
+
+// ---------- pronunciation ----------
+let wq = [], wi = 0, wres = null, wstat = { ok: 0, tries: 0 };
+function wordList() {
+  const l = LESSONS.find(x => x.n == $('wLesson').value);
+  let ws = l.words.filter(w => !/,/.test(w.de) || w.de.split(' ').length < 4);
+  if ($('wSet').value === 'learning') { const c = (lsGet('wz:v2', {}).cards) || {}; ws = ws.filter(w => c[w.id] && c[w.id].s === 'learning'); }
+  return ws;
+}
+function startWords() { wq = wordList(); wi = 0; wres = null; wstat = { ok: 0, tries: 0 }; renderWords(); }
+function sayForm(de) { return de.split(' / ')[0].replace(/\s*→.*$/, '').replace(/\(.*?\)/g, '').trim(); }
+function renderWords() {
+  if (!wq.length) { $('wDrill').innerHTML = `<p class="note">No words here. ${$('wSet').value === 'learning' ? 'Mark words as Learning in the Wortschatz trainer first.' : ''}</p>`; return; }
+  if (wi >= wq.length) { $('wDrill').innerHTML = `<div class="big">${wstat.ok} / ${wq.length}</div><p class="sub2">words understood on the first or later try</p><button class="btn primary" id="wAgain">Start again</button>`; $('wAgain').onclick = startWords; return; }
+  const w = wq[wi], target = sayForm(w.de);
+  $('wDrill').innerHTML = `<span class="count">Word ${wi + 1} of ${wq.length} · ✓ ${wstat.ok}</span>
+    <div class="big">${wres && wres.c ? markup(wres.c) : esc(target)}</div><div class="sub2">${esc(w.en)}</div>
+    <div class="actions" style="justify-content:center"><button class="btn" id="wHear">🔊 Listen</button><button class="mic" id="wMic" ${Rec ? '' : 'disabled'}>🎤 Speak</button><button class="btn" id="wNext">${wres && wres.c && wres.c.score === 100 ? 'Next →' : 'Skip →'}</button></div>
+    <div class="res" role="status">${wres ? (wres.err ? `<span style="color:var(--no)">${esc(wres.err)}</span>` : `Heard: “${esc(wres.said || wres.interim || '')}”${wres.c ? ` · <span class="score ${wres.c.score === 100 ? 'good' : 'bad'}">${wres.c.score === 100 ? 'Perfekt!' : 'Not quite, listen and try again'}</span>` : ''}`) : 'Listen first, then press Speak.'}</div>`;
+  $('wHear').onclick = () => speak(target, .8);
+  $('wNext').onclick = () => { wi++; wres = null; renderWords(); };
+  const mic = $('wMic');
+  mic.onclick = () => listen(mic, x => {
+    wres = wres || {};
+    if (x.error) { wres.err = errText(x.error); renderWords(); return; }
+    wres.err = ''; wres.interim = x.interim;
+    if (x.final && x.alts.length) { const first = !wres.c; wres.c = best(target, x.alts); wres.said = wres.c.said; if (wres.c.score === 100 && !wres.counted) { wstat.ok++; wres.counted = true; } }
+    renderWords();
+  });
+}
+$('wLesson').onchange = startWords; $('wSet').onchange = startWords;
+
+// ---------- questions ----------
+$('qModul').innerHTML = MODS.map(m => `<option value="${m.modul}">Modul ${m.modul} · Lektion ${3 * m.modul - 2}–${3 * m.modul}</option>`).join('');
+const answers = {};
+function renderQA() {
+  const m = MODS.find(x => x.modul == $('qModul').value);
+  $('qBox').innerHTML = m.questions.map((q, i) => `<div class="qcard" data-q="${i}"><div class="q">${esc(q.q)}</div>${q.hint ? `<div class="note">${esc(q.hint)}</div>` : ''}
+    <div class="actions"><button class="btn" data-hear="${i}">🔊 Hear the question</button><button class="mic" data-mic="${i}" ${Rec ? '' : 'disabled'}>🎤 Speak</button></div>
+    <div class="transcript" id="tr${i}" aria-live="polite">${answers[m.modul + '-' + i] ? esc(answers[m.modul + '-' + i]) : '<span class="note">Your answer will appear here.</span>'}</div>
+    <div class="typealt"><input type="text" lang="de" id="ty${i}" placeholder="…or type your answer" aria-label="Type your answer"><button class="btn" data-type="${i}">Save</button></div></div>`).join('') +
+    `<div class="actions" style="margin-top:16px"><button class="btn primary" id="qAI">Copy my answers for the AI tutor</button><span class="note" id="qNote" role="status"></span></div>`;
+  $('qBox').querySelectorAll('[data-hear]').forEach(b => b.onclick = () => speak(m.questions[b.dataset.hear].q, .85));
+  $('qBox').querySelectorAll('[data-mic]').forEach(b => b.onclick = () => listen(b, x => {
+    const k = m.modul + '-' + b.dataset.mic, tr = $('tr' + b.dataset.mic);
+    if (x.error) { tr.innerHTML = `<span style="color:var(--no)">${esc(errText(x.error))}</span>`; return; }
+    const txt = (x.alts[0] || '') + (x.interim ? ' ' + x.interim : '');
+    if (txt.trim()) { tr.textContent = txt; if (x.final) answers[k] = x.alts[0]; }
+  }));
+  $('qBox').querySelectorAll('[data-type]').forEach(b => b.onclick = () => { const i = b.dataset.type, v = $('ty' + i).value.trim(); if (!v) return; answers[m.modul + '-' + i] = v; $('tr' + i).textContent = v; $('ty' + i).value = ''; });
+  $('qAI').onclick = async () => {
+    const lines = m.questions.map((q, i) => `${q.q}\n→ ${answers[m.modul + '-' + i] || '(no answer)'}`).join('\n\n');
+    const t = `You are my German A1 tutor. Here are my spoken answers (written down by speech recognition, so ignore small spelling issues). For each answer: give the corrected German sentence, explain each mistake in one short English sentence, and suggest one more natural A1 answer. Then ask me 2 follow-up questions in simple German.\n\n${lines}`;
+    try { await navigator.clipboard.writeText(t); $('qNote').textContent = 'Copied. Paste it into ChatGPT or Gemini.'; $('qNote').className = 'note ok'; }
+    catch (e) { $('qNote').textContent = 'Copy did not work in this browser.'; }
+  };
+}
+$('qModul').onchange = renderQA;
+
+// ---------- start ----------
+refreshPrompt(); setRoles(); startWords(); renderQA();
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1)), mm = h.match(/^m([1-8])$/), lm = h.match(/^ai-L(\d{1,2})$/);
+  if (mm) { $('dModul').value = mm[1]; setRoles(); $('qModul').value = mm[1]; renderQA(); showTab('dlg'); }
+  else if (lm && LESSONS.some(l => l.n == lm[1])) { $('aiLesson').value = lm[1]; $('wLesson').value = lm[1]; refreshPrompt(); startWords(); showTab('ai'); }
+  else if (['ai', 'dlg', 'words', 'qa'].includes(h)) showTab(h);
+}
+route(); window.addEventListener('hashchange', route);
+})();
+</script>
+</body></html>

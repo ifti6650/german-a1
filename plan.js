@@ -23,10 +23,10 @@
     const t = w.lessons.map((l, i) => ({
       id: `${w.n}-d${i}`, day: DAYS[i],
       title: `Lektion ${l.n} · ${l.title}`,
-      body: `${esc(l.topic)}. Read ${l.steps.map(s => `<a href="${s.href}">Step ${s.n}</a>`).join(' and ')} and the <a href="${l.guide}">study-guide box</a>, say every example out loud, then learn the words in the <a href="wortschatz.html#L${l.n}">Wortschatz trainer (L${l.n})</a>.`
+      body: `${esc(l.topic)}. Read ${l.steps.map(s => `<a href="${s.href}">Step ${s.n}</a>`).join(' and ')} and the <a href="${l.guide}">study-guide box</a>, say every example out loud, then learn the words in the <a href="wortschatz.html#L${l.n}">Wortschatz trainer (L${l.n})</a>. Extra: <a href="speaking.html#ai-L${l.n}">talk about it with the AI tutor</a>.`
     }));
     t.push({ id: `${w.n}-thu`, day: 'Thu', title: 'Self-test and speaking',
-      body: `Do the <button class="linkish" data-goto="self">self-test</button> below, then the <a href="${w.speakingHref}">speaking practice</a>: read the dialogue aloud and answer the questions about yourself.` });
+      body: `Do the <button class="linkish" data-goto="self">self-test</button> below, then the <a href="${w.speakingHref}">speaking practice</a>: read the dialogue aloud and answer the questions about yourself. You can also play the dialogue in the <a href="speaking.html#m${w.n}">speaking trainer</a> with your microphone.` });
     t.push({ id: `${w.n}-fri`, day: 'Fri', title: 'Flashcards for the words you don’t know yet',
       body: `Open each lesson in the trainer, choose the <b>Learning</b> or <b>New</b> filter and go through the Flashcards; mark each card “I know it” or “Still learning”. <span class="kw" data-kw></span>` });
     t.push({ id: `${w.n}-sat`, day: 'Sat', title: 'Word test and dialogues',
