@@ -28,7 +28,7 @@
     t.push({ id: `${w.n}-thu`, day: 'Thu', title: 'Self-test and speaking',
       body: `Do the <button class="linkish" data-goto="self">self-test</button> below, then the <a href="${w.speakingHref}">speaking practice</a>: read the dialogue aloud and answer the questions about yourself.` });
     t.push({ id: `${w.n}-fri`, day: 'Fri', title: 'Flashcards for the words you don’t know yet',
-      body: `Open each lesson in the trainer, tick “Hide known” and go through the Flashcards. <span class="kw" data-kw></span>` });
+      body: `Open each lesson in the trainer, choose the <b>Learning</b> or <b>New</b> filter and go through the Flashcards; mark each card “I know it” or “Still learning”. <span class="kw" data-kw></span>` });
     t.push({ id: `${w.n}-sat`, day: 'Sat', title: 'Word test and dialogues',
       body: `Take the <button class="linkish" data-goto="test">word test</button> below (${PASS} of ${QN} to pass) and say the dialogues with a partner.` });
     return t;
