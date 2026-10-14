@@ -967,6 +967,7 @@ const WORDS=[];
 LESSONS.forEach(l=>{l.words.trim().split('\n').forEach((line,i)=>{const [de,pl,en,ex]=line.split('|').map(s=>s.trim());WORDS.push({id:l.n+'-'+i,lesson:l.n,de,pl,en,ex})})});
 let known=new Set(store.get('known',[]));
 let cur=store.get('lesson',0); // 0 = all
+{const m=location.hash.match(/^#L(\d{1,2})$/);if(m)cur=+m[1];} // deep link from the 8-week plan
 let mode='list', sortKey='lesson', sortAsc=true;
 const $=id=>document.getElementById(id);
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
