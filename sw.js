@@ -1,8 +1,8 @@
 // Offline support for the Deutsch A1 app: pages load from the network when online
 // (so updates arrive) and from the cache when offline.
-const CACHE = 'deutsch-a1-v1';
+const CACHE = 'deutsch-a1-v2';
 const FILES = ['./', 'index.html', 'wortschatz.html', 'grammar-book.html', 'study-guide.html', 'speaking.html',
-  'site.css', 'plan.js', 'plan-data.js', 'speak-data.js', 'manifest.webmanifest',
+  'site.css', 'install.js', 'plan.js', 'plan-data.js', 'speak-data.js', 'manifest.webmanifest',
   'icon-180.png', 'icon-192.png', 'icon-512.png', 'Momente_A1_Grammar_Book.pdf'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));

@@ -1264,4 +1264,4 @@ document.addEventListener('keydown', e => {
 window.addEventListener('hashchange', () => { const m = location.hash.match(/^#L(\d{1,2})$/); if (m && LESSONS.some(l => l.n === +m[1])) { S.lesson = +m[1]; save(); render() } });
 render();
 </script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
+<script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
