@@ -1,0 +1,1064 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Momente A1 Wortschatz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a Lernkartei — lesson rail on the left, the word box on the right; three modes (Liste / Karten / Quiz) */
+:root{
+  --bg:#f3f4f7; --surface:#ffffff; --ink:#1d2433; --muted:#5c6577; --line:#dde1e9;
+  --accent:#2f4fd8; --accent-soft:#e6ebfd;
+  --der:#2457c5; --die:#c23a4b; --das:#1f8a5b; --known:#1f8a5b;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151d; --surface:#1a1f2b; --ink:#e7eaf2; --muted:#9aa3b5; --line:#2b3242;
+  --accent:#8ea4ff; --accent-soft:#232c4a; --der:#7fa6ff; --die:#ff8a98; --das:#5fd19c; --known:#5fd19c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151d; --surface:#1a1f2b; --ink:#e7eaf2; --muted:#9aa3b5; --line:#2b3242;
+  --accent:#8ea4ff; --accent-soft:#232c4a; --der:#7fa6ff; --die:#ff8a98; --das:#5fd19c; --known:#5fd19c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:20px 48px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,36px);margin:0;line-height:1.1;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.stats{font-family:var(--mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;width:220px;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--known);width:0;transition:width .3s}
+.grid{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+nav.rail{display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 140px);overflow:auto;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);align-self:start}
+@media (max-width:820px){nav.rail{position:static;max-height:none;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}}
+.mod{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:12px 8px 4px;font-weight:600}
+@media (max-width:820px){.mod{display:none}}
+.lesson{all:unset;cursor:pointer;display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:8px;font-size:14px}
+.lesson .n{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:22px;font-variant-numeric:tabular-nums}
+.lesson .t{flex:1;min-width:0}
+.lesson .p{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.lesson:hover{background:var(--accent-soft)}
+.lesson[aria-current="true"]{background:var(--accent);color:var(--bg)}
+.lesson[aria-current="true"] .n,.lesson[aria-current="true"] .p{color:var(--bg)}
+.lesson:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:820px){.lesson{white-space:nowrap;border:1px solid var(--line)}.lesson .t,.lesson .p{display:none}}
+main{min-width:0}
+.lhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:12px}
+.lhead h2{font-family:var(--display);font-weight:500;font-size:22px;margin:0}
+.lhead .meta{color:var(--muted);font-size:13px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.tabs{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--surface)}
+.tabs button{all:unset;cursor:pointer;padding:7px 14px;font-weight:500;font-size:14px}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+input[type=search],select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0}
+input[type=search]{flex:1 1 180px}
+label.chk{display:inline-flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
+.btn{font:inherit;font-weight:500;cursor:pointer;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th button{all:unset;cursor:pointer}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tr.done td{opacity:.55}
+td.de{font-weight:600;min-width:170px}
+td.pl{color:var(--muted);min-width:120px}
+td.ex{color:var(--muted);font-style:italic;min-width:200px}
+td.ln{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.art-der{color:var(--der)} .art-die{color:var(--die)} .art-das{color:var(--das)}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.legend b{font-weight:600}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+/* flashcards */
+.cardzone{display:flex;flex-direction:column;align-items:center;gap:14px}
+.card{width:100%;max-width:560px;min-height:250px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;box-shadow:0 1px 0 var(--line),0 12px 24px -18px rgba(0,0,0,.35);gap:10px}
+.card .big{font-family:var(--display);font-size:clamp(24px,4.5vw,34px);font-weight:500;line-height:1.15;text-wrap:balance}
+.card .hint{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.card .pl{color:var(--muted)}
+.card .ex{color:var(--muted);font-style:italic}
+.cardnav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+/* quiz */
+.quiz{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.qprompt{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.qprompt .big{font-family:var(--display);font-size:clamp(22px,4vw,30px);font-weight:500}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.opts{grid-template-columns:minmax(0,1fr)}}
+.opt{font:inherit;text-align:left;cursor:pointer;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.opt.right{border-color:var(--known);box-shadow:inset 0 0 0 1px var(--known)}
+.opt.wrong{border-color:var(--die);box-shadow:inset 0 0 0 1px var(--die)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.feedback{font-weight:500;min-height:1.5em}
+.feedback.ok{color:var(--known)} .feedback.no{color:var(--die)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+
+<div class="wrap"><a href="index.html" style="display:inline-block;margin-bottom:10px;color:var(--accent);font-weight:600;text-decoration:none">← All materials</a>
+  <header>
+    <div>
+      <h1>Momente A1 Wortschatz</h1>
+      <p class="sub">All 24 lessons of Momente A1.1 and A1.2 · German → English · tick off what you know</p>
+    </div>
+    <div class="stats"><span id="statText">0 / 0 known</span><div class="bar"><i id="statBar"></i></div></div>
+  </header>
+  <div class="grid">
+    <nav class="rail" id="rail" aria-label="Lessons"></nav>
+    <main>
+      <div class="lhead"><h2 id="lTitle"></h2><span class="meta" id="lMeta"></span></div>
+      <div class="tools">
+        <div class="tabs" role="group" aria-label="Mode">
+          <button id="mList" aria-pressed="true">List</button>
+          <button id="mCards" aria-pressed="false">Flashcards</button>
+          <button id="mQuiz" aria-pressed="false">Quiz</button>
+        </div>
+        <input type="search" id="q" placeholder="Search German or English…" aria-label="Search">
+        <label class="chk"><input type="checkbox" id="hideKnown"> Hide known</label>
+        <select id="dir" aria-label="Direction">
+          <option value="de">German → English</option>
+          <option value="en">English → German</option>
+        </select>
+      </div>
+      <section id="vList"></section>
+      <section id="vCards" hidden></section>
+      <section id="vQuiz" hidden></section>
+    </main>
+  </div>
+</div>
+
+<script>
+// Momente A1 — vocabulary by lesson. Line format: German | plural | English | example
+const LESSONS = [
+{n:1,book:"A1.1",mod:1,title:"Ich heiße Miriam.",topic:"Greetings, introductions, how are you",words:`
+Hallo! | | Hello! | Hallo! Ich bin Tom.
+Guten Morgen! | | Good morning! | Guten Morgen, Frau Weber!
+Guten Tag! | | Good day! / Hello! | Guten Tag, Herr Schmidt.
+Guten Abend! | | Good evening! | Guten Abend! Wie geht es Ihnen?
+Gute Nacht! | | Good night! | Gute Nacht, bis morgen!
+Tschüs! | | Bye! (informal) | Tschüs, Anna!
+Auf Wiedersehen! | | Goodbye! (formal) | Auf Wiedersehen, Herr Klein!
+Bis morgen! | | See you tomorrow! | Tschüs, bis morgen!
+Wie geht's? | | How are you? (informal) | Hallo Lisa, wie geht's?
+Wie geht es Ihnen? | | How are you? (formal) | Guten Tag, Frau Berg. Wie geht es Ihnen?
+gut | | good, well | Danke, mir geht es gut.
+sehr gut | | very good | Es geht mir sehr gut.
+es geht | | okay, so-so | Na ja, es geht.
+nicht so gut | | not so good | Mir geht es nicht so gut.
+danke | | thanks | Gut, danke! Und dir?
+Und dir? / Und Ihnen? | | And you? (informal / formal) | Danke, gut. Und Ihnen?
+heißen | | to be called | Ich heiße Miriam.
+sein | | to be | Ich bin Paul. Wer bist du?
+kommen (aus) | | to come (from) | Ich komme aus Indien.
+lernen | | to learn | Ich lerne Deutsch.
+der Name | die Namen | name | Mein Name ist Kim.
+der Vorname | die Vornamen | first name | Mein Vorname ist Ali.
+der Familienname | die Familiennamen | surname | Wie ist Ihr Familienname?
+das Land | die Länder | country | Aus welchem Land kommst du?
+Deutschland | | Germany | Ich wohne in Deutschland.
+Österreich | | Austria | Wien ist in Österreich.
+die Schweiz | | Switzerland | Er kommt aus der Schweiz.
+die Türkei | | Turkey | Sie kommt aus der Türkei.
+wer? | | who? | Wer ist das?
+wie? | | how? | Wie heißt du?
+woher? | | where from? | Woher kommen Sie?
+das Alphabet | | alphabet | Das deutsche Alphabet hat 26 Buchstaben.
+der Buchstabe | die Buchstaben | letter (of alphabet) | Wie schreibt man das? Buchstabieren Sie, bitte.
+buchstabieren | | to spell | Können Sie das bitte buchstabieren?
+Herr | die Herren | Mr. | Das ist Herr Müller.
+Frau | die Frauen | Mrs./Ms.; woman | Das ist Frau Yilmaz.
+`},
+{n:2,book:"A1.1",mod:1,title:"Was macht ihr beruflich?",topic:"Personal details, jobs",words:`
+der Beruf | die Berufe | job, profession | Was sind Sie von Beruf?
+arbeiten (als / bei) | | to work (as / at) | Ich arbeite als Ingenieur bei Siemens.
+wohnen | | to live (reside) | Ich wohne in München.
+leben | | to live | Wir leben in Berlin.
+haben | | to have | Ich habe zwei Kinder.
+der Lehrer / die Lehrerin | die Lehrer / die Lehrerinnen | teacher | Sie ist Lehrerin.
+der Arzt / die Ärztin | die Ärzte / die Ärztinnen | doctor | Mein Bruder ist Arzt.
+der Ingenieur / die Ingenieurin | die Ingenieure / die Ingenieurinnen | engineer | Ich bin Ingenieurin.
+der Student / die Studentin | die Studenten / die Studentinnen | student | Er ist Student.
+der Verkäufer / die Verkäuferin | die Verkäufer / die Verkäuferinnen | salesperson | Sie arbeitet als Verkäuferin.
+der Koch / die Köchin | die Köche / die Köchinnen | cook | Mein Vater ist Koch.
+der Krankenpfleger / die Krankenpflegerin | die Krankenpfleger / die Krankenpflegerinnen | nurse | Er arbeitet als Krankenpfleger.
+der Programmierer / die Programmiererin | die Programmierer / die Programmiererinnen | programmer | Ich bin Programmierer.
+die Firma | die Firmen | company | Ich arbeite bei einer Firma in Hamburg.
+das Krankenhaus | die Krankenhäuser | hospital | Sie arbeitet im Krankenhaus.
+die Schule | die Schulen | school | Er arbeitet in einer Schule.
+arbeitslos | | unemployed | Ich bin im Moment arbeitslos.
+verheiratet | | married | Ich bin verheiratet.
+ledig | | single (not married) | Sie ist ledig.
+geschieden | | divorced | Mein Onkel ist geschieden.
+das Kind | die Kinder | child | Haben Sie Kinder?
+das Alter | | age | Wie alt sind Sie? – Ich bin 30.
+alt | | old | Wie alt bist du?
+die Adresse | die Adressen | address | Wie ist Ihre Adresse?
+die Telefonnummer | die Telefonnummern | phone number | Wie ist deine Telefonnummer?
+die Stadt | die Städte | city, town | Ich wohne in einer kleinen Stadt.
+die Zahl | die Zahlen | number | Die Zahlen von 1 bis 100.
+null, eins, zwei, drei, vier, fünf | | 0, 1, 2, 3, 4, 5 | Ich habe drei Geschwister.
+sechs, sieben, acht, neun, zehn | | 6, 7, 8, 9, 10 | Er ist zehn Jahre alt.
+elf, zwölf, dreizehn, zwanzig | | 11, 12, 13, 20 | Sie ist zwanzig.
+einundzwanzig, dreißig, hundert | | 21, 30, 100 | Mein Opa ist hundert Jahre alt!
+nicht | | not | Ich wohne nicht in Berlin.
+auch | | also, too | Ich bin auch Student.
+`},
+{n:3,book:"A1.1",mod:1,title:"Das ist meine Schwester.",topic:"Family, languages",words:`
+die Familie | die Familien | family | Das ist meine Familie.
+die Eltern | (plural only) | parents | Meine Eltern wohnen in Delhi.
+der Vater | die Väter | father | Mein Vater heißt Raj.
+die Mutter | die Mütter | mother | Meine Mutter ist Ärztin.
+der Sohn | die Söhne | son | Ich habe einen Sohn.
+die Tochter | die Töchter | daughter | Ihre Tochter ist fünf.
+der Bruder | die Brüder | brother | Das ist mein Bruder.
+die Schwester | die Schwestern | sister | Das ist meine Schwester.
+die Geschwister | (plural only) | siblings | Hast du Geschwister?
+der Großvater / der Opa | die Großväter / die Opas | grandfather / grandpa | Mein Opa ist 80.
+die Großmutter / die Oma | die Großmütter / die Omas | grandmother / grandma | Meine Oma kocht super.
+die Großeltern | (plural only) | grandparents | Meine Großeltern leben in Wien.
+der Mann | die Männer | man; husband | Das ist mein Mann.
+die Frau | die Frauen | woman; wife | Das ist meine Frau.
+der Partner / die Partnerin | die Partner / die Partnerinnen | partner | Mein Partner kommt aus Spanien.
+der Onkel | die Onkel | uncle | Mein Onkel wohnt in Kanada.
+die Tante | die Tanten | aunt | Meine Tante ist Lehrerin.
+der Cousin / die Cousine | die Cousins / die Cousinen | cousin | Meine Cousine heißt Sara.
+das Baby | die Babys | baby | Das Baby ist sehr klein.
+sprechen | | to speak | Ich spreche Englisch und Hindi.
+die Sprache | die Sprachen | language | Welche Sprachen sprechen Sie?
+Deutsch | | German (language) | Ich lerne Deutsch.
+Englisch | | English | Sprichst du Englisch?
+Französisch | | French | Sie spricht ein bisschen Französisch.
+Spanisch | | Spanish | Mein Partner spricht Spanisch.
+Arabisch | | Arabic | Er spricht Arabisch.
+die Muttersprache | die Muttersprachen | mother tongue | Meine Muttersprache ist Bengali.
+ein bisschen | | a little | Ich spreche ein bisschen Deutsch.
+gut / sehr gut | | well / very well | Sie spricht sehr gut Englisch.
+mein / meine | | my | Das ist meine Mutter und mein Vater.
+dein / deine | | your (informal) | Ist das dein Bruder?
+ja | | yes | Ja, das ist meine Schwester.
+nein | | no | Nein, das ist meine Cousine.
+doch | | yes (to a negative question) | Sprichst du kein Deutsch? – Doch!
+das Foto | die Fotos | photo | Schau mal, ein Foto von meiner Familie.
+`},
+{n:4,book:"A1.1",mod:2,title:"Das Bild ist so schön.",topic:"Shopping, furniture, prices",words:`
+das Möbel / die Möbel | die Möbel | piece of furniture / furniture | Die Möbel sind neu.
+der Tisch | die Tische | table | Der Tisch ist groß.
+der Stuhl | die Stühle | chair | Der Stuhl ist bequem.
+das Sofa | die Sofas | sofa | Das Sofa ist sehr schön.
+der Sessel | die Sessel | armchair | Der Sessel kostet 200 Euro.
+das Bett | die Betten | bed | Das Bett ist zu klein.
+der Schrank | die Schränke | cupboard, wardrobe | Der Schrank ist praktisch.
+das Regal | die Regale | shelf | Das Regal ist aus Holz.
+die Lampe | die Lampen | lamp | Die Lampe ist modern.
+das Bild | die Bilder | picture | Das Bild ist so schön!
+der Teppich | die Teppiche | carpet, rug | Der Teppich ist teuer.
+der Spiegel | die Spiegel | mirror | Der Spiegel ist rund.
+der Flohmarkt | die Flohmärkte | flea market | Am Samstag gehe ich auf den Flohmarkt.
+kosten | | to cost | Was kostet der Tisch?
+der Preis | die Preise | price | Der Preis ist gut.
+der Euro | die Euro | euro | Das kostet 50 Euro.
+der Cent | die Cent | cent | Das kostet 99 Cent.
+kaufen | | to buy | Ich kaufe das Sofa.
+finden | | to find; to think (opinion) | Wie findest du das Bild?
+schön | | beautiful, nice | Die Lampe ist schön.
+hässlich | | ugly | Der Teppich ist hässlich.
+groß | | big, tall | Das Bett ist groß.
+klein | | small | Der Spiegel ist klein.
+teuer | | expensive | Das ist zu teuer!
+billig / günstig | | cheap / good value | Der Stuhl ist günstig.
+neu | | new | Das Regal ist neu.
+alt | | old | Der Schrank ist alt.
+modern | | modern | Die Lampe ist sehr modern.
+bequem | | comfortable | Das Sofa ist bequem.
+praktisch | | practical | Der Tisch ist praktisch.
+toll / super | | great | Das Bild ist toll!
+langweilig | | boring | Die Farbe ist langweilig.
+zu | | too | Das ist zu teuer.
+hundert, tausend | | hundred, thousand | Das kostet tausend Euro.
+die Million | die Millionen | million | Eine Million Euro!
+`},
+{n:5,book:"A1.1",mod:2,title:"Ist das ein Tisch?",topic:"Objects, colours, materials",words:`
+das Ding | die Dinge | thing | Was ist das für ein Ding?
+der Gegenstand | die Gegenstände | object | Beschreiben Sie den Gegenstand.
+die Flasche | die Flaschen | bottle | Das ist eine Flasche.
+die Tasche | die Taschen | bag | Die Tasche ist aus Leder.
+der Schlüssel | die Schlüssel | key | Wo ist mein Schlüssel?
+das Handy | die Handys | mobile phone | Das Handy ist neu.
+die Brille | die Brillen | glasses | Ist das deine Brille?
+die Uhr | die Uhren | watch, clock | Die Uhr ist aus Metall.
+die Kamera | die Kameras | camera | Die Kamera ist teuer.
+der Ball | die Bälle | ball | Der Ball ist rot.
+das Buch | die Bücher | book | Das Buch ist interessant.
+der Kugelschreiber / der Kuli | die Kugelschreiber / die Kulis | pen | Hast du einen Kuli?
+der Bleistift | die Bleistifte | pencil | Das ist ein Bleistift.
+das Heft | die Hefte | exercise book | Das Heft ist blau.
+die Farbe | die Farben | colour | Welche Farbe hat die Tasche?
+rot | | red | Der Ball ist rot.
+blau | | blue | Das Heft ist blau.
+grün | | green | Die Flasche ist grün.
+gelb | | yellow | Die Lampe ist gelb.
+schwarz | | black | Die Tasche ist schwarz.
+weiß | | white | Das Handy ist weiß.
+grau | | grey | Der Stuhl ist grau.
+braun | | brown | Der Tisch ist braun.
+orange | | orange | Der Ball ist orange.
+rosa / pink | | pink | Die Brille ist rosa.
+das Material | die Materialien | material | Aus welchem Material ist das?
+das Holz | | wood | Der Tisch ist aus Holz.
+das Metall | die Metalle | metal | Die Uhr ist aus Metall.
+das Glas | die Gläser | glass | Die Flasche ist aus Glas.
+das Papier | | paper | Das ist aus Papier.
+das Plastik | | plastic | Der Kuli ist aus Plastik.
+das Leder | | leather | Die Tasche ist aus Leder.
+sehen | | to see | Siehst du das? Er sieht den Ball.
+das Wort | die Wörter | word | Wie heißt das Wort auf Deutsch?
+Wie bitte? | | Pardon? | Wie bitte? Noch einmal, bitte.
+noch einmal | | once more, again | Können Sie das noch einmal sagen?
+die E-Mail-Adresse | die E-Mail-Adressen | e-mail address | Wie ist Ihre E-Mail-Adresse?
+`},
+{n:6,book:"A1.1",mod:2,title:"Wir haben einen Termin.",topic:"Office, technology, phone calls",words:`
+das Büro | die Büros | office | Ich arbeite im Büro.
+der Termin | die Termine | appointment | Wir haben einen Termin um 10 Uhr.
+der Computer | die Computer | computer | Der Computer ist kaputt.
+der Laptop | die Laptops | laptop | Ich brauche einen Laptop.
+der Bildschirm | die Bildschirme | screen, monitor | Der Bildschirm ist zu klein.
+die Tastatur | die Tastaturen | keyboard | Die Tastatur ist neu.
+die Maus | die Mäuse | mouse | Ich habe keine Maus.
+der Drucker | die Drucker | printer | Der Drucker funktioniert nicht.
+das Papier | | paper | Wir brauchen Papier.
+der Kalender | die Kalender | calendar | Ich schreibe den Termin in den Kalender.
+das Telefon | die Telefone | telephone | Das Telefon klingelt.
+die Nachricht | die Nachrichten | message | Ich schreibe eine Nachricht.
+die E-Mail | die E-Mails | e-mail | Ich lese meine E-Mails.
+der Kollege / die Kollegin | die Kollegen / die Kolleginnen | colleague | Mein Kollege heißt Max.
+der Chef / die Chefin | die Chefs / die Chefinnen | boss | Die Chefin hat heute keine Zeit.
+das Meeting | die Meetings | meeting | Das Meeting ist um 14 Uhr.
+der Schreibtisch | die Schreibtische | desk | Mein Schreibtisch ist voll.
+die Rechnung | die Rechnungen | bill, invoice | Die Rechnung ist da.
+der Zettel | die Zettel | note, slip of paper | Ich schreibe es auf einen Zettel.
+brauchen | | to need | Ich brauche einen Drucker.
+suchen | | to look for | Ich suche meinen Kuli.
+schreiben | | to write | Ich schreibe eine E-Mail.
+drucken | | to print | Kannst du das drucken?
+telefonieren | | to make a phone call | Sie telefoniert mit dem Chef.
+funktionieren | | to work (machine) | Der Computer funktioniert nicht.
+kaputt | | broken | Die Maus ist kaputt.
+Moment, bitte. | | One moment, please. | Moment, bitte, ich verbinde.
+Können Sie das wiederholen? | | Can you repeat that? | Entschuldigung, können Sie das wiederholen?
+langsam | | slowly | Bitte sprechen Sie langsam.
+die Mailbox | die Mailboxen | voicemail | Ich spreche auf die Mailbox.
+`},
+{n:7,book:"A1.1",mod:3,title:"Sie können super tanzen!",topic:"Hobbies, compliments, abilities",words:`
+das Hobby | die Hobbys | hobby | Was sind deine Hobbys?
+die Freizeit | | free time | Was machst du in der Freizeit?
+können | | can, to be able to | Ich kann gut schwimmen.
+tanzen | | to dance | Sie können super tanzen!
+singen | | to sing | Er singt sehr schön.
+schwimmen | | to swim | Ich schwimme gern.
+lesen | | to read | Sie liest gern Romane.
+kochen | | to cook | Er kocht sehr gut.
+malen | | to paint | Meine Tochter malt gern.
+fotografieren | | to take photos | Ich fotografiere gern.
+Fahrrad fahren | | to ride a bike | Kannst du Fahrrad fahren?
+fahren | | to drive, to go (by vehicle) | Er fährt Auto.
+Fußball spielen | | to play football | Wir spielen am Wochenende Fußball.
+Gitarre spielen | | to play the guitar | Ich spiele Gitarre.
+joggen | | to jog | Ich jogge jeden Morgen.
+wandern | | to hike | Wir wandern gern in den Bergen.
+reiten | | to ride (a horse) | Sie reitet sehr gut.
+treffen | | to meet | Ich treffe meine Freunde.
+der Freund / die Freundin | die Freunde / die Freundinnen | friend; boyfriend / girlfriend | Ich treffe meine Freundin.
+Musik hören | | to listen to music | Ich höre gern Musik.
+gern | | gladly (likes doing) | Ich tanze gern.
+nicht gern | | doesn't like doing | Ich koche nicht gern.
+immer | | always | Er ist immer pünktlich.
+oft | | often | Ich lese oft.
+manchmal | | sometimes | Manchmal spiele ich Tennis.
+selten | | rarely | Ich gehe selten ins Kino.
+nie | | never | Ich tanze nie.
+das Kompliment | die Komplimente | compliment | Danke für das Kompliment!
+Super! / Toll! / Wow! | | Great! | Wow, du kannst toll singen!
+Danke, das ist nett. | | Thanks, that's kind. | Danke, das ist nett von dir.
+ein bisschen | | a bit | Ich kann ein bisschen Gitarre spielen.
+gar nicht | | not at all | Ich kann gar nicht schwimmen.
+`},
+{n:8,book:"A1.1",mod:3,title:"Ich habe leider keine Zeit.",topic:"Free time, making plans, time",words:`
+die Zeit | die Zeiten | time | Hast du am Samstag Zeit?
+leider | | unfortunately | Ich habe leider keine Zeit.
+der Tag | die Tage | day | Welcher Tag ist heute?
+die Woche | die Wochen | week | Die Woche hat sieben Tage.
+das Wochenende | die Wochenenden | weekend | Am Wochenende habe ich frei.
+der Montag | die Montage | Monday | Am Montag arbeite ich.
+der Dienstag | | Tuesday | Am Dienstag habe ich Deutschkurs.
+der Mittwoch | | Wednesday | Am Mittwoch gehe ich schwimmen.
+der Donnerstag | | Thursday | Am Donnerstag treffe ich Lisa.
+der Freitag | | Friday | Am Freitag gehen wir ins Kino.
+der Samstag | | Saturday | Am Samstag habe ich Zeit.
+der Sonntag | | Sunday | Am Sonntag schlafe ich lange.
+der Morgen | | morning | Am Morgen trinke ich Kaffee.
+der Vormittag | | late morning | Am Vormittag arbeite ich.
+der Mittag | | noon | Am Mittag esse ich.
+der Nachmittag | | afternoon | Am Nachmittag gehe ich spazieren.
+der Abend | die Abende | evening | Am Abend sehe ich fern.
+die Nacht | die Nächte | night | In der Nacht schlafe ich.
+die Uhr | die Uhren | clock; o'clock | Es ist acht Uhr.
+Wie spät ist es? / Wie viel Uhr ist es? | | What time is it? | Wie spät ist es? – Halb drei.
+halb | | half (halb drei = 2:30) | Es ist halb drei.
+Viertel nach / Viertel vor | | quarter past / quarter to | Es ist Viertel nach vier.
+die Minute | die Minuten | minute | Ich komme in fünf Minuten.
+die Stunde | die Stunden | hour | Der Kurs dauert zwei Stunden.
+am (Montag) | | on (Monday) | Am Montag gehe ich ins Kino.
+um (acht Uhr) | | at (8 o'clock) | Der Film beginnt um acht Uhr.
+heute | | today | Heute habe ich frei.
+morgen | | tomorrow | Treffen wir uns morgen?
+das Kino | die Kinos | cinema | Gehen wir ins Kino?
+das Konzert | die Konzerte | concert | Am Freitag ist ein Konzert.
+das Café | die Cafés | café | Wir treffen uns im Café.
+wissen | | to know (a fact) | Ich weiß es nicht.
+Hast du Lust? | | Do you feel like it? | Hast du Lust auf Kino?
+Gute Idee! | | Good idea! | Ins Kino? Gute Idee!
+Da kann ich nicht. | | I can't then. | Am Montag? Da kann ich leider nicht.
+`},
+{n:9,book:"A1.1",mod:3,title:"Ich mag Hamburger.",topic:"Food, eating out",words:`
+das Lebensmittel | die Lebensmittel | food item, groceries | Ich kaufe Lebensmittel im Supermarkt.
+das Essen | die Essen | food; meal | Das Essen ist lecker.
+essen | | to eat | Was isst du gern?
+trinken | | to drink | Ich trinke Tee.
+mögen | | to like | Ich mag Hamburger.
+möchte(n) | | would like | Ich möchte einen Kaffee, bitte.
+nehmen | | to take, to have (order) | Ich nehme die Suppe.
+das Brot | die Brote | bread | Ich esse Brot zum Frühstück.
+das Brötchen | die Brötchen | bread roll | Zwei Brötchen, bitte.
+der Käse | | cheese | Ich mag Käse.
+die Wurst | die Würste | sausage | Er isst gern Wurst.
+das Fleisch | | meat | Ich esse kein Fleisch.
+der Fisch | die Fische | fish | Fisch ist gesund.
+das Hähnchen | die Hähnchen | chicken | Ich nehme das Hähnchen.
+das Ei | die Eier | egg | Ich esse ein Ei.
+das Gemüse | | vegetables | Ich esse viel Gemüse.
+die Kartoffel | die Kartoffeln | potato | Kartoffeln mit Fisch, bitte.
+die Tomate | die Tomaten | tomato | Die Tomaten sind frisch.
+der Salat | die Salate | salad; lettuce | Ich liebe Salat.
+das Obst | | fruit | Obst ist gesund.
+der Apfel | die Äpfel | apple | Ich esse jeden Tag einen Apfel.
+die Banane | die Bananen | banana | Bananen sind süß.
+der Reis | | rice | Ich koche Reis.
+die Nudeln | (plural) | pasta, noodles | Die Kinder mögen Nudeln.
+die Suppe | die Suppen | soup | Die Suppe ist heiß.
+der Kuchen | die Kuchen | cake | Der Kuchen ist lecker.
+die Schokolade | die Schokoladen | chocolate | Ich liebe Schokolade.
+das Wasser | | water | Ein Wasser, bitte.
+der Kaffee | die Kaffees | coffee | Ich trinke Kaffee mit Milch.
+der Tee | die Tees | tea | Tee trinke ich nie!
+die Milch | | milk | Kaffee mit Milch, bitte.
+der Saft | die Säfte | juice | Ein Apfelsaft, bitte.
+das Bier | die Biere | beer | Ein Bier, bitte.
+das Frühstück | die Frühstücke | breakfast | Zum Frühstück esse ich Müsli.
+das Mittagessen | | lunch | Das Mittagessen ist um zwölf.
+das Abendessen | | dinner | Zum Abendessen gibt es Suppe.
+das Restaurant | die Restaurants | restaurant | Wir gehen ins Restaurant.
+die Speisekarte | die Speisekarten | menu | Die Speisekarte, bitte.
+bestellen | | to order | Ich möchte bestellen.
+bezahlen | | to pay | Ich möchte bezahlen, bitte.
+lecker | | tasty | Das ist sehr lecker!
+gesund | | healthy | Gemüse ist gesund.
+`},
+{n:10,book:"A1.1",mod:4,title:"Wann kommst du denn an?",topic:"Travel, means of transport",words:`
+das Verkehrsmittel | die Verkehrsmittel | means of transport | Welches Verkehrsmittel nimmst du?
+das Auto | die Autos | car | Ich fahre mit dem Auto.
+der Bus | die Busse | bus | Der Bus kommt um acht.
+die U-Bahn | die U-Bahnen | underground, subway | Ich fahre mit der U-Bahn.
+die S-Bahn | die S-Bahnen | suburban train | Die S-Bahn hat Verspätung.
+die Straßenbahn | die Straßenbahnen | tram | Die Straßenbahn fährt alle 10 Minuten.
+der Zug | die Züge | train | Der Zug fährt um 9 Uhr ab.
+das Flugzeug | die Flugzeuge | plane | Ich fliege mit dem Flugzeug.
+das Taxi | die Taxis | taxi | Wir nehmen ein Taxi.
+das Fahrrad | die Fahrräder | bicycle | Ich fahre mit dem Fahrrad.
+zu Fuß | | on foot | Ich gehe zu Fuß.
+der Bahnhof | die Bahnhöfe | train station | Wir treffen uns am Bahnhof.
+der Flughafen | die Flughäfen | airport | Der Flughafen ist weit weg.
+das Gleis | die Gleise | platform (track) | Der Zug fährt von Gleis 5.
+die Fahrkarte / das Ticket | die Fahrkarten / die Tickets | ticket | Ich brauche eine Fahrkarte.
+die Reise | die Reisen | trip, journey | Gute Reise!
+reisen | | to travel | Ich reise gern.
+fliegen | | to fly | Wir fliegen nach Rom.
+die Verspätung | die Verspätungen | delay | Der Zug hat 20 Minuten Verspätung.
+ankommen | | to arrive | Wann kommst du an?
+abfahren | | to depart | Der Zug fährt um 10 Uhr ab.
+anrufen | | to call (phone) | Ich rufe dich morgen an.
+abholen | | to pick up | Ich hole dich am Bahnhof ab.
+einsteigen | | to get on | Bitte einsteigen!
+aussteigen | | to get off | Wir steigen in Köln aus.
+umsteigen | | to change (trains) | Sie müssen in Frankfurt umsteigen.
+wann? | | when? | Wann fährt der Zug?
+pünktlich | | on time | Der Bus ist pünktlich.
+spät | | late | Es ist schon spät.
+früh | | early | Ich stehe früh auf.
+Schade! | | What a pity! | Der Zug hat Verspätung? Schade!
+Kein Problem. | | No problem. | Kein Problem, ich warte.
+Ich freue mich! | | I'm looking forward / I'm happy! | Ich freue mich auf dich!
+Oh nein! / So ein Mist! | | Oh no! / Damn! | So ein Mist, der Bus ist weg!
+`},
+{n:11,book:"A1.1",mod:4,title:"Was haben Sie gestern gemacht?",topic:"Daily routine, the past",words:`
+der Tagesablauf | die Tagesabläufe | daily routine | Wie ist dein Tagesablauf?
+der Alltag | | everyday life | Mein Alltag ist stressig.
+aufstehen | | to get up | Ich stehe um sechs Uhr auf.
+frühstücken | | to have breakfast | Ich frühstücke um sieben.
+duschen | | to shower | Ich dusche am Morgen.
+einkaufen | | to go shopping | Ich kaufe am Samstag ein.
+aufräumen | | to tidy up | Ich habe die Wohnung aufgeräumt.
+putzen | | to clean | Er hat das Bad geputzt.
+spazieren gehen | | to go for a walk | Wir gehen im Park spazieren.
+fernsehen | | to watch TV | Am Abend sehe ich fern.
+schlafen | | to sleep | Ich habe gut geschlafen.
+arbeiten → gearbeitet | | to work → worked | Ich habe gestern gearbeitet.
+machen → gemacht | | to do → done | Was hast du gemacht?
+kaufen → gekauft | | to buy → bought | Ich habe Brot gekauft.
+spielen → gespielt | | to play → played | Wir haben Fußball gespielt.
+kochen → gekocht | | to cook → cooked | Er hat Pasta gekocht.
+essen → gegessen | | to eat → eaten | Ich habe Pizza gegessen.
+trinken → getrunken | | to drink → drunk | Wir haben Kaffee getrunken.
+lesen → gelesen | | to read → read | Sie hat ein Buch gelesen.
+schreiben → geschrieben | | to write → written | Ich habe eine E-Mail geschrieben.
+schlafen → geschlafen | | to sleep → slept | Ich habe lange geschlafen.
+treffen → getroffen | | to meet → met | Ich habe Lisa getroffen.
+sehen → gesehen | | to see → seen | Wir haben einen Film gesehen.
+einkaufen → eingekauft | | to shop → shopped | Ich habe eingekauft.
+gestern | | yesterday | Was haben Sie gestern gemacht?
+vorgestern | | the day before yesterday | Vorgestern war ich im Kino.
+letzte Woche | | last week | Letzte Woche habe ich viel gearbeitet.
+letztes Jahr | | last year | Letztes Jahr habe ich Deutsch gelernt.
+von ... bis | | from ... until | Ich arbeite von 9 bis 17 Uhr.
+ab | | from (onwards) | Ab Montag habe ich Urlaub.
+die Öffnungszeit | die Öffnungszeiten | opening hours | Wie sind die Öffnungszeiten?
+geöffnet / geschlossen | | open / closed | Der Supermarkt ist bis 20 Uhr geöffnet.
+dann / danach | | then / after that | Ich habe gefrühstückt, dann habe ich Zeitung gelesen.
+zuerst | | first | Zuerst habe ich geduscht.
+`},
+{n:12,book:"A1.1",mod:4,title:"Im Frühling bin ich nach Hamburg gefahren.",topic:"Seasons, months, festivals, trips",words:`
+die Jahreszeit | die Jahreszeiten | season | Welche Jahreszeit magst du?
+der Frühling | | spring | Im Frühling bin ich nach Hamburg gefahren.
+der Sommer | | summer | Im Sommer ist es warm.
+der Herbst | | autumn | Im Herbst regnet es oft.
+der Winter | | winter | Im Winter fahre ich Ski.
+der Monat | die Monate | month | Das Jahr hat zwölf Monate.
+Januar, Februar, März | | January, February, March | Im Januar ist es kalt.
+April, Mai, Juni | | April, May, June | Im Mai habe ich Geburtstag.
+Juli, August, September | | July, August, September | Im August habe ich Urlaub.
+Oktober, November, Dezember | | October, November, December | Im Dezember ist Weihnachten.
+das Jahr | die Jahre | year | Ich lerne seit einem Jahr Deutsch.
+der Urlaub | die Urlaube | holiday, vacation | Wir machen Urlaub in Italien.
+das Fest | die Feste | festival, celebration | Das Fest war toll.
+der Geburtstag | die Geburtstage | birthday | Ich habe im Mai Geburtstag.
+Weihnachten | | Christmas | Zu Weihnachten fahre ich nach Hause.
+Ostern | | Easter | An Ostern haben wir frei.
+Silvester | | New Year's Eve | Silvester feiern wir mit Freunden.
+feiern | | to celebrate | Wir haben bis Mitternacht gefeiert.
+gehen → ist gegangen | | to go → went | Ich bin ins Kino gegangen.
+fahren → ist gefahren | | to go/drive → went | Wir sind nach Hamburg gefahren.
+fliegen → ist geflogen | | to fly → flew | Sie ist nach Rom geflogen.
+kommen → ist gekommen | | to come → came | Er ist spät gekommen.
+bleiben → ist geblieben | | to stay → stayed | Ich bin zu Hause geblieben.
+aufstehen → ist aufgestanden | | to get up → got up | Ich bin früh aufgestanden.
+ankommen → ist angekommen | | to arrive → arrived | Wir sind um 8 Uhr angekommen.
+war (sein) | | was (to be) | Ich war in Wien.
+hatte (haben) | | had (to have) | Ich hatte keine Zeit.
+seit | | since, for | Ich wohne seit 2024 in Deutschland.
+im (Sommer / Mai) | | in (summer / May) | Im Sommer fahren wir ans Meer.
+nach (+ city/country) | | to (city/country) | Ich fahre nach Berlin.
+das Meer | die Meere | sea | Wir waren am Meer.
+der Berg | die Berge | mountain | Im Winter fahren wir in die Berge.
+das Hotel | die Hotels | hotel | Das Hotel war schön.
+`},
+{n:13,book:"A1.2",mod:5,title:"Berlin gefällt mir.",topic:"Places in the city",words:`
+der Ort | die Orte | place | Das ist ein schöner Ort.
+die Stadt | die Städte | city | Berlin ist eine große Stadt.
+das Zentrum | die Zentren | centre | Ich wohne im Zentrum.
+die Straße | die Straßen | street | Die Straße ist sehr laut.
+der Platz | die Plätze | square; place | Der Platz ist schön.
+der Park | die Parks | park | Im Park ist es ruhig.
+das Museum | die Museen | museum | Das Museum ist interessant.
+das Theater | die Theater | theatre | Wir gehen ins Theater.
+der Supermarkt | die Supermärkte | supermarket | Gibt es hier einen Supermarkt?
+das Geschäft | die Geschäfte | shop | Die Geschäfte sind sonntags geschlossen.
+das Kaufhaus | die Kaufhäuser | department store | Das Kaufhaus ist groß.
+der Markt | die Märkte | market | Ich kaufe Obst auf dem Markt.
+die Kirche | die Kirchen | church | Die Kirche ist sehr alt.
+die Brücke | die Brücken | bridge | Die Brücke ist berühmt.
+der Turm | die Türme | tower | Der Turm ist 300 Meter hoch.
+das Viertel | die Viertel | district, quarter | Das Viertel ist sehr bunt.
+es gibt (+ Akk.) | | there is / there are | Es gibt hier einen Park.
+gefallen (+ Dat.) | | to please (I like it) | Berlin gefällt mir.
+gehören (+ Dat.) | | to belong to | Das Fahrrad gehört mir.
+helfen (+ Dat.) | | to help | Kannst du mir helfen?
+danken (+ Dat.) | | to thank | Ich danke dir!
+schmecken (+ Dat.) | | to taste (good) | Das schmeckt mir.
+mir / dir / ihm / ihr | | (to) me / you / him / her | Gefällt dir die Stadt?
+uns / euch / ihnen / Ihnen | | (to) us / you / them / you (formal) | Die Stadt gefällt uns.
+laut | | loud, noisy | Die Straße ist laut.
+ruhig | | quiet | Das Viertel ist ruhig.
+interessant | | interesting | Das Museum ist interessant.
+berühmt | | famous | Der Turm ist berühmt.
+bunt | | colourful | Das Viertel ist bunt.
+sauber / schmutzig | | clean / dirty | Die Stadt ist sehr sauber.
+die Sehenswürdigkeit | die Sehenswürdigkeiten | sight, attraction | Berlin hat viele Sehenswürdigkeiten.
+der Tourist / die Touristin | die Touristen / die Touristinnen | tourist | Hier sind viele Touristen.
+`},
+{n:14,book:"A1.2",mod:5,title:"Vor dem Kaufhaus nach rechts.",topic:"Giving directions",words:`
+der Weg | die Wege | way, path | Wie ist der Weg zum Bahnhof?
+die Post | | post office | Wo ist die Post?
+die Bank | die Banken | bank | Die Bank ist neben der Post.
+die Apotheke | die Apotheken | pharmacy | Gibt es hier eine Apotheke?
+das Rathaus | die Rathäuser | town hall | Das Rathaus ist am Marktplatz.
+die Bibliothek | die Bibliotheken | library | Ich lerne in der Bibliothek.
+die Polizei | | police | Die Polizei ist hier rechts.
+die Haltestelle | die Haltestellen | (bus/tram) stop | Die Haltestelle ist vor dem Kino.
+die Ampel | die Ampeln | traffic light | An der Ampel links.
+die Kreuzung | die Kreuzungen | crossroads | An der Kreuzung geradeaus.
+die Ecke | die Ecken | corner | Die Bäckerei ist an der Ecke.
+die Bäckerei | die Bäckereien | bakery | Ich kaufe Brötchen in der Bäckerei.
+das Hotel | die Hotels | hotel | Das Hotel ist hinter dem Bahnhof.
+links | | left | Gehen Sie hier links.
+rechts | | right | Vor dem Kaufhaus nach rechts.
+geradeaus | | straight ahead | Gehen Sie immer geradeaus.
+vor (+ Dat.) | | in front of | Ich warte vor dem Kino.
+neben (+ Dat.) | | next to | Die Bank ist neben der Post.
+an (+ Dat.) | | at, on | An der Ampel gehen Sie links.
+hinter (+ Dat.) | | behind | Der Park ist hinter dem Museum.
+gegenüber (von) | | opposite | Die Apotheke ist gegenüber vom Bahnhof.
+zwischen (+ Dat.) | | between | Das Café ist zwischen der Bank und der Post.
+in der Nähe | | nearby | Ist hier in der Nähe eine Bank?
+weit | | far | Ist das weit?
+nah | | near | Der Bahnhof ist ganz nah.
+die erste / zweite Straße | | the first / second street | Nehmen Sie die zweite Straße rechts.
+Entschuldigung, wo ist ...? | | Excuse me, where is ...? | Entschuldigung, wo ist der Bahnhof?
+Wie komme ich zum / zur ...? | | How do I get to ...? | Wie komme ich zur Post?
+Vielen Dank! | | Thank you very much! | Vielen Dank für Ihre Hilfe!
+Das weiß ich leider nicht. | | Sorry, I don't know. | Das weiß ich leider nicht, ich bin nicht von hier.
+`},
+{n:15,book:"A1.2",mod:5,title:"Ich finde ihr Zimmer schön.",topic:"Living, flats and rooms",words:`
+die Wohnung | die Wohnungen | flat, apartment | Die Wohnung hat drei Zimmer.
+das Haus | die Häuser | house | Sie wohnen in einem Haus.
+das Zimmer | die Zimmer | room | Ich finde ihr Zimmer schön.
+das Wohnzimmer | die Wohnzimmer | living room | Das Wohnzimmer ist groß.
+das Schlafzimmer | die Schlafzimmer | bedroom | Das Schlafzimmer ist ruhig.
+das Kinderzimmer | die Kinderzimmer | children's room | Das Kinderzimmer ist bunt.
+die Küche | die Küchen | kitchen | Die Küche ist modern.
+das Bad / das Badezimmer | die Bäder / die Badezimmer | bathroom | Das Bad ist klein.
+die Toilette | die Toiletten | toilet | Die Toilette ist neben dem Bad.
+der Flur | die Flure | hallway | Im Flur steht ein Schrank.
+der Balkon | die Balkone | balcony | Die Wohnung hat einen Balkon.
+der Garten | die Gärten | garden | Das Haus hat einen Garten.
+der Stock / die Etage | die Stockwerke / die Etagen | floor (storey) | Ich wohne im dritten Stock.
+der Aufzug | die Aufzüge | lift, elevator | Gibt es einen Aufzug?
+die Miete | die Mieten | rent | Die Miete ist hoch.
+der Quadratmeter | die Quadratmeter | square metre | Die Wohnung hat 60 Quadratmeter.
+das Fenster | die Fenster | window | Das Zimmer hat zwei Fenster.
+die Tür | die Türen | door | Die Tür ist offen.
+die Waschmaschine | die Waschmaschinen | washing machine | Die Waschmaschine ist im Bad.
+der Kühlschrank | die Kühlschränke | fridge | Der Kühlschrank ist leer.
+der Herd | die Herde | stove | Der Herd ist neu.
+hell | | bright | Die Küche ist sehr hell.
+dunkel | | dark | Der Flur ist dunkel.
+gemütlich | | cosy | Das Wohnzimmer ist gemütlich.
+eng | | cramped, narrow | Das Bad ist ein bisschen eng.
+zentral | | central | Die Wohnung liegt zentral.
+liegen | | to lie, to be located | Die Wohnung liegt im Zentrum.
+mieten / vermieten | | to rent / to let | Wir mieten eine Wohnung.
+umziehen | | to move (house) | Wir ziehen im Mai um.
+sein / seine | | his | Sein Zimmer ist klein.
+ihr / ihre | | her; their | Ihre Wohnung ist hell.
+`},
+{n:16,book:"A1.2",mod:6,title:"Wir haben hier ein Problem.",topic:"Appointments, devices, asking for help",words:`
+das Problem | die Probleme | problem | Wir haben hier ein Problem.
+das Gerät | die Geräte | device, appliance | Das Gerät funktioniert nicht.
+der Fernseher | die Fernseher | TV set | Der Fernseher ist kaputt.
+die Heizung | die Heizungen | heating | Die Heizung ist kalt.
+das Licht | die Lichter | light | Das Licht geht nicht.
+der Akku | die Akkus | battery (rechargeable) | Mein Akku ist leer.
+das Ladekabel | die Ladekabel | charging cable | Hast du ein Ladekabel?
+das Internet | | internet | Das Internet funktioniert nicht.
+der Techniker / die Technikerin | die Techniker / die Technikerinnen | technician | Der Techniker kommt morgen.
+die Hilfe | | help | Brauchen Sie Hilfe?
+reparieren | | to repair | Können Sie die Heizung reparieren?
+helfen | | to help | Kann ich Ihnen helfen?
+einen Termin vereinbaren | | to make an appointment | Ich möchte einen Termin vereinbaren.
+absagen | | to cancel | Ich muss den Termin leider absagen.
+verschieben | | to postpone | Können wir den Termin verschieben?
+vorschlagen | | to suggest | Ich schlage Dienstag vor.
+passen | | to suit (time) | Passt es Ihnen am Freitag?
+in (+ Dat., time) | | in (+ time) | In zwei Stunden bin ich da.
+vor (+ Dat., time) | | before; ago | Vor dem Termin rufe ich an. Vor einer Woche.
+nach (+ Dat., time) | | after | Nach der Arbeit habe ich Zeit.
+Kann ich helfen? | | Can I help? | Kann ich Ihnen helfen? – Ja, gern!
+Könnten Sie bitte ...? | | Could you please ...? | Könnten Sie bitte morgen kommen?
+Natürlich! / Klar! | | Of course! / Sure! | Klar, mache ich!
+Tut mir leid. | | I'm sorry. | Tut mir leid, das geht nicht.
+Das geht. / Das geht nicht. | | That works. / That doesn't work. | Um 10 Uhr? Das geht.
+dringend | | urgent | Es ist dringend!
+sofort | | immediately | Ich komme sofort.
+gleich | | right away, soon | Der Techniker kommt gleich.
+`},
+{n:17,book:"A1.2",mod:6,title:"Ich will Lehrerin werden.",topic:"Plans and wishes",words:`
+der Plan | die Pläne | plan | Was sind deine Pläne?
+der Wunsch | die Wünsche | wish | Ich habe einen großen Wunsch.
+der Traum | die Träume | dream | Mein Traum ist eine Weltreise.
+wollen | | to want (to) | Ich will Deutsch lernen.
+werden | | to become | Ich will Lehrerin werden.
+die Zukunft | | future | In der Zukunft will ich in Berlin wohnen.
+die Ausbildung | die Ausbildungen | vocational training | Er macht eine Ausbildung als Koch.
+das Studium | die Studien | university studies | Mein Studium dauert drei Jahre.
+studieren | | to study (at university) | Ich will Medizin studieren.
+die Prüfung | die Prüfungen | exam | Ich mache im Juni die Prüfung.
+der Kurs | die Kurse | course | Ich mache einen Deutschkurs.
+der Führerschein | die Führerscheine | driving licence | Ich will den Führerschein machen.
+die Weltreise | die Weltreisen | trip around the world | Sie will eine Weltreise machen.
+heiraten | | to get married | Wir wollen nächstes Jahr heiraten.
+sparen | | to save (money) | Ich spare für ein Auto.
+mit (+ Dat.) | | with | Ich reise mit meiner Freundin.
+ohne (+ Akk.) | | without | Ich gehe nie ohne mein Handy.
+wichtig | | important | Familie ist mir sehr wichtig.
+unwichtig | | unimportant | Geld ist unwichtig.
+nächste Woche / nächstes Jahr | | next week / next year | Nächstes Jahr will ich nach Wien.
+später | | later | Später will ich Ärztin werden.
+bald | | soon | Ich mache bald Urlaub.
+endlich | | finally | Endlich habe ich Zeit!
+selbstständig | | self-employed | Er will selbstständig sein.
+die Arbeit | die Arbeiten | work | Ich suche eine neue Arbeit.
+der Job | die Jobs | job | Sie hat einen neuen Job.
+`},
+{n:18,book:"A1.2",mod:6,title:"Ich soll diese Übung machen.",topic:"Health, illness, body",words:`
+die Gesundheit | | health | Gesundheit ist wichtig.
+krank | | ill, sick | Ich bin krank.
+gesund | | healthy | Bleib gesund!
+der Körper | die Körper | body | Der Körper braucht Bewegung.
+der Kopf | die Köpfe | head | Mein Kopf tut weh.
+das Auge | die Augen | eye | Sie hat blaue Augen.
+das Ohr | die Ohren | ear | Das Ohr tut weh.
+die Nase | die Nasen | nose | Meine Nase läuft.
+der Mund | die Münder | mouth | Öffnen Sie bitte den Mund.
+der Zahn | die Zähne | tooth | Ich habe Zahnschmerzen.
+der Hals | die Hälse | neck, throat | Mein Hals tut weh.
+der Arm | die Arme | arm | Mein Arm tut weh.
+die Hand | die Hände | hand | Waschen Sie die Hände.
+der Finger | die Finger | finger | Ich habe zehn Finger.
+der Bauch | die Bäuche | stomach, belly | Ich habe Bauchschmerzen.
+der Rücken | die Rücken | back | Mein Rücken tut weh.
+das Bein | die Beine | leg | Das Bein ist gebrochen.
+das Knie | die Knie | knee | Mein Knie tut weh.
+der Fuß | die Füße | foot | Meine Füße sind kalt.
+die Schmerzen | (plural) | pain | Ich habe starke Schmerzen.
+wehtun | | to hurt | Der Kopf tut mir weh.
+das Fieber | | fever | Ich habe Fieber.
+die Erkältung | die Erkältungen | cold | Ich habe eine Erkältung.
+der Husten | | cough | Ich habe Husten.
+der Schnupfen | | runny nose | Ich habe Schnupfen.
+der Arzt / die Ärztin | die Ärzte / die Ärztinnen | doctor | Ich gehe zum Arzt.
+die Praxis | die Praxen | doctor's surgery | Die Praxis öffnet um 8 Uhr.
+das Medikament | die Medikamente | medicine | Nehmen Sie das Medikament dreimal am Tag.
+die Tablette | die Tabletten | tablet, pill | Nehmen Sie eine Tablette.
+sollen | | should, to be supposed to | Ich soll viel trinken.
+der Rat / der Tipp | die Ratschläge / die Tipps | advice / tip | Hast du einen Tipp für mich?
+sich ausruhen | | to rest | Ruhen Sie sich aus!
+die Übung | die Übungen | exercise | Ich soll diese Übung machen.
+Gute Besserung! | | Get well soon! | Du bist krank? Gute Besserung!
+`},
+{n:19,book:"A1.2",mod:7,title:"Jetzt sei doch nicht gleich sauer!",topic:"Housework, requests, criticism",words:`
+der Haushalt | die Haushalte | household, housework | Wer macht den Haushalt?
+putzen | | to clean | Putz bitte das Bad!
+spülen / abwaschen | | to wash the dishes | Ich spüle heute.
+die Spülmaschine | die Spülmaschinen | dishwasher | Räum bitte die Spülmaschine aus!
+aufräumen | | to tidy up | Räum dein Zimmer auf!
+staubsaugen | | to vacuum | Wer saugt heute Staub?
+Wäsche waschen | | to do the laundry | Ich wasche die Wäsche.
+bügeln | | to iron | Er bügelt seine Hemden.
+den Müll rausbringen | | to take out the rubbish | Bring bitte den Müll raus!
+den Tisch decken | | to set the table | Deck bitte den Tisch!
+einkaufen | | to go shopping | Kauf bitte Milch ein!
+kochen | | to cook | Koch heute bitte du!
+die Blumen gießen | | to water the flowers | Gieß bitte die Blumen!
+sauer | | annoyed, angry; sour | Jetzt sei doch nicht gleich sauer!
+ärgern | | to annoy | Das ärgert mich.
+Mach ich! | | Will do! | Bring bitte den Müll raus. – Mach ich!
+Moment, gleich! | | One moment, in a sec! | Moment, ich komme gleich!
+Keine Lust! | | Don't feel like it! | Aufräumen? Keine Lust!
+Das ist nicht fair! | | That's not fair! | Ich putze immer! Das ist nicht fair!
+immer | | always | Du kommst immer zu spät!
+schon wieder | | yet again | Du hast schon wieder nicht gespült!
+mich / dich | | me / you (Akk.) | Ruf mich bitte an! Ich besuche dich.
+ihn / sie / es | | him / her / it (Akk.) | Ich frage ihn.
+uns / euch | | us / you (pl., Akk.) | Besucht uns mal!
+der Mitbewohner / die Mitbewohnerin | die Mitbewohner / die Mitbewohnerinnen | flatmate | Mein Mitbewohner putzt nie.
+die WG (Wohngemeinschaft) | die WGs | shared flat | Ich wohne in einer WG.
+der Streit | |  argument | Wir haben oft Streit.
+Entschuldigung! / Sorry! | | Sorry! | Sorry, das habe ich vergessen.
+vergessen | | to forget | Ich habe es vergessen.
+`},
+{n:20,book:"A1.2",mod:7,title:"Das Team sieht sehr sympathisch aus!",topic:"Appearance and character",words:`
+das Aussehen | | appearance | Wie ist ihr Aussehen?
+aussehen | | to look (appearance) | Das Team sieht sehr sympathisch aus!
+der Charakter | die Charaktere | character | Er hat einen guten Charakter.
+das Team | die Teams | team | Unser Team ist super.
+die Haare | (plural) | hair | Sie hat lange Haare.
+lang / kurz | | long / short | Er hat kurze Haare.
+blond | | blond | Sie hat blonde Haare.
+glatt / lockig | | straight / curly | Er hat lockige Haare.
+der Bart | die Bärte | beard | Mein Kollege hat einen Bart.
+groß / klein | | tall / short | Sie ist sehr groß.
+schlank | | slim | Er ist schlank.
+hübsch | | pretty | Das Kind ist sehr hübsch.
+jung | | young | Sie ist noch jung.
+sympathisch | | likeable, nice | Der Chef ist sehr sympathisch.
+unsympathisch | | unpleasant | Ich finde ihn unsympathisch.
+freundlich | | friendly | Die Kollegin ist freundlich.
+unfreundlich | | unfriendly | Der Verkäufer war unfreundlich.
+nett | | kind, nice | Das ist sehr nett von dir.
+lustig | | funny | Mein Bruder ist lustig.
+ernst | | serious | Sie ist oft ernst.
+ruhig | | calm, quiet | Er ist ein ruhiger Mensch.
+fleißig | | hard-working | Sie ist sehr fleißig.
+faul | | lazy | Ich bin heute faul.
+pünktlich / unpünktlich | | punctual / unpunctual | Er ist immer unpünktlich.
+ehrlich | | honest | Sie ist sehr ehrlich.
+geduldig / ungeduldig | | patient / impatient | Der Lehrer ist geduldig.
+kreativ | | creative | Unsere Designerin ist kreativ.
+höflich / unhöflich | | polite / impolite | Das war unhöflich.
+gefallen → gefallen | | to please → pleased | Der Film hat mir gefallen.
+besuchen → besucht | | to visit → visited | Ich habe meine Oma besucht.
+erzählen → erzählt | | to tell → told | Sie hat viel erzählt.
+bekommen → bekommen | | to receive → received | Ich habe ein Geschenk bekommen.
+verstehen → verstanden | | to understand → understood | Ich habe alles verstanden.
+vergessen → vergessen | | to forget → forgotten | Ich habe es vergessen.
+Wirklich? / Echt? | | Really? | Echt? Das wusste ich nicht.
+`},
+{n:21,book:"A1.2",mod:7,title:"Darf man das?",topic:"Rules in traffic and environment",words:`
+die Regel | die Regeln | rule | In Deutschland gibt es viele Regeln.
+dürfen | | may, to be allowed to | Hier darf man nicht rauchen.
+müssen | | must, to have to | Man muss an der Ampel warten.
+man | | one, you (general) | Hier darf man parken.
+verboten | | forbidden | Rauchen ist hier verboten.
+erlaubt | | allowed | Das ist nicht erlaubt.
+der Verkehr | | traffic | Der Verkehr ist sehr stark.
+die Umwelt | | environment | Wir müssen die Umwelt schützen.
+parken | | to park | Hier darf man nicht parken.
+rauchen | | to smoke | Darf man hier rauchen?
+der Fahrradweg | die Fahrradwege | cycle path | Fahr auf dem Fahrradweg!
+der Fußgänger / die Fußgängerin | die Fußgänger / die Fußgängerinnen | pedestrian | Fußgänger müssen bei Rot warten.
+der Helm | die Helme | helmet | Trag einen Helm!
+die Strafe | die Strafen | fine, penalty | Die Strafe kostet 50 Euro.
+der Müll | | rubbish, waste | Wirf den Müll nicht auf die Straße!
+der Mülleimer | die Mülleimer | rubbish bin | Der Mülleimer ist dort.
+trennen | | to separate (rubbish) | In Deutschland muss man Müll trennen.
+das Pfand | | deposit (on bottles) | Auf die Flasche gibt es 25 Cent Pfand.
+der Hund | die Hunde | dog | Hunde dürfen hier nicht rein.
+laut sein | | to be noisy | Nach 22 Uhr darf man nicht laut sein.
+die Ruhe | | peace and quiet | Am Sonntag ist Ruhe.
+schützen | | to protect | Wir schützen die Natur.
+die Meinung | die Meinungen | opinion | Was ist deine Meinung?
+Ich finde, ... | | I think ... | Ich finde, das ist eine gute Regel.
+Ich glaube, ... | | I believe ... | Ich glaube, das ist verboten.
+Das stimmt. / Das stimmt nicht. | | That's right. / That's not right. | Das stimmt, da hast du recht.
+Da hast du recht. | | You're right. | Da hast du recht!
+Ich bin anderer Meinung. | | I disagree. | Ich bin anderer Meinung.
+Achtung! / Vorsicht! | | Attention! / Careful! | Vorsicht, das Auto!
+wirklich | | really | Das ist wirklich wichtig.
+total / echt | | totally / really | Das ist total wichtig.
+`},
+{n:22,book:"A1.2",mod:8,title:"Mehr, mehr, mehr?",topic:"Clothes, comparing",words:`
+die Kleidung | | clothes | Ich kaufe neue Kleidung.
+die Hose | die Hosen | trousers | Die Hose ist zu lang.
+die Jeans | die Jeans | jeans | Ich trage gern Jeans.
+das Hemd | die Hemden | shirt | Er trägt ein weißes Hemd.
+die Bluse | die Blusen | blouse | Die Bluse ist sehr schön.
+das T-Shirt | die T-Shirts | T-shirt | Das T-Shirt kostet 10 Euro.
+der Pullover / der Pulli | die Pullover / die Pullis | jumper, sweater | Der Pulli ist warm.
+die Jacke | die Jacken | jacket | Ich brauche eine Jacke.
+der Mantel | die Mäntel | coat | Der Mantel ist teuer.
+das Kleid | die Kleider | dress | Das Kleid ist rot.
+der Rock | die Röcke | skirt | Der Rock ist kurz.
+der Schuh | die Schuhe | shoe | Die Schuhe sind bequem.
+der Stiefel | die Stiefel | boot | Im Winter trage ich Stiefel.
+die Mütze | die Mützen | woolly hat | Die Mütze ist warm.
+der Schal | die Schals | scarf | Ich trage einen Schal.
+die Größe | die Größen | size | Welche Größe haben Sie?
+tragen | | to wear; to carry | Sie trägt ein Kleid.
+anprobieren | | to try on | Kann ich das anprobieren?
+passen | | to fit | Die Hose passt gut.
+die Umkleidekabine | die Umkleidekabinen | changing room | Wo ist die Umkleidekabine?
+gut – besser – am besten | | good – better – best | Diese Jacke ist besser.
+viel – mehr – am meisten | | much – more – most | Ich brauche mehr Zeit.
+gern – lieber – am liebsten | | gladly – rather – most of all | Ich trage am liebsten Jeans.
+groß – größer – am größten | | big – bigger – biggest | Die Jacke ist größer.
+billig – billiger – am billigsten | | cheap – cheaper – cheapest | Das T-Shirt ist billiger.
+teuer – teurer – am teuersten | | expensive – more expensive – most expensive | Der Mantel ist am teuersten.
+als | | than | Die Hose ist teurer als der Rock.
+so ... wie | | as ... as | Der Pulli ist so warm wie die Jacke.
+welcher / welches / welche? | | which? | Welche Jacke nimmst du?
+dieser / dieses / diese | | this | Diese Schuhe sind toll!
+der hier / die hier | | this one here | Ich nehme die hier.
+Wirklich? Das gibt's doch nicht! | | Really? I can't believe it! | Nur 5 Euro? Das gibt's doch nicht!
+`},
+{n:23,book:"A1.2",mod:8,title:"Es regnet. Na und?",topic:"Weather",words:`
+das Wetter | | weather | Wie ist das Wetter heute?
+die Sonne | | sun | Die Sonne scheint.
+scheinen | | to shine | Heute scheint die Sonne.
+der Regen | | rain | Ich mag Regen.
+regnen | | to rain | Es regnet. Na und?
+der Schnee | | snow | Im Winter gibt es Schnee.
+schneien | | to snow | Es schneit.
+der Wind | die Winde | wind | Der Wind ist stark.
+die Wolke | die Wolken | cloud | Es gibt viele Wolken.
+das Gewitter | die Gewitter | thunderstorm | Heute Abend kommt ein Gewitter.
+der Nebel | | fog | Am Morgen ist Nebel.
+die Temperatur | die Temperaturen | temperature | Die Temperatur ist 25 Grad.
+der Grad | die Grad | degree | Es sind minus 5 Grad.
+sonnig | | sunny | Es ist sonnig.
+bewölkt | | cloudy | Heute ist es bewölkt.
+windig | | windy | Es ist sehr windig.
+neblig | | foggy | Es ist neblig.
+warm | | warm | Im Sommer ist es warm.
+heiß | | hot | Heute ist es heiß.
+kalt | | cold | Im Winter ist es kalt.
+kühl | | cool | Am Abend ist es kühl.
+nass / trocken | | wet / dry | Die Straße ist nass.
+der Regenschirm | die Regenschirme | umbrella | Nimm einen Regenschirm mit!
+der Wetterbericht | die Wetterberichte | weather forecast | Der Wetterbericht sagt Regen.
+denn | | because | Ich bleibe zu Hause, denn es regnet.
+an / in / auf (Wo? + Dat. / Wohin? + Akk.) | | at / in / on | Ich lege das Buch auf den Tisch. Das Buch liegt auf dem Tisch.
+der Grund | die Gründe | reason | Was ist der Grund?
+wolkenlos | | cloudless | Der Himmel ist wolkenlos.
+arbeitslos | | unemployed | Er ist arbeitslos.
+Gute Reise! | | Have a good trip! | Gute Reise und viel Spaß!
+Viel Spaß! | | Have fun! | Viel Spaß im Urlaub!
+`},
+{n:24,book:"A1.2",mod:8,title:"Der erste Oktober war mein Glückstag!",topic:"Festivals, dates, congratulating",words:`
+das Fest | die Feste | festival, party | Das Fest war super.
+die Feier | die Feiern | celebration | Die Feier beginnt um 19 Uhr.
+die Party | die Partys | party | Kommst du zu meiner Party?
+die Hochzeit | die Hochzeiten | wedding | Die Hochzeit ist im Juni.
+der Geburtstag | die Geburtstage | birthday | Wann hast du Geburtstag?
+das Geschenk | die Geschenke | present | Das ist ein Geschenk für dich.
+die Einladung | die Einladungen | invitation | Danke für die Einladung!
+einladen | | to invite | Ich lade dich zu meiner Party ein.
+schenken | | to give (as a present) | Ich schenke dir ein Buch.
+gratulieren | | to congratulate | Ich gratuliere dir!
+Herzlichen Glückwunsch! | | Congratulations! / Happy birthday! | Herzlichen Glückwunsch zum Geburtstag!
+Alles Gute! | | All the best! | Alles Gute zum Geburtstag!
+Frohe Weihnachten! | | Merry Christmas! | Frohe Weihnachten und ein gutes neues Jahr!
+Prost! | | Cheers! | Prost! Auf dich!
+der Glückstag | die Glückstage | lucky day | Der erste Oktober war mein Glückstag!
+das Glück | | luck, happiness | Viel Glück!
+das Datum | die Daten | date | Welches Datum ist heute?
+der erste / zweite / dritte | | the first / second / third | Heute ist der erste Oktober.
+der siebte / zwanzigste | | the seventh / twentieth | Heute ist der siebte Mai.
+am ersten Mai | | on the first of May | Ich habe am ersten Mai Geburtstag.
+der Feiertag | die Feiertage | public holiday | Der 3. Oktober ist ein Feiertag.
+würde(n) + Infinitiv | | would + verb | Ich würde gern nach Paris fahren.
+gern / lieber | | gladly / rather | Ich würde lieber zu Hause feiern.
+das Jubiläum | die Jubiläen | anniversary | Die Firma feiert ihr Jubiläum.
+die Torte | die Torten | gateau, cake | Die Torte ist lecker.
+die Kerze | die Kerzen | candle | Auf der Torte sind 30 Kerzen.
+der Gast | die Gäste | guest | Wir haben 50 Gäste.
+wichtig | | important | Das war ein wichtiger Tag.
+`}
+];
+
+
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const WORDS=[];
+LESSONS.forEach(l=>{l.words.trim().split('\n').forEach((line,i)=>{const [de,pl,en,ex]=line.split('|').map(s=>s.trim());WORDS.push({id:l.n+'-'+i,lesson:l.n,de,pl,en,ex})})});
+let known=new Set(store.get('known',[]));
+let cur=store.get('lesson',0); // 0 = all
+let mode='list', sortKey='lesson', sortAsc=true;
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function artClass(de){const m=de.match(/^(der|die|das)\s/);return m?'art-'+m[1]:''}
+function shown(){
+  const q=$('q').value.trim().toLowerCase();
+  let w=WORDS.filter(x=>(cur===0||x.lesson===cur));
+  if(q)w=w.filter(x=>(x.de+' '+x.en+' '+x.pl).toLowerCase().includes(q));
+  if($('hideKnown').checked)w=w.filter(x=>!known.has(x.id));
+  return w;
+}
+function save(){store.set('known',[...known]);renderStats();renderRail()}
+function renderStats(){const t=WORDS.length,k=WORDS.filter(w=>known.has(w.id)).length;$('statText').textContent=`${k} / ${t} words known`;$('statBar').style.width=(t?k/t*100:0)+'%'}
+function renderRail(){
+  const r=$('rail');let h=`<button class="lesson" data-n="0" aria-current="${cur===0}"><span class="n">All</span><span class="t">All lessons</span><span class="p">${WORDS.filter(w=>known.has(w.id)).length}/${WORDS.length}</span></button>`;
+  let mod=0;
+  LESSONS.forEach(l=>{
+    if(l.mod!==mod){mod=l.mod;h+=`<div class="mod">${l.book} · Modul ${mod}</div>`}
+    const ws=WORDS.filter(w=>w.lesson===l.n),k=ws.filter(w=>known.has(w.id)).length;
+    h+=`<button class="lesson" data-n="${l.n}" aria-current="${cur===l.n}" title="${esc(l.title)}"><span class="n">L${l.n}</span><span class="t">${esc(l.title)}</span><span class="p">${k}/${ws.length}</span></button>`;
+  });
+  r.innerHTML=h;
+  r.querySelectorAll('.lesson').forEach(b=>b.onclick=()=>{cur=+b.dataset.n;store.set('lesson',cur);render()});
+}
+function renderHead(){
+  if(cur===0){$('lTitle').textContent='All lessons';$('lMeta').textContent=`${WORDS.length} words · Momente A1.1 + A1.2`;return}
+  const l=LESSONS.find(x=>x.n===cur);$('lTitle').textContent=`Lektion ${l.n} · ${l.title}`;$('lMeta').textContent=`${l.topic} · ${l.book}, Modul ${l.mod}`;
+}
+function renderList(){
+  let w=shown().slice();
+  const key={lesson:x=>x.lesson*1000+(+x.id.split('-')[1]),de:x=>x.de.replace(/^(der|die|das)\s/,'').toLowerCase(),en:x=>x.en.toLowerCase()}[sortKey];
+  w.sort((a,b)=>{const A=key(a),B=key(b);return (A<B?-1:A>B?1:0)*(sortAsc?1:-1)});
+  if(!w.length){$('vList').innerHTML=`<div class="tablebox"><div class="empty">No words match. Clear the search or untick “Hide known”.</div></div>`;return}
+  const arrow=k=>sortKey===k?(sortAsc?' ↑':' ↓'):'';
+  let h=`<div class="tablebox"><table><thead><tr><th>Known</th><th><button data-s="de">German${arrow('de')}</button></th><th>Plural</th><th><button data-s="en">English${arrow('en')}</button></th><th>Example</th><th><button data-s="lesson">Lesson${arrow('lesson')}</button></th></tr></thead><tbody>`;
+  w.forEach(x=>{h+=`<tr class="${known.has(x.id)?'done':''}"><td><input type="checkbox" id="k-${x.id}" data-id="${x.id}" ${known.has(x.id)?'checked':''} aria-label="Mark ${esc(x.de)} as known"></td><td class="de ${artClass(x.de)}">${esc(x.de)}</td><td class="pl">${esc(x.pl)}</td><td>${esc(x.en)}</td><td class="ex">${esc(x.ex)}</td><td class="ln">L${x.lesson}</td></tr>`});
+  h+=`</tbody></table></div><div class="legend"><span><b class="art-der">der</b> masculine</span><span><b class="art-die">die</b> feminine</span><span><b class="art-das">das</b> neuter</span><span>Always learn a noun together with its article and plural.</span></div>`;
+  $('vList').innerHTML=h;
+  $('vList').querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{c.checked?known.add(c.dataset.id):known.delete(c.dataset.id);c.closest('tr').classList.toggle('done',c.checked);save()});
+  $('vList').querySelectorAll('th button').forEach(b=>b.onclick=()=>{const s=b.dataset.s;if(sortKey===s)sortAsc=!sortAsc;else{sortKey=s;sortAsc=true}renderList()});
+}
+let deck=[],ci=0,flipped=false;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function newDeck(){deck=shuffle(shown().slice());ci=0;flipped=false}
+function renderCards(){
+  if(!deck.length){$('vCards').innerHTML=`<div class="cardzone"><div class="card"><div class="big">All done here</div><div class="hint">No cards left with the current filter</div></div><div class="cardnav"><button class="btn" id="cReset">Start again</button></div></div>`;$('cReset').onclick=()=>{newDeck();renderCards()};return}
+  const x=deck[ci],deFirst=$('dir').value==='de';
+  const front=deFirst?`<div class="big ${artClass(x.de)}">${esc(x.de)}</div>`:`<div class="big">${esc(x.en)}</div>`;
+  const back=`<div class="big ${artClass(x.de)}">${esc(x.de)}</div>${x.pl?`<div class="pl">Plural: ${esc(x.pl)}</div>`:''}<div>${esc(x.en)}</div><div class="ex">${esc(x.ex)}</div>`;
+  $('vCards').innerHTML=`<div class="cardzone"><span class="count">Card ${ci+1} of ${deck.length} · L${x.lesson}</span>
+  <div class="card" id="card" tabindex="0" role="button" aria-label="Flip card">${flipped?back:front}<div class="hint">${flipped?'':'Tap to show the answer'}</div></div>
+  <div class="cardnav"><button class="btn" id="cPrev">← Back</button><button class="btn" id="cAgain">Practise again</button><button class="btn primary" id="cKnow">I know it ✓</button></div></div>`;
+  const flip=()=>{flipped=!flipped;renderCards()};
+  $('card').onclick=flip;$('card').onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip()}};
+  $('cPrev').onclick=()=>{ci=Math.max(0,ci-1);flipped=false;renderCards()};
+  $('cAgain').onclick=()=>{deck.push(deck.splice(ci,1)[0]);if(ci>=deck.length)ci=0;flipped=false;renderCards()};
+  $('cKnow').onclick=()=>{known.add(x.id);save();deck.splice(ci,1);if(ci>=deck.length)ci=0;flipped=false;renderCards()};
+}
+let qs=[],qi=0,score=0,answered=false;
+function newQuiz(){const pool=shown();qs=shuffle(pool.slice()).slice(0,10);qi=0;score=0;answered=false}
+function renderQuiz(){
+  const pool=WORDS.filter(w=>cur===0||w.lesson===cur);
+  if(qs.length<1||pool.length<4){$('vQuiz').innerHTML=`<div class="quiz"><div class="qprompt">Not enough words for a quiz with this filter.</div></div>`;return}
+  if(qi>=qs.length){$('vQuiz').innerHTML=`<div class="quiz"><div class="qprompt"><div class="hint" style="color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase">Result</div><div class="big">${score} / ${qs.length} correct</div><p style="color:var(--muted)">${score===qs.length?'Perfect. Mark these as known and move on.':'Go back to the list or flashcards for the words you missed, then try again.'}</p></div><div class="qfoot"><span></span><button class="btn primary" id="qNew">New quiz</button></div></div>`;$('qNew').onclick=()=>{newQuiz();renderQuiz()};return}
+  const x=qs[qi],deFirst=$('dir').value==='de';
+  const others=shuffle(pool.filter(w=>w.id!==x.id&&w.en!==x.en)).slice(0,3);
+  const opts=shuffle([x,...others]);
+  $('vQuiz').innerHTML=`<div class="quiz"><span class="count">Question ${qi+1} of ${qs.length} · Score ${score}</span>
+  <div class="qprompt"><div style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">${deFirst?'What does this mean?':'How do you say this in German?'}</div><div class="big ${deFirst?artClass(x.de):''}">${esc(deFirst?x.de:x.en)}</div></div>
+  <div class="opts">${opts.map(o=>`<button class="opt" data-id="${o.id}">${esc(deFirst?o.en:o.de)}</button>`).join('')}</div>
+  <div class="qfoot"><span class="feedback" id="fb"></span><button class="btn primary" id="qNext" hidden>Next →</button></div></div>`;
+  answered=false;
+  $('vQuiz').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    if(answered)return;answered=true;
+    const ok=b.dataset.id===x.id;if(ok)score++;
+    $('vQuiz').querySelectorAll('.opt').forEach(o=>{if(o.dataset.id===x.id)o.classList.add('right')});
+    if(!ok)b.classList.add('wrong');
+    const fb=$('fb');fb.className='feedback '+(ok?'ok':'no');fb.textContent=ok?'Richtig!':`The answer is: ${deFirst?x.en:x.de}`;
+    $('qNext').hidden=false;$('qNext').focus();
+  });
+  $('qNext').onclick=()=>{qi++;renderQuiz()};
+}
+function setMode(m){mode=m;['List','Cards','Quiz'].forEach(k=>{$('m'+k).setAttribute('aria-pressed',m===k.toLowerCase());$('v'+k).hidden=m!==k.toLowerCase()});render(true)}
+function render(keepRail){
+  if(!keepRail)renderRail();renderHead();renderStats();
+  if(mode==='list')renderList();
+  if(mode==='cards'){newDeck();renderCards()}
+  if(mode==='quiz'){newQuiz();renderQuiz()}
+}
+$('mList').onclick=()=>setMode('list');$('mCards').onclick=()=>setMode('cards');$('mQuiz').onclick=()=>setMode('quiz');
+$('q').oninput=()=>render(true);$('hideKnown').onchange=()=>render(true);$('dir').onchange=()=>render(true);
+if(!LESSONS.some(l=>l.n===cur))cur=0;
+render();
+</script>
+</body></html>
