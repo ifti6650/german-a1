@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Momente A1 Wortschatz</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Deutsch A1"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#5363cf"><title>Momente A1 Wortschatz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -1264,4 +1264,4 @@ document.addEventListener('keydown', e => {
 window.addEventListener('hashchange', () => { const m = location.hash.match(/^#L(\d{1,2})$/); if (m && LESSONS.some(l => l.n === +m[1])) { S.lesson = +m[1]; save(); render() } });
 render();
 </script>
-</body></html>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
