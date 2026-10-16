@@ -14,6 +14,15 @@
     <ul class="ac-list" style="margin-top:12px"><li><span class="ic" aria-hidden="true">@</span><span class="tx"><b>E-mail</b><span id="acEmail">…</span></span></li>
       <li><span class="ic" aria-hidden="true">★</span><span class="tx"><b>Member since</b><span id="acSince">…</span></span></li></ul>
   </section>
+  <section class="panel" aria-labelledby="wT" id="acPw"><h2 id="wT">Password</h2>
+    <p class="sub" id="acPwSub">Set or change the password you use with your e-mail address.</p>
+    <form class="ac-form" id="acPwForm" novalidate>
+      <div><label class="ui-label" for="acPw1">New password</label><input class="ui-input" id="acPw1" type="password" autocomplete="new-password" minlength="8"></div>
+      <div><label class="ui-label" for="acPw2">Repeat new password</label><input class="ui-input" id="acPw2" type="password" autocomplete="new-password" minlength="8"></div>
+      <button class="ui-btn" type="submit" id="acPwGo">Save password</button>
+    </form>
+    <p class="ui-fine" style="margin-top:8px">At least 8 characters.</p>
+  </section>
   <section class="panel" aria-labelledby="mT"><h2 id="mT">Sign-in methods</h2>
     <p class="sub">These sign-in options are linked to your account. </p>
     <ul class="ac-list" id="acMethods"><li><span class="ui-sk" style="height:40px;width:100%"></span></li></ul>
@@ -61,6 +70,22 @@
   A1_SHELL.ready.then(async s => {
     if (!s.user) { msg('error', 'You are offline', ' Account settings need an internet connection.'); return }
     renderUser(s.user); renderPasskeys();
+    const reset = new URLSearchParams(location.search).has('reset');
+    if (reset) { // arrived from the password-reset e-mail
+      const box = $('acPw'); box.parentNode.insertBefore(box, box.parentNode.querySelector('.panel'));
+      $('wT').textContent = 'Choose a new password'; $('acPwSub').textContent = 'You opened the reset link from your e-mail. Enter your new password below.';
+      history.replaceState(null, '', location.pathname); $('acPw1').focus();
+    }
+    $('acPwForm').addEventListener('submit', async e => {
+      e.preventDefault(); msg('');
+      const a = $('acPw1').value, b = $('acPw2').value;
+      if (a.length < 8) { msg('error', 'Password too short', ' Use at least 8 characters.'); $('acPw1').focus(); return }
+      if (a !== b) { msg('error', 'Passwords do not match', ' Type the same password twice.'); $('acPw2').focus(); return }
+      const btn = $('acPwGo'); btn.disabled = true;
+      const r = await A1.auth.setPassword(a); btn.disabled = false;
+      if (r.error) msg('error', 'Password not saved', ' ' + esc(/different from the old|same/i.test(r.error.message) ? 'The new password must be different from the old one.' : r.error.message));
+      else { msg('success', 'Password saved', ' From now on sign in with your e-mail and this password.'); $('acPw1').value = $('acPw2').value = ''; if (reset) setTimeout(() => location.replace('dashboard.html'), 1500) }
+    });
     $('acName').addEventListener('submit', async e => {
       e.preventDefault(); const v = $('acNameIn').value.trim();
       if (!v) { msg('error', 'Please enter a name', ''); return }

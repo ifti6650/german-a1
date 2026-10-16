@@ -43,8 +43,9 @@
     $('#siNameRow').hidden = m !== 'signup'; $('#siPwHint').hidden = m !== 'signup';
     $('#siPw').autocomplete = m === 'signup' ? 'new-password' : 'current-password';
     $('#siPwGo').textContent = m === 'signup' ? 'Create account' : 'Sign in';
+    $('#siForgot').hidden = m === 'signup';
   }
-  function step(which) { stepStart.hidden = which !== 'start'; stepCode.hidden = which !== 'code'; $('#siSwitch').hidden = which !== 'start' }
+  function step(which) { stepStart.hidden = which !== 'start'; stepCode.hidden = which !== 'code'; $('#siStepForgot').hidden = which !== 'forgot'; $('#siSwitch').hidden = which !== 'start' }
   function openSignin(course, m) {
     if (course) try { sessionStorage.setItem('a1:intent', course) } catch (e) {}
     if (hasStoredSession() || (window.A1 && A1.user)) { location.href = next; return }
@@ -111,6 +112,23 @@
     try { await sendCode(); showMsg('success', `<b>New code sent</b>Check ${esc(emailAddr)}. Only the newest code works.`) } catch (err) { fail(err) }
   });
   $('#siBack').addEventListener('click', () => { showMsg('', ''); step('start') });
+  // Password recovery
+  $('#siForgot').addEventListener('click', () => { showMsg('', ''); $('#siFgEmail').value = $('#siPwEmail').value.trim(); $('#siTitle').textContent = 'Reset your password'; step('forgot'); $('#siFgEmail').focus() });
+  $('#siFgBack').addEventListener('click', () => { showMsg('', ''); setMode('signin'); step('start') });
+  $('#siStepForgot').addEventListener('submit', async e => {
+    e.preventDefault(); showMsg('', '');
+    const email = $('#siFgEmail').value.trim();
+    if (!validEmail(email)) { showMsg('error', '<b>Please check the e-mail address</b>It should look like name@example.com.'); $('#siFgEmail').focus(); return }
+    const btn = $('#siFgGo'); btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const a = await client(); const r = await a.resetPassword(email); if (r && r.error) throw r.error;
+      showMsg('success', `<b>Check your inbox</b>If an account exists for ${esc(email)}, we sent a link to choose a new password. Open it on this device. Also check your spam folder.`);
+    } catch (err) {
+      const m = (err && err.message) || '';
+      if (/rate limit|security purposes|too many/i.test(m)) showMsg('error', '<b>Please wait a moment</b>A new reset link can only be requested once a minute.');
+      else fail(err);
+    } finally { btn.disabled = false; btn.textContent = 'Send reset link' }
+  });
   // E-mail + password
   $('#siPwShow').addEventListener('click', e => { const i = $('#siPw'), show = i.type === 'password'; i.type = show ? 'text' : 'password'; e.target.textContent = show ? 'Hide' : 'Show'; e.target.setAttribute('aria-pressed', show) });
   pwForm.addEventListener('submit', async e => {

@@ -73,8 +73,13 @@
         async delete({ passkeyId }) { put('mock:passkeys', get('mock:passkeys', []).filter(k => k.id !== passkeyId)); return { data: null, error: null } },
         async update({ passkeyId, friendlyName }) { put('mock:passkeys', get('mock:passkeys', []).map(k => k.id === passkeyId ? Object.assign(k, { friendly_name: friendlyName }) : k)); return { data: null, error: null } }
       },
-      async updateUser({ data }) {
+      async resetPasswordForEmail(email, options) {
+        const last = get('mock:resetAt', 0); if (Date.now() - last < 2000) return { data: null, error: { message: 'For security purposes, you can only request this after 60 seconds.' } };
+        put('mock:resetAt', Date.now()); put('mock:reset', { email: email.toLowerCase(), redirectTo: options && options.redirectTo }); return { data: {}, error: null };
+      },
+      async updateUser({ data, password }) {
         const s = session(); if (!s) return { data: null, error: { message: 'not signed in' } };
+        if (password) { const pw = get('mock:pw', {}); if (pw[s.user.email] === password) return { data: null, error: { message: 'New password should be different from the old password.' } }; pw[s.user.email] = password; put('mock:pw', pw); saveUser(s.user); return { data: { user: s.user }, error: null } }
         const u = Object.assign({}, s.user, { user_metadata: Object.assign({}, s.user.user_metadata, data) }); setSession(u); saveUser(u);
         return { data: { user: u }, error: null };
       },
