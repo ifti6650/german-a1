@@ -61,7 +61,7 @@ test('course: 24 lessons, 8 modules, A1.1 = 1–12, A1.2 = 13–24', () => {
   assert.equal(C.lessons.length, 24); assert.equal(C.modules.length, 8);
   assert.ok(C.lessons.filter(l => l.level === 'A1.1').every(l => l.n <= 12));
   assert.ok(C.lessons.every(l => l.words.length > 0), 'every lesson has Wortschatz words');
-  assert.equal(C.status(1), 'complete'); assert.equal(C.status(24), 'vocab-only');
+  assert.equal(C.status(1), 'complete'); assert.ok(C.lessons.every(l => C.status(l.n) === 'complete'), 'all 24 lessons authored');
   assert.equal(C.tests().length, 24 + 8 + 2);
 });
 
