@@ -39,7 +39,7 @@ test('landing is public: no guard, no portal shell', () => {
   assert.ok(!landing.includes('guard.js') && !landing.includes('shell.js'));
   assert.ok(landing.includes('class="lp"'));
 });
-const PORTAL = ['dashboard.html', 'onboarding.html', 'course.html', 'lesson.html', 'wortschatz.html', 'practice.html', 'tests.html', 'test.html', 'mistakes.html', 'progress.html', 'grammar-book.html', 'study-guide.html', 'speaking.html'];
+const PORTAL = ['dashboard.html', 'onboarding.html', 'account.html', 'course.html', 'lesson.html', 'wortschatz.html', 'practice.html', 'tests.html', 'test.html', 'mistakes.html', 'progress.html', 'grammar-book.html', 'study-guide.html', 'speaking.html'];
 for (const f of PORTAL) test(`portal page ${f}: protected, uses the shell, no old navigation`, () => {
   const s = read(f);
   const head = s.slice(0, s.indexOf('</head>'));
@@ -49,7 +49,16 @@ for (const f of PORTAL) test(`portal page ${f}: protected, uses the shell, no ol
   assert.ok(!/<nav class="top"/.test(s) && !s.includes('nav.js'), 'old top navigation still present');
   assert.ok(!s.includes('href="index.html"'), 'portal links must not point to the public homepage');
 });
+test('privacy page is public and linked from the sign-in dialog', () => {
+  const pv = read('privacy.html'); assert.ok(!pv.includes('guard.js') && pv.includes('class="lp"'));
+  assert.ok(landing.includes('href="privacy.html"'));
+});
+test('auth-config.js lists every sign-in method the dialog knows', () => {
+  global.window = global; delete global.A1_AUTH; require(path.join(ROOT, 'auth-config.js'));
+  for (const k of ['google', 'azure', 'apple', 'email', 'passkey']) assert.equal(typeof global.A1_AUTH[k], 'boolean', k);
+  for (const pr of ['google', 'azure', 'apple']) assert.ok(landing.includes(`data-provider="${pr}"`), pr);
+});
 test('service worker caches the new files', () => {
   const sw = read('sw.js');
-  ['dashboard.html', 'onboarding.html', 'ui.css', 'guard.js', 'shell.js', 'landing.js'].forEach(f => assert.ok(sw.includes(`'${f}'`), f));
+  ['dashboard.html', 'onboarding.html', 'account.html', 'privacy.html', 'auth-config.js', 'ui.css', 'guard.js', 'shell.js', 'landing.js'].forEach(f => assert.ok(sw.includes(`'${f}'`), f));
 });

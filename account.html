@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Account · Deutsch A1</title><meta name="robots" content="noindex"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#4f5fd6"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="ui.css"><script src="guard.js"></script>
+</head><body>
+<header class="hero small"><div class="in"><div class="kicker">Account</div><h1>Account &amp; sign-in</h1><p>Your profile, the ways you can sign in, and passkeys for this device.</p></div></header>
+<main class="pg narrow" id="main">
+  <div id="acMsg" role="status"></div>
+  <section class="panel" aria-labelledby="pT"><h2 id="pT">Profile</h2>
+    <form class="ac-form" id="acName" novalidate style="margin-top:12px">
+      <div><label class="ui-label" for="acNameIn">Your name</label><input class="ui-input" id="acNameIn" autocomplete="name" maxlength="80" placeholder="e.g. Lena Neu"></div>
+      <button class="ui-btn" type="submit">Save name</button>
+    </form>
+    <ul class="ac-list" style="margin-top:12px"><li><span class="ic" aria-hidden="true">@</span><span class="tx"><b>E-mail</b><span id="acEmail">…</span></span></li>
+      <li><span class="ic" aria-hidden="true">★</span><span class="tx"><b>Member since</b><span id="acSince">…</span></span></li></ul>
+  </section>
+  <section class="panel" aria-labelledby="mT"><h2 id="mT">Sign-in methods</h2>
+    <p class="sub">These sign-in options are linked to your account. Signing in with the same e-mail address through another option opens this same account.</p>
+    <ul class="ac-list" id="acMethods"><li><span class="ui-sk" style="height:40px;width:100%"></span></li></ul>
+  </section>
+  <section class="panel" aria-labelledby="kT" id="acPasskeys" hidden><h2 id="kT">Passkeys</h2>
+    <p class="sub">Sign in with Face ID, your fingerprint or your device PIN: no e-mail or password needed. Add a passkey on each device you use.</p>
+    <ul class="ac-list" id="acPkList"></ul>
+    <div class="row" style="margin-top:12px"><button class="ui-btn" type="button" id="acPkAdd">Add a passkey for this device</button></div>
+  </section>
+  <section class="panel" aria-labelledby="oT"><h2 id="oT">Sign out</h2>
+    <p class="sub">Your progress stays saved in your account.</p>
+    <button class="ui-btn ghost" type="button" id="acOut">Sign out</button>
+  </section>
+</main>
+<script src="auth-config.js"></script><script src="sync.js"></script><script src="shell.js"></script><script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const CFG = window.A1_AUTH || {};
+  const LABEL = { google: 'Google', azure: 'Microsoft', apple: 'Apple', email: 'E-mail code', phone: 'Phone' };
+  const ICON = { google: 'G', azure: '⊞', apple: '', email: '✉', phone: '☎' };
+  const msg = (kind, title, text) => { $('acMsg').innerHTML = kind ? `<div class="ui-state ${kind}" style="margin-bottom:16px"><span class="ic">${kind === 'error' ? '!' : '✓'}</span><div><b>${title}</b>${text || ''}</div></div>` : '' };
+  const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '–';
+  function renderUser(u) {
+    const n = A1_SHELL.names(u);
+    $('acNameIn').value = (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || '';
+    $('acEmail').textContent = n.email || 'No e-mail address';
+    $('acSince').textContent = fmt(u.created_at);
+    const ids = (u.identities || []).slice().sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+    $('acMethods').innerHTML = ids.length ? ids.map(i => `<li><span class="ic" aria-hidden="true">${ICON[i.provider] || '•'}</span><span class="tx"><b>${esc(LABEL[i.provider] || i.provider)}</b>${esc((i.identity_data && i.identity_data.email) || n.email || '')} · linked ${fmt(i.created_at)}</span></li>`).join('')
+      : `<li><span class="tx">No linked sign-in methods found.</span></li>`;
+  }
+  async function renderPasskeys() {
+    const box = $('acPasskeys'); if (!CFG.passkey) return; box.hidden = false;
+    const P = A1.auth.passkeys;
+    if (!P.supported()) { $('acPkList').innerHTML = '<li><span class="tx">This browser does not support passkeys. Try a current version of Chrome, Safari, Edge or Firefox.</span></li>'; $('acPkAdd').hidden = true; return }
+    $('acPkList').innerHTML = '<li><span class="ui-sk" style="height:40px;width:100%"></span></li>';
+    try {
+      const r = await P.list(); if (r.error) throw r.error;
+      const list = r.data || [];
+      $('acPkList').innerHTML = list.length ? list.map(k => `<li><span class="ic" aria-hidden="true">🔑</span><span class="tx"><b>${esc(k.friendly_name || 'Passkey')}</b>Added ${fmt(k.created_at)}</span><button class="ui-btn sm ghost" type="button" data-del="${esc(k.id)}" data-name="${esc(k.friendly_name || 'Passkey')}">Remove</button></li>`).join('')
+        : '<li><span class="tx">No passkeys yet.</span></li>';
+    } catch (e) { $('acPkList').innerHTML = `<li><span class="tx">Passkeys could not be loaded: ${esc(e.message || e)}</span></li>` }
+  }
+  A1_SHELL.ready.then(async s => {
+    if (!s.user) { msg('error', 'You are offline', ' Account settings need an internet connection.'); return }
+    renderUser(s.user); renderPasskeys();
+    $('acName').addEventListener('submit', async e => {
+      e.preventDefault(); const v = $('acNameIn').value.trim();
+      if (!v) { msg('error', 'Please enter a name', ''); return }
+      const r = await A1.auth.updateName(v);
+      if (r.error) msg('error', 'Name not saved', ' ' + esc(r.error.message)); else { msg('success', 'Name saved', ''); renderUser(r.data.user) }
+    });
+    $('acPkAdd').addEventListener('click', async () => {
+      msg(''); const b = $('acPkAdd'); b.disabled = true;
+      try { const r = await A1.auth.passkeys.add(); if (r.error) throw r.error; msg('success', 'Passkey added', ' Next time choose “Sign in with a passkey”.'); renderPasskeys() }
+      catch (e) { msg('error', /NotAllowed|cancel|abort/i.test((e.name || '') + e.message) ? 'Cancelled' : /exists/i.test(e.message || e.code) ? 'This device already has a passkey' : 'Passkey not added', ' ' + esc(/NotAllowed|cancel|abort/i.test((e.name || '') + e.message) ? 'No passkey was created.' : e.message || '')) }
+      finally { b.disabled = false }
+    });
+    $('acPkList').addEventListener('click', async e => {
+      const b = e.target.closest('[data-del]'); if (!b) return;
+      if (!confirm(`Remove the passkey “${b.dataset.name}”? You can still sign in with your other methods.`)) return;
+      b.disabled = true; const r = await A1.auth.passkeys.remove(b.dataset.del);
+      if (r.error) { msg('error', 'Passkey not removed', ' ' + esc(r.error.message)); b.disabled = false } else { msg('success', 'Passkey removed', ''); renderPasskeys() }
+    });
+  });
+  $('acOut').addEventListener('click', () => { const so = document.getElementById('sh-signout'); if (so) so.click() });
+})();
+</script><script src="install.js"></script>
+</body></html>
