@@ -6,6 +6,7 @@ global.window = globalThis;
 require(path.join(__dirname, '..', 'plan-data.js'));
 require(path.join(__dirname, '..', 'lessons', 'l01.js'));
 require(path.join(__dirname, '..', 'lessons', 'l02.js'));
+require(path.join(__dirname, '..', 'lessons', 'l03.js'));
 require(path.join(__dirname, '..', 'course.js'));
 const E = require(path.join(__dirname, '..', 'engine.js'));
 const SCHED = require(path.join(__dirname, '..', 'review.js'));
@@ -62,12 +63,12 @@ test('course: 24 lessons, 8 modules, A1.1 = 1–12, A1.2 = 13–24', () => {
   assert.equal(C.lessons.length, 24); assert.equal(C.modules.length, 8);
   assert.ok(C.lessons.filter(l => l.level === 'A1.1').every(l => l.n <= 12));
   assert.ok(C.lessons.every(l => l.words.length > 0), 'every lesson has Wortschatz words');
-  assert.equal(C.status(1), 'complete'); assert.equal(C.status(2), 'complete'); assert.equal(C.status(3), 'vocab-only');
+  assert.equal(C.status(1), 'complete'); assert.equal(C.status(2), 'complete'); assert.equal(C.status(3), 'complete'); assert.equal(C.status(4), 'vocab-only');
   assert.equal(C.tests().length, 24 + 8 + 2);
 });
 
 const REQUIRED = ['id', 'level', 'lesson', 'topic', 'skill', 'difficulty', 'type', 'instructions', 'explanation', 'objective', 'status'];
-for (const N of [1, 2]) test(`Lektion ${N}: every question has the required metadata and a valid key`, () => {
+for (const N of [1, 2, 3]) test(`Lektion ${N}: every question has the required metadata and a valid key`, () => {
   const c = window.COURSE.content(N); const all = [...c.practice, ...c.apply, ...c.quiz];
   const ids = new Set(); const objectives = new Set(c.objectives.map(o => o.id));
   for (const q of all) {
