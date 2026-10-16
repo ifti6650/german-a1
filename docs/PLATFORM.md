@@ -24,7 +24,7 @@ lessons/l01.js (authored content) ─┼─> course.js (COURSE: 24 lessons, 8 mo
 engine.js   pure answer checking + 12 question types (UI) + practice runner + vocab question generator
 review.js   mistake scheduling (mirror of SQL record_answer_v2)
 progress-model.js  every progress definition in one place (PM)
-sync.js     auth, offline answer queue, app_state sync (now also a1:lessons, a1:prefs, a1:writing)
+sync.js     auth, offline answer queue, app_state sync (now also a1:lessons, a1:prefs, a1:writing, a1:guide)
 data.js     reads (RLS-scoped), question-bank lookup, answer recording
 ui.css      design tokens (one palette for every page) + public site (.lp-*) + portal shell (.sh-*) + dashboard (.db-*)
 guard.js    <head> auth guard for learner pages: no stored session → index.html?signin=1&next=<page>
@@ -51,9 +51,22 @@ Pages: `dashboard.html` (personal dashboard), `course.html` (lessons + the 8-wee
 **Content lives in the repo, learner data in Supabase.** Question banks are versioned JS files (reviewable in PRs, work offline, no admin UI needed). The database stores only learner events.
 *Open decision for review:* move question banks into Supabase tables later (needed only for an in-browser content editor).
 
+### Study Guide: "Deutsch im echten Leben" (v4)
+
+The Study Guide is the real-life communication part of the course (Grammar Book = rules, Wortschatz = words, Practice = exercises, Tests = scores).
+
+| Piece | File | Notes |
+|---|---|---|
+| Content (source of truth) | `guide/intro.md`, `guide/l01.md` … `guide/l24.md` | One Markdown file per lesson. Edit a file, then run `node tools/guide-build.js index`. |
+| Overview data | `guide/index.js` | Generated: titles, goals, situation titles, Wort-Hilfe words, Grammar Book steps (for cards and search). A unit test fails if it is out of date. |
+| Parser + safe renderer | `guide-md.js` | Splits a lesson into 9 parts by its headings (Einführung, Lernziele, Wort-Hilfe, Satzmuster, Situationen, Nützliche Ausdrücke, Sprechvarianten, Frei sprechen, Wiederholen). Escapes all text before formatting (no HTML from content reaches the page). `**Name:** …` lines become conversation blocks. |
+| Page | `study-guide.html` + `guide-app.js` + `guide.css` | `study-guide.html` = overview (A1.1/A1.2 cards, search, resume). `study-guide.html?l=N#part[-k]` = lesson N, part, situation k (refresh and deep links work on GitHub Pages). |
+| Reading progress | `guide-progress.js`, localStorage `a1:guide` | Synced per user through the existing `app_state` table (RLS, one row per user and key): no migration. Opening a page only stores "last visited". A part counts when the learner presses "Abschnitt erledigt"; situations get a "Geübt" tick; a lesson is completed when all its parts are marked. Separate from quiz scores and mastery. |
+| Dashboard | `dashboard.js` (`guideCard`) | Lessons completed, situations practised, resume link. |
+
 ## 3. Curriculum model
 
-* 24 lessons from `plan-data.js`: title, topic, level (A1.1 L1–12 / A1.2 L13–24), Modul (3 lessons each), grammar steps with Grammar Book links, Study Guide anchor, Wortschatz words.
+* 24 lessons from `plan-data.js`: title, topic, level (A1.1 L1–12 / A1.2 L13–24), Modul (3 lessons each), grammar steps with Grammar Book links, Study Guide lesson link (`study-guide.html?l=N`), Wortschatz words.
 * `textbookMapping: 'title-and-topic'`: lesson titles/topics and grammar order follow Momente. **Exercise-level mapping to Kursbuch/Arbeitsbuch pages is not verified** (no access to the books) and no page numbers are claimed.
 * Lesson content status: **L1 complete** (6 objectives, 7 Learn sections, 30 practice, 7 apply, 15 quiz items). **L2 complete** (6 objectives, 7 Learn sections, 31 practice, 8 apply, 15 quiz items). **L3 complete** (6 objectives, 7 Learn sections, 30 practice, 7 apply, 15 quiz items) — Modul 1 fully authored. **L4–L6 complete** (Modul 2: nouns & gender, prices; ein/kein, colours & materials; plurals, accusative, phone at work). **L7–L9 complete** (Modul 3: können & sentence bracket, hobbies, frequency; time, am/um, inversion, wissen, plans; food verbs, mögen/möchte, compound nouns, restaurant). **L10–L12 complete** (Modul 4: separable verbs & transport; Perfekt with haben, daily routine; Perfekt with sein, war/hatte, months & seasons) — A1.1 fully authored. **L13–L15 complete** (Modul 5: es gibt, dative pronouns & verbs, gefallen, city; dative articles & prepositions, short forms, directions; all possessive articles, flat & rooms). **L16–L18 complete** (Modul 6: in/vor/nach + dative time, könnten, appointments & problems; wollen, werden, mit/ohne/für, wichtig, plans; body & pain, Sie-imperative, sollen, at the doctor's). **L19–L21 complete** (Modul 7: du/ihr-imperative, bitte/doch/mal, all personal pronouns, housework; Perfekt without ge-, separable vs inseparable, appearance & character, un-; müssen/dürfen, nicht müssen vs nicht dürfen, man, all modals, opinions). **L22–L24 complete** (Modul 8: comparative/superlative, als/so … wie, gern–lieber–am liebsten, welch-/dies-, clothes; und/aber/oder/denn, two-way prepositions, liegen/legen, weather, -los; ordinals, dates & years, würde, congratulations). **All 24 lessons are fully authored** (719 practice, 169 apply, 360 quiz items; status ai-checked, pending teacher review).
 * Question metadata: `id, level, lesson, topic, skill, grammar, difficulty, type, instructions, prompt, options, answer, accept, explanation, objective, status`. `status: 'ai-checked'` = written and checked by AI, **needs teacher review** before `approved`; `generated` = built from the Wortschatz list.
