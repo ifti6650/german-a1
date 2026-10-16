@@ -20,7 +20,7 @@ async function context(opts = {}, viewport = DESK) {
   if (opts.offline) await ctx.route(/cdn\.jsdelivr\.net/, r => r.abort());
   else await ctx.route(/cdn\.jsdelivr\.net/, r => r.fulfill({ status: 200, contentType: 'application/javascript', body: MOCK }));
   // every sign-in method switched on, unless the test checks the real auth-config.js
-  if (!opts.realAuth) await ctx.route(/auth-config\.js/, r => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.A1_AUTH = { google: true, azure: true, apple: true, email: true, passkey: true };' }));
+  if (!opts.realAuth) await ctx.route(/auth-config\.js/, r => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.A1_AUTH = { google: true, azure: true, apple: true, password: true, email: true, passkey: true };' }));
   await ctx.addInitScript(seed(opts));
   const page = await ctx.newPage();
   page.on('pageerror', e => pageErrors.push(`${page.url()} :: ${e.message}`));
@@ -222,6 +222,37 @@ async function journey(name, fn) {
       await ctx.close();
     });
 
+    await journey('8b · E-mail + password: sign up → onboarding → dashboard → sign out → sign in', async () => {
+      const { ctx, page: p } = await context({ as: 'fresh', realAuth: true });
+      await p.goto(BASE + 'index.html'); await settle(p);
+      await p.click('.lp-hero [data-start]');
+      ok(await p.isVisible('#siPwName') && (await p.textContent('#siPwGo')) === 'Create account', 'sign-up form not shown');
+      await p.fill('#siPwName', 'Tom'); await p.fill('#siPwEmail', 'tom@example.org'); await p.fill('#siPw', 'short');
+      await p.click('#siPwGo'); ok(/too short/i.test(await p.textContent('#siMsg')), 'short password accepted');
+      await p.fill('#siPw', 'Lernen2026!'); await p.click('#siPwShow'); ok((await p.getAttribute('#siPw', 'type')) === 'text', 'show password does not work');
+      await shot(p, 'j8b-password-signup');
+      await Promise.all([p.waitForURL(/onboarding\.html/), p.click('#siPwGo')]); await settle(p);
+      ok(await p.isHidden('#obNameBox'), 'name was given at sign-up, onboarding should not ask again');
+      ok((await p.textContent('#obTitle')).includes('Tom'), 'onboarding does not greet Tom');
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
+      ok((await p.textContent('#dbHello')).includes('Tom'), 'dashboard does not greet Tom');
+      await p.click('#sh-avatar'); await Promise.all([p.waitForURL(/index\.html/), p.click('#sh-signout')]); await settle(p);
+      await p.click('.lp-actions [data-signin]');
+      ok(await p.isHidden('#siPwName') && (await p.textContent('#siPwGo')) === 'Sign in', 'sign-in form wrong');
+      await p.fill('#siPwEmail', 'tom@example.org'); await p.fill('#siPw', 'wrong-password'); await p.click('#siPwGo'); await p.waitForTimeout(300);
+      ok(/not correct/i.test(await p.textContent('#siMsg')), 'wrong password not reported');
+      await p.fill('#siPw', 'Lernen2026!'); await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#siPwGo')]); await settle(p);
+      ok((await p.textContent('#dbHello')).includes('Tom') && /Lektion 1/.test(await p.textContent('.db-resume h2')), 'returning password user not on dashboard');
+      await p.goto(BASE + 'index.html'); await settle(p); // signed in → header shows dashboard
+      ok(await p.isVisible('[data-member] a'), 'signed-in visitor should see Go to dashboard');
+      await ctx.close();
+      const { ctx: c2, page: q } = await context({ as: 'fresh', realAuth: true });
+      await q.goto(BASE + 'index.html'); await q.evaluate(() => localStorage.setItem('mock:users', JSON.stringify({ x: { id: 'x', email: 'tom@example.org', user_metadata: {}, identities: [] } })));
+      await q.click('.lp-hero [data-start]'); await q.fill('#siPwEmail', 'tom@example.org'); await q.fill('#siPw', 'Lernen2026!'); await q.click('#siPwGo'); await q.waitForTimeout(300);
+      ok(/already has an account/i.test(await q.textContent('#siMsg')) && (await q.textContent('#siPwGo')) === 'Sign in', 'duplicate sign-up not handled');
+      await c2.close();
+    });
+
     await journey('9 · Sign in with Microsoft → dashboard', async () => {
       const { ctx, page: p } = await context({ as: 'returning' });
       await p.goto(BASE + 'index.html'); await settle(p);
@@ -269,7 +300,8 @@ async function journey(name, fn) {
       await p.goto(BASE + 'index.html'); await settle(p); await p.click('.lp-actions [data-signin]');
       const cfg = await p.evaluate(() => window.A1_AUTH);
       for (const pr of ['google', 'azure', 'apple']) ok((await p.isVisible(`[data-provider="${pr}"]`)) === !!cfg[pr], `${pr} visibility does not match auth-config.js`);
-      ok((await p.isVisible('#siEmailForm')) === !!cfg.email, 'e-mail form visibility does not match auth-config.js');
+      ok((await p.isVisible('#siEmailForm')) === !!cfg.email, 'e-mail code form visibility does not match auth-config.js');
+      ok((await p.isVisible('#siPwForm')) === !!cfg.password, 'password form visibility does not match auth-config.js');
       ok((await p.isVisible('[data-passkey]')) === !!cfg.passkey, 'passkey visibility does not match auth-config.js');
       await shot(p, 'j11-live-config-dialog');
       await ctx.close();

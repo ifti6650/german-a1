@@ -45,6 +45,19 @@
         saveUser(u); setSession(u); localStorage.removeItem('mock:otp'); notify('SIGNED_IN', session());
         return { data: { user: u, session: session() }, error: null };
       },
+      async signUp({ email, password, options }) {
+        const c = get(CFG, {}); if (c.signupsOff) return { data: {}, error: { message: 'Signups not allowed for this instance' } };
+        const e = email.toLowerCase(); if (Object.values(users()).some(u => u.email === e)) return { data: {}, error: { message: 'User already registered' } };
+        if (password.length < 6) return { data: {}, error: { message: 'Password should be at least 6 characters.' } };
+        const u = { id: 'u-' + e.replace(/[^a-z0-9]/g, ''), email: e, created_at: new Date().toISOString(), user_metadata: (options && options.data) || {}, identities: [{ provider: 'email', identity_data: { email: e }, created_at: new Date().toISOString() }] };
+        saveUser(u); const pw = get('mock:pw', {}); pw[e] = password; put('mock:pw', pw);
+        setSession(u); notify('SIGNED_IN', session()); return { data: { user: u, session: session() }, error: null };
+      },
+      async signInWithPassword({ email, password }) {
+        const e = email.toLowerCase(); const u = Object.values(users()).find(x => x.email === e);
+        if (!u || get('mock:pw', {})[e] !== password) return { data: {}, error: { message: 'Invalid login credentials' } };
+        setSession(u); notify('SIGNED_IN', session()); return { data: { user: u, session: session() }, error: null };
+      },
       async signInWithPasskey() {
         const pk = get('mock:passkeys', []); if (!pk.length) return { data: {}, error: { message: 'webauthn_credential_not_found', code: 'webauthn_credential_not_found' } };
         const u = users()[pk[0].user_id]; setSession(u); notify('SIGNED_IN', session());

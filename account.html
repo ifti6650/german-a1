@@ -15,7 +15,7 @@
       <li><span class="ic" aria-hidden="true">★</span><span class="tx"><b>Member since</b><span id="acSince">…</span></span></li></ul>
   </section>
   <section class="panel" aria-labelledby="mT"><h2 id="mT">Sign-in methods</h2>
-    <p class="sub">These sign-in options are linked to your account. Signing in with the same e-mail address through another option opens this same account.</p>
+    <p class="sub">These sign-in options are linked to your account. </p>
     <ul class="ac-list" id="acMethods"><li><span class="ui-sk" style="height:40px;width:100%"></span></li></ul>
   </section>
   <section class="panel" aria-labelledby="kT" id="acPasskeys" hidden><h2 id="kT">Passkeys</h2>
@@ -33,7 +33,7 @@
   const $ = id => document.getElementById(id);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const CFG = window.A1_AUTH || {};
-  const LABEL = { google: 'Google', azure: 'Microsoft', apple: 'Apple', email: 'E-mail code', phone: 'Phone' };
+  const LABEL = { google: 'Google', azure: 'Microsoft', apple: 'Apple', email: 'E-mail', phone: 'Phone' };
   const ICON = { google: 'G', azure: '⊞', apple: '', email: '✉', phone: '☎' };
   const msg = (kind, title, text) => { $('acMsg').innerHTML = kind ? `<div class="ui-state ${kind}" style="margin-bottom:16px"><span class="ic">${kind === 'error' ? '!' : '✓'}</span><div><b>${title}</b>${text || ''}</div></div>` : '' };
   const fmt = d => d ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '–';

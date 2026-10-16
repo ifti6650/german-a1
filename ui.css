@@ -230,6 +230,9 @@ body.lp { margin: 0; background: var(--ui-surface); color: var(--ui-ink); font: 
 .ui-code { font: 700 22px/1 var(--ui-font); letter-spacing: .35em; text-align: center; font-variant-numeric: tabular-nums; }
 .ui-link { all: unset; cursor: pointer; color: var(--ui-accent-ink); font: 600 14px var(--ui-font); text-decoration: underline; text-underline-offset: 2px; }
 .ui-link:focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 2px; border-radius: 4px; }
+.ui-pw { position: relative; }
+.ui-pw .ui-input { padding-right: 64px; }
+.ui-pw .ui-link { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; }
 .ui-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .ui-switch { margin: 0; font-size: 14.5px; color: var(--ui-ink-2); text-align: center; }
 .ui-dialog .ui-google span { flex: none; }
