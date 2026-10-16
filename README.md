@@ -4,7 +4,9 @@ Grammar, vocabulary and speaking practice following Momente A1.1 and A1.2 (Huebe
 
 | Page | What it is |
 | --- | --- |
-| `index.html` | Start page |
+| `index.html` | Public website (landing page, course overview, sign-in) |
+| `dashboard.html` | Learner dashboard (signed-in learners only, like every page below) |
+| `onboarding.html` | First sign-in: choose Momente A1.1 or A1.2 |
 | `wortschatz.html` | Vocabulary trainer: 783 words, flashcards, quiz |
 | `grammar-book.html` | Grammar book, 25 steps + 4 bonus chapters |
 | `study-guide.html` | 8-week revision guide |

@@ -26,10 +26,26 @@ review.js   mistake scheduling (mirror of SQL record_answer_v2)
 progress-model.js  every progress definition in one place (PM)
 sync.js     auth, offline answer queue, app_state sync (now also a1:lessons, a1:prefs, a1:writing)
 data.js     reads (RLS-scoped), question-bank lookup, answer recording
-nav.js      shared menu: Dashboard · My Course · Wortschatz · Practice · Tests · Mistakes · Progress · Resources
+ui.css      design tokens (one palette for every page) + public site (.lp-*) + portal shell (.sh-*) + dashboard (.db-*)
+guard.js    <head> auth guard for learner pages: no stored session → index.html?signin=1&next=<page>
+shell.js    learner-portal layout: sidebar · top header with profile menu · mobile drawer + tab bar · onboarding redirect
+landing.js  public website: header, mobile menu, sign-in dialog, signed-in awareness
 ```
 
-Pages: `index.html` (dashboard + existing tools/plan), `course.html`, `lesson.html?l=N#learn|wortschatz|practice|apply|test|review`, `practice.html` (hub), `tests.html`, `test.html?id=…`, `mistakes.html`, `progress.html`.
+### Public website vs. learner portal (v3)
+| | Public website | Learner portal |
+| --- | --- | --- |
+| Pages | `index.html` only | `dashboard.html`, `onboarding.html`, `course.html`, `lesson.html`, `wortschatz.html`, `practice.html`, `tests.html`, `test.html`, `mistakes.html`, `progress.html`, `grammar-book.html`, `study-guide.html`, `speaking.html` |
+| Layout | `body.lp`: header, hero, course cards, features, footer | `shell.js` wraps each page: fixed sidebar (≥1001 px), top header + profile menu, drawer + bottom tab bar (≤1000 px) |
+| Access | anyone | `guard.js` in `<head>`; `shell.js` re-checks with Supabase and signs out stale sessions |
+
+Routing stays file-based (GitHub Pages, no build step), so every page is a real URL: deep links and refresh work without a SPA router.
+**Sign-in flow:** landing → Google (Supabase PKCE) → `redirectTo` = `dashboard.html` or the page the learner originally asked for (`next`, same-site page names only).
+**Onboarding:** after sign-in, a learner without `a1:prefs.course` and without any saved progress goes to `onboarding.html` to choose Momente A1.1 or A1.2. Learners who already have progress get the course inferred once (highest lesson used), so existing users never see onboarding. The choice is stored in `a1:prefs` (already synced via `app_state`): no database change.
+**Sign-out:** uploads queued answers, ends the Supabase session, returns to `index.html?signedout=1`. Browser copies of synced progress are kept so offline use still works; they are overwritten by the account's data at the next sign-in.
+**Offline:** if Supabase cannot load but a session is stored, portal pages stay usable with local data and show an offline notice.
+
+Pages: `dashboard.html` (personal dashboard), `course.html` (lessons + the 8-week plan, moved from the old start page), `lesson.html?l=N#learn|wortschatz|practice|apply|test|review`, `practice.html` (hub), `tests.html`, `test.html?id=…`, `mistakes.html`, `progress.html`.
 
 **Content lives in the repo, learner data in Supabase.** Question banks are versioned JS files (reviewable in PRs, work offline, no admin UI needed). The database stores only learner events.
 *Open decision for review:* move question banks into Supabase tables later (needed only for an in-browser content editor).
@@ -60,6 +76,10 @@ How to apply: Supabase → SQL Editor → paste the file → Run. The new pages 
 Security notes: RLS on all four tables; only the publishable key is in the client; scores are computed in the browser, so a determined user could submit a fake score for *their own* account (acceptable for self-study; server-side grading would need an Edge Function).
 
 ## 6. Verification
+* `node --test tests/*.test.js` — engine/content tests plus `tests/site.test.js`: landing numbers and lesson lists are computed from the real content; every learner page loads `guard.js` in `<head>`, uses the shell and has no old navigation; service worker caches the new files.
+* `NODE_PATH=$(npm root -g) node tests/e2e/journeys.js [--shots dir]` — Playwright journeys against a simulated Supabase (`tests/e2e/mock-supabase.js`, never the real project): guest → login → dashboard; new user → onboarding → A1.1 (and A1.2 → Lektion 13); protected deep link → login → same page; resume learning; Wortschatz → Practice → Progress (incl. sync to `app_state`); refresh; logout; mobile navigation; closed sign-ups; server error + retry; offline; keyboard menu; active states on every page.
+* `NODE_PATH=$(npm root -g) node tests/e2e/lessons.js 1 2 … 24` (static server on :8765) — answers every practice, apply and quiz item of each lesson inside the portal.
+
 * `node --test tests/*.test.js` — 16 tests: answer evaluation, partial scores, scoring/breakdown, course model, Lektion 1 schema + every key passes its own checker, quiz ≠ practice, generated vocab questions, review scheduling.
 * Playwright e2e (run locally): all pages load without errors; L1 practice 30/30 via UI; apply 7/7; test mode leaks no feedback; quiz 100% → lesson marked passed → course card "Completed"; module test resume; Wortschatz 783 words, 4 modes, state format unchanged; no horizontal overflow at 390 px.
 
