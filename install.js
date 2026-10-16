@@ -52,6 +52,9 @@
     b.id = 'installBtn'; b.className = 'inst-btn'; b.type = 'button';
     b.innerHTML = '<span aria-hidden="true">📲</span> Install app';
     b.onclick = openDialog;
+    if (document.body.classList.contains('lp')) return;              // public website: no install prompt
+    var slot = document.getElementById('sh-install');                // learner portal: sidebar footer
+    if (slot) { slot.appendChild(b); return; }
     var links = document.querySelector('nav.top .links');
     if (links) { links.appendChild(b); return; }
     var backs = document.querySelectorAll('.back'), last = backs[backs.length - 1];

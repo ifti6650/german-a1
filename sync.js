@@ -134,12 +134,19 @@
   }
 
   // ---------- login UI ----------
-  function login() {
-    if (!sb) return;
-    const back = location.href.split('#')[0];
-    sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: back } });
+  // After Google sign-in the learner lands inside the portal (dashboard, or the page they originally asked for).
+  // `next` must be a page of this site (e.g. "practice.html?topic=x"); anything else falls back to the dashboard.
+  function login(next) {
+    if (!sb) return Promise.reject(new Error('offline'));
+    const safe = typeof next === 'string' && /^[a-z0-9-]+\.html(?:[?#][^\s]*)?$/i.test(next) ? next : 'dashboard.html';
+    const redirectTo = new URL(safe, location.href).href;
+    return sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } });
   }
-  async function logout() { if (sb) await sb.auth.signOut(); sessionStorage.removeItem('a1:pulled'); try { localStorage.removeItem('a1:synced') } catch (e) {} }
+  async function logout() {
+    await flush();                      // upload pending answers before the session ends
+    if (sb) await sb.auth.signOut();
+    sessionStorage.removeItem('a1:pulled'); try { localStorage.removeItem('a1:synced') } catch (e) {}
+  }
 
   let pill;
   function mountPill() {
@@ -152,13 +159,19 @@
 .a1-acct .q{color:var(--muted,#5b6072);font-weight:500}
 .a1-acct.float{position:fixed;right:12px;bottom:12px;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.12);border-radius:10px;background:var(--paper,#fff);padding:4px}`;
     document.head.appendChild(css);
+    if (document.body.classList.contains('lp')) return;                 // public website: own sign-in buttons
+    const slot = document.getElementById('sh-sync');                     // learner portal: status in the top header
     const host = document.querySelector('nav.top .in');
-    if (host) host.appendChild(pill); else { pill.classList.add('float'); document.body.appendChild(pill) }
+    if (slot) { pill.dataset.portal = '1'; slot.appendChild(pill) } else if (host) host.appendChild(pill); else { pill.classList.add('float'); document.body.appendChild(pill) }
     paint();
   }
   function paint() {
     if (!pill) return;
     const n = queue().length;
+    if (pill.dataset.portal) { // the shell has the account menu; only show what still has to upload
+      pill.innerHTML = n ? `<span class="sh-sync off" title="Saved in this browser; uploads automatically"><i></i>${n} to sync</span>` : (sb && user ? '<span class="sh-sync" title="All progress is saved to your account"><i></i><span class="ui-sr">All progress </span>Synced</span>' : '');
+      return;
+    }
     if (!sb) { pill.innerHTML = n ? `<span class="q" title="Saved in this browser, uploads when online">${n} unsynced</span>` : ''; return }
     if (!user) {
       pill.innerHTML = `${n ? `<span class="q">${n} unsynced</span>` : ''}<button class="pri" data-a1="in">Sign in with Google</button>`;
@@ -182,7 +195,7 @@
   }
   A1.ready = (async () => {
     if (document.readyState === 'loading') await new Promise(r => document.addEventListener('DOMContentLoaded', r));
-    mountPill();
+    await new Promise(r => setTimeout(r)); mountPill();   // after the portal shell has created its header slot
     try { await loadLib() } catch (e) { paint(); return } // offline: keep working locally
     sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' } });
     const { data } = await sb.auth.getSession();

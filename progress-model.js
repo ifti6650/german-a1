@@ -39,10 +39,12 @@
   function course() {
     const wz = wortschatz(); const all = C.lessons.map(l => lesson(l.n, wz));
     const lvl = v => { const xs = all.filter(x => x.lesson.level === v); return { done: xs.filter(x => x.completed).length, total: xs.length, pct: Math.round(xs.reduce((a, x) => a + x.pct, 0) / xs.length) } };
-    // current lesson = most recently visited unfinished lesson, else first unfinished
+    // chosen course (onboarding): 'A1.1' or 'A1.2'; null if not chosen yet
+    const pref = ls('a1:prefs', {}).course; const chosen = pref === 'A1.1' || pref === 'A1.2' ? pref : null;
+    // current lesson = most recently visited unfinished lesson, else first unfinished lesson of the chosen course, else first unfinished
     const started = all.filter(x => x.last && !x.completed).sort((a, b) => b.last.localeCompare(a.last));
-    const current = started[0] || all.find(x => !x.completed) || all[all.length - 1];
-    return { lessons: all, current, a11: lvl('A1.1'), a12: lvl('A1.2'), completed: all.filter(x => x.completed).length, wz };
+    const current = started[0] || (chosen && all.find(x => x.lesson.level === chosen && !x.completed)) || all.find(x => !x.completed) || all[all.length - 1];
+    return { lessons: all, current, course: chosen, a11: lvl('A1.1'), a12: lvl('A1.2'), completed: all.filter(x => x.completed).length, wz };
   }
 
   // Analytics from persisted events (Supabase rows)

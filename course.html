@@ -1,11 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My Course · Deutsch A1</title><meta name="description" content="All 24 lessons of German A1 (Momente A1.1 and A1.2) with your progress."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<title>My Course · Deutsch A1</title><meta name="description" content="All 24 lessons of German A1 (Momente A1.1 and A1.2) with your progress."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#4f5fd6"><link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
 <script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="lessons/l02.js"></script><script src="lessons/l03.js"></script><script src="lessons/l04.js"></script><script src="lessons/l05.js"></script><script src="lessons/l06.js"></script><script src="lessons/l07.js"></script><script src="lessons/l08.js"></script><script src="lessons/l09.js"></script><script src="lessons/l10.js"></script><script src="lessons/l11.js"></script><script src="lessons/l12.js"></script><script src="lessons/l13.js"></script><script src="lessons/l14.js"></script><script src="lessons/l15.js"></script><script src="lessons/l16.js"></script><script src="lessons/l17.js"></script><script src="lessons/l18.js"></script><script src="lessons/l19.js"></script><script src="lessons/l20.js"></script><script src="lessons/l21.js"></script><script src="lessons/l22.js"></script><script src="lessons/l23.js"></script><script src="lessons/l24.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+<link rel="stylesheet" href="ui.css"><script src="guard.js"></script>
 </head><body>
-<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
-<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
-<header class="hero small"><div class="in"><div class="kicker">My Course · German A1</div><h1>24 lessons, one path</h1><p>Each lesson: Learn → Wortschatz → Practice → Apply → Quiz → Review. All 24 lessons are fully built, with grammar explanations, practice, listening, reading, writing and speaking tasks, and a lesson quiz.</p></div></header>
+<header class="hero small"><div class="in"><div class="kicker">My Course · German A1</div><h1>24 lessons, one path</h1><p>Every lesson follows the same path: Learn → Wortschatz → Practice → Apply → Quiz → Review. Pass the lesson quiz to complete a lesson.</p></div></header>
 <main class="pg" id="main">
   <div class="tiles" id="sum"></div>
   <div class="filters" role="group" aria-label="Filters">
@@ -13,11 +12,12 @@
     <select id="fStatus" aria-label="Status"><option value="all">Any status</option><option value="todo">Not started</option><option value="doing">In progress</option><option value="done">Completed</option></select>
   </div>
   <div id="map"></div>
+  <section class="plan" id="plan"><div class="plan-head"><div><h2>Your 8-week plan</h2><p>One module a week. Open a week to see its daily plan, tick off each day, then check yourself with the grammar self-test and the word test. Your ticks are saved to your account.</p></div><div class="overall"><span id="ovText">0 of 8 weeks complete · 0%</span><span class="pbar" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="ovBar"></i></span><span class="reset"><button class="linkish" data-reset>Reset progress</button><span id="resetConfirm" hidden> Clear all ticks and scores? <button class="linkish danger" data-reset-yes>Yes, reset</button> <button class="linkish" data-reset-no>Cancel</button></span></span></div></div><ol class="weeks" id="weeks"></ol><div class="wdetail" id="wdetail" hidden></div></section>
 </main>
 <script>
 (function () {
   const esc = ENGINE.esc; let level = 'all', status = 'all';
-  try { const p = JSON.parse(localStorage.getItem('a1:prefs') || '{}'); if (p.courseLevel) level = p.courseLevel } catch (e) {}
+  try { const p = JSON.parse(localStorage.getItem('a1:prefs') || '{}'); level = p.courseLevel || p.course || level } catch (e) {}
   function render() {
     const cp = PM.course();
     document.getElementById('sum').innerHTML = `
@@ -49,5 +49,4 @@
   render(); A1D.whenAuth(() => render()); window.addEventListener('storage', render);
 })();
 </script>
-<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
-<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
+<script src="plan.js"></script><script src="shell.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

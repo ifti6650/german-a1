@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Welcome · Deutsch A1</title><meta name="robots" content="noindex"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#4f5fd6"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css"><link rel="stylesheet" href="ui.css"><script src="guard.js"></script>
+</head><body data-layout="focus">
+<main id="main" class="ob">
+  <div class="ob-steps" aria-hidden="true"><i class="on"></i><i id="obStep2"></i></div>
+  <p class="ui-fine" id="obStepTxt">Step 1 of 2 · Choose your course</p>
+  <h1 id="obTitle">Willkommen!</h1>
+  <p class="lead" id="obLead">Choose the course you want to start with. Your dashboard, current lesson and course progress follow this choice. You can change it any time.</p>
+  <form id="obForm">
+    <fieldset style="border:0;padding:0;margin:0"><legend class="ui-sr">Choose your course</legend>
+    <div class="ob-choices">
+      <label class="ob-choice"><input type="radio" name="course" value="A1.1" required><span class="chk" aria-hidden="true"></span>
+        <span class="lvl">A1.1 · Modul 1–4 · Lektion 1–12</span><h2>Momente A1.1</h2>
+        <p>I am new to German. Start with greetings, introductions, jobs, family, shopping, free time and the past tense.</p></label>
+      <label class="ob-choice"><input type="radio" name="course" value="A1.2"><span class="chk" aria-hidden="true"></span>
+        <span class="lvl">A1.2 · Modul 5–8 · Lektion 13–24</span><h2>Momente A1.2</h2>
+        <p>I know the basics. Continue with the dative, directions, flats, health, plans, rules, comparing and dates.</p></label>
+    </div></fieldset>
+    <div id="obMsg" role="alert"></div>
+    <div class="ob-actions"><button class="ui-btn lg" type="submit" id="obGo">Continue <span aria-hidden="true">→</span></button><a class="ui-btn quiet" id="obCancel" href="dashboard.html" hidden>Cancel</a></div>
+  </form>
+</main>
+<script src="plan-data.js"></script><script src="sync.js"></script><script src="shell.js"></script><script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const P = new URLSearchParams(location.search);
+  const change = P.has('change');
+  const nxt = P.get('next'); const safe = nxt && /^[a-z0-9-]+\.html(?:[?#][^\s]*)?$/i.test(nxt) && !/^(index|onboarding)\.html/i.test(nxt) ? nxt : null;
+  const prefs = () => { try { return JSON.parse(localStorage.getItem('a1:prefs') || '{}') || {} } catch (e) { return {} } };
+  let intent = null; try { intent = sessionStorage.getItem('a1:intent') } catch (e) {}
+  const preset = prefs().course || (intent === 'A1.1' || intent === 'A1.2' ? intent : null);
+  if (preset) { const r = document.querySelector(`input[value="${preset}"]`); if (r) r.checked = true }
+  if (change) { $('obTitle').textContent = 'Change your course'; $('obLead').textContent = 'Your progress in both courses is kept. Switching only changes which course your dashboard follows.'; $('obCancel').hidden = false; document.querySelector('.ob-steps').hidden = true; $('obStepTxt').hidden = true }
+  A1_SHELL.ready.then(s => {
+    if (!s.user || change) return;
+    const first = A1_SHELL.names(s.user).first;
+    if (first) $('obTitle').textContent = `Willkommen, ${first}!`;
+    if (prefs().course) location.replace(safe || 'dashboard.html'); // already onboarded
+  });
+  $('obForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = (new FormData(e.target)).get('course');
+    if (v !== 'A1.1' && v !== 'A1.2') { $('obMsg').innerHTML = '<div class="ui-state error" style="margin-bottom:16px"><span class="ic">!</span><div><b>Please choose a course</b>Pick A1.1 or A1.2 to continue.</div></div>'; return }
+    const p = prefs(); const was = p.course;
+    p.course = v; p.courseSetAt = new Date().toISOString(); p.courseSource = 'onboarding';
+    if (!p.courseLevel || p.courseLevel === was) p.courseLevel = v; // the My Course filter follows the course
+    localStorage.setItem('a1:prefs', JSON.stringify(p)); // synced to the account via app_state
+    try { sessionStorage.removeItem('a1:intent') } catch (e) {}
+    $('obGo').disabled = true; $('obStep2').classList.add('on');
+    location.replace(change ? (safe || 'dashboard.html') : (safe && safe !== 'dashboard.html' ? safe : 'dashboard.html?welcome=1'));
+  });
+})();
+</script><script src="install.js"></script>
+</body></html>
