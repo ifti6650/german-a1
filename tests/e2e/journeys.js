@@ -370,6 +370,85 @@ async function journey(name, fn) {
       await ctx.close();
     });
 
+    await journey('12 · Study Guide overview: 24 lesson cards, search, level filter', async () => {
+      const { ctx, page: p } = await context({ signedIn: true });
+      await p.goto(BASE + 'study-guide.html'); await settle(p);
+      ok(await current(p) === 'Study Guide', 'Study Guide not active in sidebar');
+      ok((await p.$$('.sg-lc')).length === 24, 'expected 24 lesson cards');
+      ok((await p.$$eval('.sg-lc', as => as.map(a => +a.dataset.n))).join() === Array.from({ length: 24 }, (_, i) => i + 1).join(), 'lesson cards out of order');
+      ok((await p.$$('#lv-A1\\.1 ~ .sg-grid .sg-lc, section:has(#lv-A1\\.1) .sg-lc')).length >= 12, 'A1.1 section missing');
+      ok((await p.textContent('#sgResume')).includes('Lektion starten'), 'fresh learner should get "Lektion starten"');
+      await shot(p, 'j12-overview');
+      await p.fill('#sgQ', 'Apotheke'); await p.waitForTimeout(100);
+      ok((await p.$$eval('.sg-lc', as => as.map(a => +a.dataset.n))).includes(18), 'search did not find Lektion 18 (Apotheke)');
+      await p.fill('#sgQ', 'Postleitzahl'); await p.waitForTimeout(100);
+      ok(await p.isVisible('.sg-lc[data-n="2"] .hit'), 'word search shows no hit hint');
+      await p.fill('#sgQ', ''); await p.click('[data-lv="A1.2"]'); await p.waitForTimeout(100);
+      ok((await p.$$('.sg-lc')).length === 12 && !(await p.$('.sg-lc[data-n="1"]')), 'A1.2 filter wrong');
+      await p.click('[data-lv=""]'); await p.click('#sgHow summary'); await p.waitForSelector('#sgIntro[data-done]');
+      ok((await p.textContent('#sgIntro')).includes('Learning routine'), 'how-to-use intro not rendered');
+      await ctx.close();
+      const m = await context({ signedIn: true }, MOBILE);
+      await m.page.goto(BASE + 'study-guide.html'); await settle(m.page); await noHScroll(m.page, 'study guide overview (mobile)'); await shot(m.page, 'j12-overview-mobile');
+      await m.ctx.close();
+    });
+
+    await journey('13 · Study Guide lesson: parts, situations, progress, resume, dashboard', async () => {
+      const { ctx, page: p } = await context({ signedIn: true });
+      await p.goto(BASE + 'study-guide.html?l=2'); await settle(p);
+      ok((await p.textContent('#sgTitle')) === 'Arbeit, Wohnort und persönliche Angaben', 'lesson 2 title wrong (umlauts?)');
+      ok((await p.$$('#sgTabs [role="tab"]')).length === 9, 'expected 9 lesson parts');
+      ok(await p.isVisible('#tab-intro[aria-selected="true"]'), 'lesson should open on Einführung');
+      ok((await p.textContent('#sgProg')).includes('0 von 9'), 'opening a lesson must not mark anything done');
+      await p.click('#tab-words'); ok(/#words$/.test(p.url()), 'part not in URL');
+      ok((await p.$$('.sg-tw tbody tr')).length >= 15, 'Wort-Hilfe table missing');
+      await p.click('#tab-situations'); await p.waitForSelector('.sg-dlg');
+      ok((await p.$$('.sg-sits [data-sit]')).length === 8, 'expected 8 situation buttons');
+      ok((await p.$$('.sg-dlg .sg-turn')).length >= 4, 'dialogue not shown as conversation');
+      ok((await p.$$('.sg-turn.r')).length >= 2, 'second speaker not distinguished');
+      await shot(p, 'j13-situation');
+      await p.click('[data-sit="3"]'); ok(/#situations-3$/.test(p.url()), 'situation not in URL');
+      await p.click('[data-sitdone="3"]');
+      ok(await p.isVisible('.sg-sits [data-sit="3"].done'), 'situation tick not shown');
+      await p.click('#sgDone'); ok(await p.isVisible('#tab-situations.done'), 'part done not shown');
+      // deep link + refresh keep the place
+      await p.reload(); await settle(p);
+      ok(await p.isVisible('#tab-situations[aria-selected="true"]') && await p.isVisible('.sg-sits [data-sit="3"][aria-pressed="true"]'), 'refresh lost the situation');
+      ok((await p.textContent('#sgProg')).includes('1 von 9'), 'progress not kept after refresh');
+      // Grammar Book link resolves
+      await p.click('#tab-patterns'); const gb = await p.$eval('.sg-body a[href^="grammar-book.html#step-"]', a => a.getAttribute('href'));
+      // can-do checks remembered
+      await p.click('#tab-review'); await p.check('.sg-can input >> nth=0'); await p.reload(); await settle(p);
+      ok(await p.isChecked('.sg-can input >> nth=0'), 'can-do tick not remembered');
+      // complete the lesson by marking every part
+      for (const k of ['intro', 'goals', 'words', 'patterns', 'expressions', 'variations', 'challenge', 'review']) { await p.click('#tab-' + k); await p.click('#sgDone') }
+      ok((await p.textContent('#sgProg')).includes('Lektion abgeschlossen'), 'lesson not completed after all parts');
+      // overview shows completion and resume
+      await p.goto(BASE + 'study-guide.html'); await settle(p);
+      ok((await p.textContent('.sg-lc[data-n="2"] .sg-st')).includes('Abgeschlossen'), 'overview does not show completed lesson');
+      await p.goto(BASE + 'study-guide.html?l=5#expressions'); await settle(p);
+      await p.goto(BASE + 'study-guide.html'); await settle(p);
+      ok((await p.getAttribute('#sgResume', 'href')) === 'study-guide.html?l=5#expressions', 'resume link wrong: ' + await p.getAttribute('#sgResume', 'href'));
+      // dashboard card
+      await p.goto(BASE + 'dashboard.html'); await settle(p);
+      ok((await p.textContent('.db-guide')).includes('1 of 24 lessons completed'), 'dashboard Study Guide card wrong: ' + await p.textContent('.db-guide'));
+      ok((await p.getAttribute('.db-guide a', 'href')) === 'study-guide.html?l=5#expressions', 'dashboard resume link wrong');
+      // progress is stored under the synced key, per user
+      const st = await p.evaluate(() => JSON.parse(localStorage.getItem('a1:guide')));
+      ok(st.l[2].parts.situations && st.l[2].sit[3] && st.last.n === 5, 'a1:guide state wrong');
+      await p.waitForTimeout(1800);
+      const row = await p.evaluate(() => (JSON.parse(localStorage.getItem('mock:db')).app_state || []).find(r => r.key === 'a1:guide'));
+      ok(row && row.user_id && row.value.l[2], 'a1:guide not synced to app_state');
+      await p.goto(BASE + 'grammar-book.html'); await settle(p); ok(await p.$('#' + gb.split('#')[1]), 'Grammar Book anchor missing: ' + gb);
+      await p.goto(BASE + 'lesson.html?l=7'); await settle(p);
+      ok(await p.$('a[href="study-guide.html?l=7"]'), 'lesson page does not link to the Study Guide lesson');
+      await ctx.close();
+      const m = await context({ signedIn: true }, MOBILE);
+      await m.page.goto(BASE + 'study-guide.html?l=14#situations-2'); await settle(m.page);
+      await noHScroll(m.page, 'study guide lesson (mobile)'); await shot(m.page, 'j13-lesson-mobile');
+      await m.ctx.close();
+    });
+
     await journey('E4 · Loading skeleton, keyboard menu, active states', async () => {
       const { ctx, page: p } = await context({ as: 'returning', signedIn: true });
       await p.goto(BASE + 'dashboard.html', { waitUntil: 'domcontentloaded' });
