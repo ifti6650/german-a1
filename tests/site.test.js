@@ -55,7 +55,7 @@ test('privacy page is public and linked from the sign-in dialog', () => {
 });
 test('auth-config.js lists every sign-in method the dialog knows', () => {
   global.window = global; delete global.A1_AUTH; require(path.join(ROOT, 'auth-config.js'));
-  for (const k of ['google', 'azure', 'apple', 'email', 'passkey']) assert.equal(typeof global.A1_AUTH[k], 'boolean', k);
+  for (const k of ['google', 'azure', 'apple', 'password', 'email', 'passkey']) assert.equal(typeof global.A1_AUTH[k], 'boolean', k);
   for (const pr of ['google', 'azure', 'apple']) assert.ok(landing.includes(`data-provider="${pr}"`), pr);
 });
 test('service worker caches the new files', () => {
