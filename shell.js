@@ -61,7 +61,7 @@
     if (page === 'onboarding.html') return '<b>Welcome</b>';
     if (page === 'account.html') return '<b>Account &amp; sign-in</b>';
     const [g, t] = groupOf(cur); if (!t) return '';
-    const sub = page === 'lesson.html' ? (new URLSearchParams(location.search).get('l') ? 'Lektion ' + (+new URLSearchParams(location.search).get('l')) : '') : page === 'test.html' ? 'Test' : '';
+    const ql = +new URLSearchParams(location.search).get('l'); const sub = (page === 'lesson.html' || page === 'study-guide.html') ? (ql >= 1 && ql <= 24 ? 'Lektion ' + Math.round(ql) : '') : page === 'test.html' ? 'Test' : '';
     return `<span>${g}</span><span class="sep">/</span>${sub ? `<a href="${cur}" style="color:inherit;text-decoration:none">${t}</a><span class="sep">/</span><b>${esc(sub)}</b>` : `<b>${t}</b>`}`;
   }
 

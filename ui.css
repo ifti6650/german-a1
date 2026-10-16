@@ -451,3 +451,7 @@ html.sh-focus .sh-top .mlogo { display: inline-flex; }
 .ob-choice .chk { position: absolute; top: 18px; right: 18px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ui-line-2); }
 .ob-choice:has(input:checked) .chk { border-color: var(--ui-accent); background: var(--ui-accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/14px no-repeat; }
 .ob-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.db-guide { gap: 12px; }
+.db-guide-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.db-guide .cap { color: var(--ui-muted); font-size: 14px; }
+@media (max-width: 640px) { .db-guide-row .ui-btn { width: 100%; } }
