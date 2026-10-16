@@ -31,13 +31,18 @@
   const pkBtn = $('[data-passkey]');
   pkBtn.hidden = !(CFG.passkey && window.PublicKeyCredential);
   emailForm.hidden = !CFG.email;
+  const pwForm = $('#siPwForm'); pwForm.hidden = !CFG.password;
   function showMsg(kind, text) { msg.innerHTML = text ? `<div class="ui-state ${kind}"><span class="ic">${kind === 'error' ? '!' : '✓'}</span><div>${text}</div></div>` : '' }
   function setMode(m) {
     mode = m;
     $('#siTitle').textContent = m === 'signup' ? 'Create your free account' : 'Sign in to Deutsch A1';
-    if (!P.get('next') || m === 'signup') $('#siLead').textContent = m === 'signup' ? 'Start learning in seconds. Pick any option: no password needed.' : 'Welcome back. Choose how you want to continue.';
+    if (!P.get('next') || m === 'signup') $('#siLead').textContent = m === 'signup' ? 'Start learning in seconds. It’s free.' : 'Welcome back. Choose how you want to continue.';
     $('#siSwitch').innerHTML = m === 'signup' ? 'Already have an account? <button class="ui-link" type="button" data-mode="signin">Sign in</button>' : 'New here? <button class="ui-link" type="button" data-mode="signup">Create a free account</button>';
     pkBtn.hidden = m === 'signup' || !(CFG.passkey && window.PublicKeyCredential); // passkeys sign in existing accounts only
+    // e-mail + password: the same form signs in or creates the account
+    $('#siNameRow').hidden = m !== 'signup'; $('#siPwHint').hidden = m !== 'signup';
+    $('#siPw').autocomplete = m === 'signup' ? 'new-password' : 'current-password';
+    $('#siPwGo').textContent = m === 'signup' ? 'Create account' : 'Sign in';
   }
   function step(which) { stepStart.hidden = which !== 'start'; stepCode.hidden = which !== 'code'; $('#siSwitch').hidden = which !== 'start' }
   function openSignin(course, m) {
@@ -106,6 +111,34 @@
     try { await sendCode(); showMsg('success', `<b>New code sent</b>Check ${esc(emailAddr)}. Only the newest code works.`) } catch (err) { fail(err) }
   });
   $('#siBack').addEventListener('click', () => { showMsg('', ''); step('start') });
+  // E-mail + password
+  $('#siPwShow').addEventListener('click', e => { const i = $('#siPw'), show = i.type === 'password'; i.type = show ? 'text' : 'password'; e.target.textContent = show ? 'Hide' : 'Show'; e.target.setAttribute('aria-pressed', show) });
+  pwForm.addEventListener('submit', async e => {
+    e.preventDefault(); showMsg('', '');
+    const email = $('#siPwEmail').value.trim(), pw = $('#siPw').value, name = $('#siPwName').value.trim();
+    if (!validEmail(email)) { showMsg('error', '<b>Please check the e-mail address</b>It should look like name@example.com.'); $('#siPwEmail').focus(); return }
+    if (mode === 'signup' && pw.length < 8) { showMsg('error', '<b>Password too short</b>Use at least 8 characters.'); $('#siPw').focus(); return }
+    if (!pw) { showMsg('error', '<b>Please enter your password</b>'); $('#siPw').focus(); return }
+    const btn = $('#siPwGo'), label = btn.textContent; btn.disabled = true; btn.textContent = mode === 'signup' ? 'Creating account…' : 'Signing in…';
+    try {
+      const a = await client();
+      const r = mode === 'signup' ? await a.signUp(email, pw, name) : await a.signInPassword(email, pw);
+      if (r.error) throw r.error;
+      if (mode === 'signup' && !r.data.session) { // project still requires e-mail confirmation
+        showMsg('success', '<b>Account created</b>Please confirm your e-mail address with the link we sent, then sign in.'); setMode('signin'); btn.disabled = false; return;
+      }
+      location.replace(next);
+    } catch (err) {
+      btn.disabled = false; btn.textContent = label;
+      const m = (err && err.message) || '';
+      if (/invalid login credentials/i.test(m)) showMsg('error', '<b>E-mail or password is not correct</b>Check both, or <button class="ui-link" type="button" data-mode="signup">create a free account</button>. If you signed up with Google, use “Continue with Google”.');
+      else if (/already registered|already exists/i.test(m)) { showMsg('error', '<b>This e-mail already has an account</b>Sign in instead.'); setMode('signin') }
+      else if (/password/i.test(m) && /weak|short|least|characters/i.test(m)) showMsg('error', '<b>Please choose a stronger password</b>' + esc(m));
+      else if (/signups? not allowed|disabled/i.test(m)) showMsg('error', '<b>New accounts cannot be created at the moment</b>Please try again later.');
+      else if (/not confirmed/i.test(m)) showMsg('error', '<b>Please confirm your e-mail address first</b>Use the link in the e-mail we sent.');
+      else fail(err);
+    }
+  });
 
   // messages from redirects
   const err = P.get('error');

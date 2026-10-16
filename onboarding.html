@@ -32,7 +32,7 @@
   const nxt = P.get('next'); const safe = nxt && /^[a-z0-9-]+\.html(?:[?#][^\s]*)?$/i.test(nxt) && !/^(index|onboarding)\.html/i.test(nxt) ? nxt : null;
   const prefs = () => { try { return JSON.parse(localStorage.getItem('a1:prefs') || '{}') || {} } catch (e) { return {} } };
   let intent = null; try { intent = sessionStorage.getItem('a1:intent') } catch (e) {}
-  const preset = prefs().course || (intent === 'A1.1' || intent === 'A1.2' ? intent : null);
+  const preset = prefs().course || (intent === 'A1.1' || intent === 'A1.2' ? intent : 'A1.1'); // beginners' course pre-selected: one click to continue
   if (preset) { const r = document.querySelector(`input[value="${preset}"]`); if (r) r.checked = true }
   if (change) { $('obTitle').textContent = 'Change your course'; $('obLead').textContent = 'Your progress in both courses is kept. Switching only changes which course your dashboard follows.'; $('obCancel').hidden = false; document.querySelector('.ob-steps').hidden = true; $('obStepTxt').hidden = true }
   A1_SHELL.ready.then(s => {

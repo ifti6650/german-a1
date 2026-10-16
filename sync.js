@@ -152,6 +152,9 @@
     // E-mail: one message with a 6-digit code AND a magic link. The code works on any device; the link only in this browser (PKCE).
     async emailCode(email, next) { need(); return sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: back(next) } }) },
     async verifyCode(email, token) { need(); return sb.auth.verifyOtp({ email, token, type: 'email' }) },
+    // E-mail + password (works without an e-mail service when "Confirm email" is off in Supabase)
+    async signUp(email, password, name) { need(); return sb.auth.signUp({ email, password, options: { data: name ? { full_name: name } : {}, emailRedirectTo: back('dashboard.html') } }) },
+    async signInPassword(email, password) { need(); return sb.auth.signInWithPassword({ email, password }) },
     // Passkeys (Supabase beta): sign-in only for accounts that registered one while signed in.
     async passkey() { need(); return sb.auth.signInWithPasskey() },
     passkeys: {
