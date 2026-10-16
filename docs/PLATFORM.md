@@ -38,7 +38,7 @@ Pages: `index.html` (dashboard + existing tools/plan), `course.html`, `lesson.ht
 
 * 24 lessons from `plan-data.js`: title, topic, level (A1.1 L1–12 / A1.2 L13–24), Modul (3 lessons each), grammar steps with Grammar Book links, Study Guide anchor, Wortschatz words.
 * `textbookMapping: 'title-and-topic'`: lesson titles/topics and grammar order follow Momente. **Exercise-level mapping to Kursbuch/Arbeitsbuch pages is not verified** (no access to the books) and no page numbers are claimed.
-* Lesson content status: **L1 complete** (6 objectives, 7 Learn sections, 30 practice, 7 apply, 15 quiz items). **L2–L24 vocab-only**: Learn links + vocabulary practice and quiz generated from the existing word list (article, meaning, write).
+* Lesson content status: **L1 complete** (6 objectives, 7 Learn sections, 30 practice, 7 apply, 15 quiz items). **L2 complete** (6 objectives, 7 Learn sections, 31 practice, 8 apply, 15 quiz items). **L3 complete** (6 objectives, 7 Learn sections, 30 practice, 7 apply, 15 quiz items) — Modul 1 fully authored. **L4–L24 vocab-only**: Learn links + vocabulary practice and quiz generated from the existing word list (article, meaning, write).
 * Question metadata: `id, level, lesson, topic, skill, grammar, difficulty, type, instructions, prompt, options, answer, accept, explanation, objective, status`. `status: 'ai-checked'` = written and checked by AI, **needs teacher review** before `approved`; `generated` = built from the Wortschatz list.
 
 **Content plan for L2–L24** (same template as `lessons/l01.js`): objectives (4–6), Learn (5–7 sections linked to the Grammar Book step), Practice (~25–30), Apply (2 listening, 2 reading, 1 writing, 1–2 speaking), Quiz (15, no overlap with Practice). Add the file, add a `<script src="lessons/lNN.js">` to the page template + `sw.js`; `tests/engine.test.js` validates every item automatically.
@@ -46,7 +46,7 @@ Pages: `index.html` (dashboard + existing tools/plan), `course.html`, `lesson.ht
 ## 4. Definitions
 See `progress-model.js` header and the "How these numbers work" box on `progress.html`. Completion (quiz passed) ≠ mastery (spaced mistake review) ≠ accuracy.
 
-## 5. Database migration 002 (required for spaced mistake review)
+## 5. Database migration 002 (required for spaced mistake review) — APPLIED 2026-10-16, verified
 
 File: `supabase/migrations/002_learning_platform.sql` · rollback: `002_learning_platform_rollback.sql`
 
