@@ -1,8 +1,8 @@
 // Offline support for the Deutsch A1 app: pages load from the network when online
 // (so updates arrive) and from the cache when offline.
-const CACHE = 'deutsch-a1-v5';
+const CACHE = 'deutsch-a1-v6';
 const FILES = ['./', 'index.html', 'wortschatz.html', 'grammar-book.html', 'study-guide.html', 'speaking.html', 'practice.html', 'progress.html', 'course.html', 'lesson.html', 'test.html', 'tests.html', 'mistakes.html',
-  'site.css', 'install.js', 'plan.js', 'plan-data.js', 'speak-data.js', 'sync.js', 'app.css', 'nav.js', 'course.js', 'engine.js', 'review.js', 'progress-model.js', 'data.js', 'dashboard.js', 'gb-links.js', 'lessons/l01.js', 'lessons/l02.js', 'manifest.webmanifest',
+  'site.css', 'install.js', 'plan.js', 'plan-data.js', 'speak-data.js', 'sync.js', 'app.css', 'nav.js', 'course.js', 'engine.js', 'review.js', 'progress-model.js', 'data.js', 'dashboard.js', 'gb-links.js', 'lessons/l01.js', 'lessons/l02.js', 'lessons/l03.js', 'manifest.webmanifest',
   'icon-180.png', 'icon-192.png', 'icon-512.png', 'Momente_A1_Grammar_Book.pdf'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
