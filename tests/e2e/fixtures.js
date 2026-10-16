@@ -1,8 +1,8 @@
 // Seed data for browser tests (simulated Supabase). Each function returns an init script that seeds localStorage once per browser context.
 const DAY = 864e5;
 const USERS = {
-  returning: { id: 'u-returning', email: 'learner@example.com', user_metadata: { given_name: 'Jade', full_name: 'Jade Example' } },
-  fresh: { id: 'u-new', email: 'new.learner@example.com', user_metadata: { given_name: 'Lena', full_name: 'Lena Neu' } }
+  returning: { id: 'u-returning', email: 'learner@example.com', created_at: '2026-09-01T10:00:00Z', user_metadata: { given_name: 'Jade', full_name: 'Jade Example' }, identities: [{ provider: 'google', identity_data: { email: 'learner@example.com' }, created_at: '2026-09-01T10:00:00Z' }] },
+  fresh: { id: 'u-new', email: 'new.learner@example.com', created_at: '2026-10-16T10:00:00Z', user_metadata: { given_name: 'Lena', full_name: 'Lena Neu' }, identities: [{ provider: 'google', identity_data: { email: 'new.learner@example.com' }, created_at: '2026-10-16T10:00:00Z' }] }
 };
 function returningDb(now = Date.now()) {
   const uid = USERS.returning.id; const iso = t => new Date(t).toISOString();

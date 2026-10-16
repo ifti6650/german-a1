@@ -16,18 +16,56 @@
       const u = get(CFG, {}).loginAs; if (u) put(KEY, { access_token: 'mock-access', refresh_token: 'mock-refresh', expires_at: 4e9, token_type: 'bearer', user: u });
       sp.delete('code'); history.replaceState(null, '', location.pathname + (sp.toString() ? '?' + sp : '') + location.hash);
     }
+    const setSession = u => put(KEY, { access_token: 'mock-access', refresh_token: 'mock-refresh', expires_at: 4e9, token_type: 'bearer', user: u });
+    const users = () => get('mock:users', {});
+    const saveUser = u => { const all = users(); all[u.id] = u; put('mock:users', all) };
+    const notify = (ev, s) => listeners.forEach(f => f(ev, s));
     const auth = {
       async getSession() { return { data: { session: session() }, error: null } },
       onAuthStateChange(cb) { listeners.push(cb); setTimeout(() => cb('INITIAL_SESSION', session()), 0); return { data: { subscription: { unsubscribe() {} } } } },
-      async signInWithOAuth({ options }) {
-        window.__lastRedirectTo = options.redirectTo;
-        const u = get(CFG, {}).loginAs; const url = new URL(options.redirectTo);
+      async signInWithOAuth({ provider, options }) {
+        window.__lastRedirectTo = options.redirectTo; put('mock:lastOAuth', { provider, scopes: options.scopes || null, redirectTo: options.redirectTo });
+        const c = get(CFG, {}); let u = c.loginAs; const url = new URL(options.redirectTo);
         if (!u) { url.searchParams.set('error', 'access_denied'); url.searchParams.set('error_description', 'Signups not allowed for this instance') }
-        else url.searchParams.set('code', 'mock');
+        else { u = Object.assign({}, u, { identities: [{ provider, identity_data: { email: u.email }, created_at: new Date().toISOString() }] }); c.loginAs = u; put(CFG, c); url.searchParams.set('code', 'mock') }
         setTimeout(() => { location.href = url.href }, 30);
         return { data: { url: url.href }, error: null };
       },
-      async signOut() { localStorage.removeItem(KEY); listeners.forEach(f => f('SIGNED_OUT', null)); return { error: null } }
+      async signInWithOtp({ email, options }) {
+        const c = get(CFG, {}); if (c.fail) return { data: null, error: { message: 'Mock network error' } };
+        const last = get('mock:otpAt', 0); if (Date.now() - last < 2000) return { data: null, error: { message: 'For security purposes, you can only request this after 60 seconds.' } };
+        put('mock:otpAt', Date.now()); put('mock:otp', { email: email.toLowerCase(), code: '123456', redirect: options && options.emailRedirectTo });
+        return { data: {}, error: null };
+      },
+      async verifyOtp({ email, token, type }) {
+        const o = get('mock:otp', null);
+        if (!o || o.email !== email.toLowerCase() || token !== o.code || type !== 'email') return { data: {}, error: { message: 'Token has expired or is invalid' } };
+        const known = Object.values(users()).find(u => u.email === o.email);
+        const u = known || { id: 'u-' + o.email.replace(/[^a-z0-9]/g, ''), email: o.email, created_at: new Date().toISOString(), user_metadata: {}, identities: [{ provider: 'email', identity_data: { email: o.email }, created_at: new Date().toISOString() }] };
+        saveUser(u); setSession(u); localStorage.removeItem('mock:otp'); notify('SIGNED_IN', session());
+        return { data: { user: u, session: session() }, error: null };
+      },
+      async signInWithPasskey() {
+        const pk = get('mock:passkeys', []); if (!pk.length) return { data: {}, error: { message: 'webauthn_credential_not_found', code: 'webauthn_credential_not_found' } };
+        const u = users()[pk[0].user_id]; setSession(u); notify('SIGNED_IN', session());
+        return { data: { user: u, session: session() }, error: null };
+      },
+      async registerPasskey() {
+        const s = session(); if (!s) return { data: null, error: { message: 'not signed in' } };
+        saveUser(s.user); const pk = get('mock:passkeys', []); const k = { id: 'pk' + (pk.length + 1), user_id: s.user.id, friendly_name: 'Chrome on test device', created_at: new Date().toISOString() };
+        pk.push(k); put('mock:passkeys', pk); return { data: k, error: null };
+      },
+      passkey: {
+        async list() { const s = session(); return { data: get('mock:passkeys', []).filter(k => s && k.user_id === s.user.id), error: null } },
+        async delete({ passkeyId }) { put('mock:passkeys', get('mock:passkeys', []).filter(k => k.id !== passkeyId)); return { data: null, error: null } },
+        async update({ passkeyId, friendlyName }) { put('mock:passkeys', get('mock:passkeys', []).map(k => k.id === passkeyId ? Object.assign(k, { friendly_name: friendlyName }) : k)); return { data: null, error: null } }
+      },
+      async updateUser({ data }) {
+        const s = session(); if (!s) return { data: null, error: { message: 'not signed in' } };
+        const u = Object.assign({}, s.user, { user_metadata: Object.assign({}, s.user.user_metadata, data) }); setSession(u); saveUser(u);
+        return { data: { user: u }, error: null };
+      },
+      async signOut() { localStorage.removeItem(KEY); notify('SIGNED_OUT', null); return { error: null } }
     };
     const me = () => { const s = session(); return s && s.user.id };
     function from(table) {

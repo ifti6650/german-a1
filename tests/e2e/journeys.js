@@ -15,10 +15,12 @@ let browser;
 
 function ok(cond, msg) { if (!cond) throw new Error(msg) }
 async function context(opts = {}, viewport = DESK) {
-  const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: viewport === MOBILE, hasTouch: viewport === MOBILE });
+  const ctx = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: viewport === MOBILE, hasTouch: viewport === MOBILE, serviceWorkers: 'block' }); // routes must see every request
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   if (opts.offline) await ctx.route(/cdn\.jsdelivr\.net/, r => r.abort());
   else await ctx.route(/cdn\.jsdelivr\.net/, r => r.fulfill({ status: 200, contentType: 'application/javascript', body: MOCK }));
+  // every sign-in method switched on, unless the test checks the real auth-config.js
+  if (!opts.realAuth) await ctx.route(/auth-config\.js/, r => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'window.A1_AUTH = { google: true, azure: true, apple: true, email: true, passkey: true };' }));
   await ctx.addInitScript(seed(opts));
   const page = await ctx.newPage();
   page.on('pageerror', e => pageErrors.push(`${page.url()} :: ${e.message}`));
@@ -51,7 +53,7 @@ async function journey(name, fn) {
       await shot(p, 'j1-landing');
       await p.click('.lp-actions [data-signin]'); ok(await p.isVisible('#signin'), 'sign-in dialog did not open');
       await shot(p, 'j1-signin-dialog');
-      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#siGoogle')]); await settle(p);
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('[data-provider="google"]')]); await settle(p);
       ok(!/code=/.test(p.url()), 'OAuth code left in URL'); ok(file(p) === 'dashboard.html', 'not on dashboard: ' + p.url());
       ok((await p.textContent('#dbHello')).includes('Jade'), 'greeting without name');
       ok((await p.textContent('#dbCourse')).includes('Momente A1.1'), 'course missing');
@@ -71,7 +73,7 @@ async function journey(name, fn) {
       const { ctx, page: p } = await context({ as: 'fresh' });
       await p.goto(BASE + 'index.html#courses'); await settle(p);
       await p.click('[data-start="A1.1"]');
-      await Promise.all([p.waitForURL(/onboarding\.html/), p.click('#siGoogle')]); await settle(p);
+      await Promise.all([p.waitForURL(/onboarding\.html/), p.click('[data-provider="google"]')]); await settle(p);
       ok((await p.textContent('#obTitle')).includes('Lena'), 'onboarding does not greet the new learner');
       ok(await p.isChecked('input[value="A1.1"]'), 'A1.1 not preselected from the course card');
       await shot(p, 'j2-onboarding');
@@ -101,7 +103,7 @@ async function journey(name, fn) {
       await p.goto(BASE + 'practice.html?topic=sein'); await p.waitForURL(/index\.html/); await settle(p);
       ok(await p.isVisible('#signin'), 'protected page did not ask to sign in');
       ok(/sign in to open that page/i.test(await p.textContent('#siLead')), 'no explanation for the redirect');
-      await Promise.all([p.waitForURL(/practice\.html\?topic=sein/), p.click('#siGoogle')]); await settle(p);
+      await Promise.all([p.waitForURL(/practice\.html\?topic=sein/), p.click('[data-provider="google"]')]); await settle(p);
       ok(await current(p) === 'Practice', 'Practice not active after deep link');
       await p.click('.sh-side a[href="dashboard.html"]'); await settle(p);
       await Promise.all([p.waitForURL(/lesson\.html\?l=2/), p.click('.db-resume .ui-btn')]); await settle(p);
@@ -114,7 +116,7 @@ async function journey(name, fn) {
 
     await journey('4 · Wortschatz → Practice → Progress', async () => {
       const { ctx, page: p } = await context({ as: 'returning', signedIn: true });
-      await p.goto(BASE + 'wortschatz.html'); await settle(p);
+      await p.goto(BASE + 'wortschatz.html'); await p.waitForFunction(() => localStorage.getItem('a1:synced')); await p.waitForLoadState('load'); await settle(p); // first download from the account done
       const rows = await p.$$eval('.tablebox tbody tr', r => r.length);
       ok(rows === 783, 'Wortschatz should list 783 words, got ' + rows);
       ok(await current(p) === 'Wortschatz', 'Wortschatz not active');
@@ -138,10 +140,11 @@ async function journey(name, fn) {
       await p.click('.sh-side a[href="progress.html"]'); await settle(p);
       ok(await current(p) === 'Progress', 'Progress not active');
       const t = (await p.textContent('#app')).replace(/\s+/g, ' ');
-      ok(new RegExp(`Words known\\s*${after}(?!\\d)`, 'i').test(t), 'Progress does not show the new Known word count');
+      const nowKnown = await p.evaluate(() => Object.values(JSON.parse(localStorage.getItem('wz:v2')).cards).filter(c => c.s === 'known').length); // the quiz step above may move a word back to Learning
+      ok(new RegExp(`Words known\\s*${nowKnown}(?!\\d)`, 'i').test(t), `Progress shows a different Known count than the trainer (${nowKnown})`);
       await p.waitForTimeout(1800);
       const remote = await p.evaluate(() => { const r = JSON.parse(localStorage.getItem('mock:db')).app_state.find(x => x.key === 'wz:v2'); return r && Object.values(r.value.cards).filter(c => c.s === 'known').length });
-      ok(remote === after, 'Wortschatz change not synced to the account (app_state)');
+      ok(remote === nowKnown, 'Wortschatz change not synced to the account (app_state)');
       await ctx.close();
     });
 
@@ -192,11 +195,91 @@ async function journey(name, fn) {
       await ctx.close();
     });
 
+    await journey('8 · New user signs up with an e-mail code → onboarding (name + A1.2) → dashboard', async () => {
+      const { ctx, page: p } = await context({ as: 'fresh' });
+      await p.goto(BASE + 'index.html'); await settle(p);
+      await p.click('.lp-hero [data-start]');
+      ok((await p.textContent('#siTitle')).includes('Create your free account'), 'sign-up mode title missing');
+      ok(await p.isHidden('[data-passkey]'), 'passkey button must not show when creating an account');
+      for (const pr of ['google', 'azure', 'apple']) ok(await p.isVisible(`[data-provider="${pr}"]`), pr + ' button missing');
+      await shot(p, 'j8-signup-dialog');
+      await p.fill('#siEmail', 'not-an-email'); await p.click('#siEmailGo');
+      ok(/check the e-mail address/i.test(await p.textContent('#siMsg')), 'invalid e-mail not caught');
+      await p.fill('#siEmail', 'Mia.Muster@example.org'); await p.click('#siEmailGo'); await p.waitForSelector('#siStepCode:not([hidden])');
+      ok((await p.textContent('#siSentTo')) === 'Mia.Muster@example.org', 'code step does not show the address');
+      await shot(p, 'j8-code-step');
+      await p.fill('#siCode', '000000'); await p.click('#siCodeGo'); await p.waitForTimeout(300);
+      ok(/did not work/i.test(await p.textContent('#siMsg')), 'wrong code not rejected');
+      await p.click('#siResend'); await p.waitForTimeout(200);
+      ok(/wait \d+ seconds/i.test(await p.textContent('#siMsg')), 'resend cooldown missing');
+      await p.fill('#siCode', '123456'); await Promise.all([p.waitForURL(/onboarding\.html/), p.click('#siCodeGo')]); await settle(p);
+      ok(await p.isVisible('#obName'), 'onboarding should ask for a name');
+      await p.fill('#obName', 'Mia'); await p.check('input[value="A1.2"]', { force: true });
+      await shot(p, 'j8-onboarding-name');
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
+      ok((await p.textContent('#dbHello')).includes('Mia'), 'dashboard does not greet with the new name');
+      ok(/Lektion 13/.test(await p.textContent('.db-resume h2')), 'A1.2 learner should start at Lektion 13');
+      await ctx.close();
+    });
+
+    await journey('9 · Sign in with Microsoft → dashboard', async () => {
+      const { ctx, page: p } = await context({ as: 'returning' });
+      await p.goto(BASE + 'index.html'); await settle(p);
+      await p.click('.lp-actions [data-signin]');
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('[data-provider="azure"]')]); await settle(p);
+      const o = await p.evaluate(() => JSON.parse(localStorage.getItem('mock:lastOAuth')));
+      ok(o.provider === 'azure' && /email/.test(o.scopes) && /dashboard\.html$/.test(o.redirectTo), 'Microsoft sign-in called wrongly: ' + JSON.stringify(o));
+      ok((await p.textContent('#dbHello')).includes('Jade'), 'not signed in after Microsoft');
+      await p.goto(BASE + 'account.html'); await settle(p);
+      ok(/Microsoft/.test(await p.textContent('#acMethods')), 'account page does not list Microsoft');
+      await ctx.close();
+      const { ctx: c2, page: q } = await context({ as: 'returning' });
+      await q.goto(BASE + 'index.html'); await q.click('.lp-actions [data-signin]');
+      await q.click('[data-provider="apple"]'); await q.waitForURL(/dashboard\.html/); await settle(q);
+      ok((await q.evaluate(() => JSON.parse(localStorage.getItem('mock:lastOAuth')).provider)) === 'apple', 'Apple sign-in not called');
+      await c2.close();
+    });
+
+    await journey('10 · Passkey: add on account page → sign out → sign in with passkey', async () => {
+      const { ctx, page: p } = await context({ as: 'returning', signedIn: true });
+      await p.goto(BASE + 'dashboard.html'); await settle(p);
+      await p.click('#sh-avatar'); await Promise.all([p.waitForURL(/account\.html/), p.click('#sh-menu a[href="account.html"]')]); await settle(p);
+      ok((await p.inputValue('#acNameIn')) === 'Jade Example', 'name not prefilled');
+      ok(/Google/.test(await p.textContent('#acMethods')), 'Google method not listed');
+      await p.waitForFunction(() => { const l = document.getElementById('acPkList'); return l && !l.querySelector('.ui-sk') && l.textContent.trim() });
+      ok(/No passkeys yet/.test(await p.textContent('#acPkList')), 'empty passkey state missing');
+      await p.click('#acPkAdd'); await p.waitForTimeout(400);
+      ok(/Passkey added/.test(await p.textContent('#acMsg')) && /Chrome on test device/.test(await p.textContent('#acPkList')), 'passkey not added');
+      await p.fill('#acNameIn', 'Jade E.'); await p.click('#acName button'); await p.waitForTimeout(200);
+      ok(/Name saved/.test(await p.textContent('#acMsg')), 'name not saved');
+      await shot(p, 'j10-account');
+      await Promise.all([p.waitForURL(/index\.html/), p.click('#acOut')]); await settle(p);
+      await p.click('.lp-actions [data-signin]');
+      ok(await p.isVisible('[data-passkey]'), 'passkey sign-in button missing');
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('[data-passkey]')]); await settle(p);
+      ok((await p.textContent('#dbHello')).includes('Jade'), 'passkey sign-in failed');
+      await p.goto(BASE + 'account.html'); await settle(p);
+      await p.waitForSelector('[data-del]'); p.once('dialog', d => d.accept()); await p.click('[data-del]'); await p.waitForTimeout(400);
+      ok(/No passkeys yet/.test(await p.textContent('#acPkList')), 'passkey not removed');
+      await ctx.close();
+    });
+
+    await journey('11 · Live config: only switched-on methods are shown', async () => {
+      const { ctx, page: p } = await context({ as: 'fresh', realAuth: true });
+      await p.goto(BASE + 'index.html'); await settle(p); await p.click('.lp-actions [data-signin]');
+      const cfg = await p.evaluate(() => window.A1_AUTH);
+      for (const pr of ['google', 'azure', 'apple']) ok((await p.isVisible(`[data-provider="${pr}"]`)) === !!cfg[pr], `${pr} visibility does not match auth-config.js`);
+      ok((await p.isVisible('#siEmailForm')) === !!cfg.email, 'e-mail form visibility does not match auth-config.js');
+      ok((await p.isVisible('[data-passkey]')) === !!cfg.passkey, 'passkey visibility does not match auth-config.js');
+      await shot(p, 'j11-live-config-dialog');
+      await ctx.close();
+    });
+
     await journey('E1 · Closed sign-ups show a clear error', async () => {
       const { ctx, page: p } = await context({ as: 'fresh' });
       await p.goto(BASE + 'index.html'); await p.evaluate(() => { const c = JSON.parse(localStorage.getItem('mock:cfg')); c.loginAs = null; localStorage.setItem('mock:cfg', JSON.stringify(c)) });
-      await p.click('.lp-actions [data-signin]'); await Promise.all([p.waitForURL(/index\.html\?signin=1&error=/), p.click('#siGoogle')]); await settle(p);
-      ok(/has not been invited/.test(await p.textContent('#siMsg')), 'no invitation error message');
+      await p.click('.lp-actions [data-signin]'); await Promise.all([p.waitForURL(/index\.html\?signin=1&error=/), p.click('[data-provider="google"]')]); await settle(p);
+      ok(/cannot be created at the moment/.test(await p.textContent('#siMsg')), 'no sign-up error message');
       await shot(p, 'e1-signup-closed'); await ctx.close();
     });
 
