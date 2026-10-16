@@ -216,6 +216,7 @@
         <div class="ui-pw"><input class="ui-input" id="siPw" type="password" autocomplete="current-password" minlength="8" required>
           <button class="ui-link" type="button" id="siPwShow" aria-controls="siPw" aria-pressed="false">Show</button></div>
         <p class="ui-fine" id="siPwHint" hidden>At least 8 characters.</p>
+        <button class="ui-link" type="button" id="siForgot" style="align-self:flex-start">Forgot your password?</button>
         <button class="ui-btn" type="submit" id="siPwGo">Sign in</button>
       </form>
       <form class="ui-emailform" id="siEmailForm" hidden novalidate>
@@ -233,6 +234,14 @@
       <button class="ui-btn" type="submit" id="siCodeGo">Verify and continue</button>
       <div class="ui-row"><button class="ui-link" type="button" id="siResend">Send a new code</button><button class="ui-link" type="button" id="siBack">Use another method</button></div>
       <p class="ui-fine">Nothing arrived? Check your spam folder. Codes expire after one hour.</p>
+    </form>
+    <form id="siStepForgot" class="ui-auth" hidden novalidate>
+      <p>Enter the e-mail address of your account. We send you a link to choose a new password.</p>
+      <label class="ui-label" for="siFgEmail">E-mail address</label>
+      <input class="ui-input" id="siFgEmail" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+      <button class="ui-btn" type="submit" id="siFgGo">Send reset link</button>
+      <p class="ui-fine">Signed up with a Gmail address? You can also use “Continue with Google”, then set a new password under Account &amp; sign-in.</p>
+      <div class="ui-row"><button class="ui-link" type="button" id="siFgBack">Back to sign in</button></div>
     </form>
     <p class="ui-switch" id="siSwitch"></p>
     <p class="ui-fine">By continuing you agree to our <a href="privacy.html">privacy notice</a>.</p>

@@ -155,6 +155,9 @@
     // E-mail + password (works without an e-mail service when "Confirm email" is off in Supabase)
     async signUp(email, password, name) { need(); return sb.auth.signUp({ email, password, options: { data: name ? { full_name: name } : {}, emailRedirectTo: back('dashboard.html') } }) },
     async signInPassword(email, password) { need(); return sb.auth.signInWithPassword({ email, password }) },
+    // Password recovery: e-mail with a link back to account.html?reset=1, where the learner sets a new password
+    async resetPassword(email) { need(); return sb.auth.resetPasswordForEmail(email, { redirectTo: back('account.html?reset=1') }) },
+    async setPassword(password) { need(); return sb.auth.updateUser({ password }) },
     // Passkeys (Supabase beta): sign-in only for accounts that registered one while signed in.
     async passkey() { need(); return sb.auth.signInWithPasskey() },
     passkeys: {
