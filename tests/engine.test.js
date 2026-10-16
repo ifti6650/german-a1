@@ -67,7 +67,7 @@ test('course: 24 lessons, 8 modules, A1.1 = 1–12, A1.2 = 13–24', () => {
 
 const REQUIRED = ['id', 'level', 'lesson', 'topic', 'skill', 'difficulty', 'type', 'instructions', 'explanation', 'objective', 'status'];
 const AUTHORED = window.COURSE.lessons.filter(l => window.COURSE.content(l.n)).map(l => l.n);
-test('authored lessons are loaded', () => assert.deepEqual(AUTHORED, [1, 2, 3, 4, 5, 6]));
+test('authored lessons are loaded', () => assert.equal(AUTHORED.length, require('fs').readdirSync(path.join(__dirname, '..', 'lessons')).filter(f => /^l\d\d\.js$/.test(f)).length));
 for (const N of AUTHORED) test(`Lektion ${N}: every question has the required metadata and a valid key`, () => {
   const c = window.COURSE.content(N); const all = [...c.practice, ...c.apply, ...c.quiz];
   const ids = new Set(); const objectives = new Set(c.objectives.map(o => o.id));
