@@ -59,6 +59,7 @@
   function groupOf(h) { for (const [g, items] of NAV) for (const it of items) if (it[0] === h) return [g, it[1]]; return ['', ''] }
   function crumb() {
     if (page === 'onboarding.html') return '<b>Welcome</b>';
+    if (page === 'account.html') return '<b>Account &amp; sign-in</b>';
     const [g, t] = groupOf(cur); if (!t) return '';
     const sub = page === 'lesson.html' ? (new URLSearchParams(location.search).get('l') ? 'Lektion ' + (+new URLSearchParams(location.search).get('l')) : '') : page === 'test.html' ? 'Test' : '';
     return `<span>${g}</span><span class="sep">/</span>${sub ? `<a href="${cur}" style="color:inherit;text-decoration:none">${t}</a><span class="sep">/</span><b>${esc(sub)}</b>` : `<b>${t}</b>`}`;
@@ -142,6 +143,7 @@
     menu.innerHTML = `<div class="who">${u ? `<b>${esc(n.full)}</b><span>${esc(n.email)}</span>` : '<b>Offline</b><span>Your progress is saved in this browser.</span>'}</div>
       <a role="menuitem" href="dashboard.html">${svg('home')}Dashboard</a>
       <a role="menuitem" href="progress.html">${svg('chart')}My progress</a>
+      <a role="menuitem" href="account.html">${svg('user')}Account &amp; sign-in</a>
       <a role="menuitem" href="onboarding.html?change=1">${svg('swap')}${c ? `Course: Momente ${c} · change` : 'Choose your course'}</a>
       <hr>${u ? `<button role="menuitem" class="danger" id="sh-signout">${svg('out')}Sign out</button>` : ''}`;
     const so = menu.querySelector('#sh-signout'); if (so) so.addEventListener('click', signOut);

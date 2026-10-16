@@ -18,11 +18,13 @@
         <span class="lvl">A1.2 · Modul 5–8 · Lektion 13–24</span><h2>Momente A1.2</h2>
         <p>I know the basics. Continue with the dative, directions, flats, health, plans, rules, comparing and dates.</p></label>
     </div></fieldset>
+    <div id="obNameBox" hidden style="margin:0 0 20px;max-width:420px"><label class="ui-label" for="obName">What should we call you?</label>
+      <input class="ui-input" id="obName" autocomplete="name" maxlength="80" placeholder="Your first name" style="margin-top:6px"></div>
     <div id="obMsg" role="alert"></div>
     <div class="ob-actions"><button class="ui-btn lg" type="submit" id="obGo">Continue <span aria-hidden="true">→</span></button><a class="ui-btn quiet" id="obCancel" href="dashboard.html" hidden>Cancel</a></div>
   </form>
 </main>
-<script src="plan-data.js"></script><script src="sync.js"></script><script src="shell.js"></script><script>
+<script src="plan-data.js"></script><script src="auth-config.js"></script><script src="sync.js"></script><script src="shell.js"></script><script>
 (function () {
   const $ = id => document.getElementById(id);
   const P = new URLSearchParams(location.search);
@@ -35,14 +37,19 @@
   if (change) { $('obTitle').textContent = 'Change your course'; $('obLead').textContent = 'Your progress in both courses is kept. Switching only changes which course your dashboard follows.'; $('obCancel').hidden = false; document.querySelector('.ob-steps').hidden = true; $('obStepTxt').hidden = true }
   A1_SHELL.ready.then(s => {
     if (!s.user || change) return;
-    const first = A1_SHELL.names(s.user).first;
+    const m = s.user.user_metadata || {};
+    const hasName = !!(m.full_name || m.name || m.given_name);
+    if (!hasName) $('obNameBox').hidden = false;       // e-mail sign-ups have no name yet
+    const first = hasName ? A1_SHELL.names(s.user).first : '';
     if (first) $('obTitle').textContent = `Willkommen, ${first}!`;
     if (prefs().course) location.replace(safe || 'dashboard.html'); // already onboarded
   });
-  $('obForm').addEventListener('submit', e => {
+  $('obForm').addEventListener('submit', async e => {
     e.preventDefault();
     const v = (new FormData(e.target)).get('course');
     if (v !== 'A1.1' && v !== 'A1.2') { $('obMsg').innerHTML = '<div class="ui-state error" style="margin-bottom:16px"><span class="ic">!</span><div><b>Please choose a course</b>Pick A1.1 or A1.2 to continue.</div></div>'; return }
+    const nm = $('obName').value.trim();
+    if (!$('obNameBox').hidden && nm && window.A1 && A1.auth) { $('obGo').disabled = true; try { await A1.auth.updateName(nm) } catch (err) { console.warn(err) } }
     const p = prefs(); const was = p.course;
     p.course = v; p.courseSetAt = new Date().toISOString(); p.courseSource = 'onboarding';
     if (!p.courseLevel || p.courseLevel === was) p.courseLevel = v; // the My Course filter follows the course

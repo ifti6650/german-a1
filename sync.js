@@ -24,6 +24,7 @@
     get client() { return sb },
     onChange(fn) { listeners.push(fn); fn(user) },
     record, saveTest, login, logout, flush,
+    auth: null,                         // sign-in methods (set below): oauth, emailCode, verifyCode, passkey, passkeys, updateName
     get v2() { return v2 !== false },   // true unless the 002 migration is missing
     lessons: {                          // lesson progress, stored in 'a1:lessons' (synced via app_state)
       all() { return ls.get('a1:lessons', {}) },
@@ -134,14 +135,35 @@
   }
 
   // ---------- login UI ----------
-  // After Google sign-in the learner lands inside the portal (dashboard, or the page they originally asked for).
+  // After sign-in the learner lands inside the portal (dashboard, or the page they originally asked for).
   // `next` must be a page of this site (e.g. "practice.html?topic=x"); anything else falls back to the dashboard.
-  function login(next) {
+  function safeNext(next) { return typeof next === 'string' && /^[a-z0-9-]+\.html(?:[?#][^\s]*)?$/i.test(next) && !/^index\.html/i.test(next) ? next : 'dashboard.html' }
+  const back = next => new URL(safeNext(next), location.href).href;
+  const need = () => { if (!sb) throw new Error('offline') };
+  // OAuth providers: 'google' | 'azure' (Microsoft) | 'apple'. The first sign-in creates the account (if sign-ups are on).
+  function login(next, provider = 'google') {
     if (!sb) return Promise.reject(new Error('offline'));
-    const safe = typeof next === 'string' && /^[a-z0-9-]+\.html(?:[?#][^\s]*)?$/i.test(next) ? next : 'dashboard.html';
-    const redirectTo = new URL(safe, location.href).href;
-    return sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } });
+    const options = { redirectTo: back(next) };
+    if (provider === 'azure') options.scopes = 'email openid profile';   // Microsoft only returns the e-mail with this scope
+    return sb.auth.signInWithOAuth({ provider, options });
   }
+  A1.auth = {
+    oauth: (provider, next) => login(next, provider),
+    // E-mail: one message with a 6-digit code AND a magic link. The code works on any device; the link only in this browser (PKCE).
+    async emailCode(email, next) { need(); return sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: back(next) } }) },
+    async verifyCode(email, token) { need(); return sb.auth.verifyOtp({ email, token, type: 'email' }) },
+    // Passkeys (Supabase beta): sign-in only for accounts that registered one while signed in.
+    async passkey() { need(); return sb.auth.signInWithPasskey() },
+    passkeys: {
+      supported: () => !!(window.PublicKeyCredential && navigator.credentials),
+      async list() { need(); return sb.auth.passkey.list() },
+      async add() { need(); return sb.auth.registerPasskey() },
+      async remove(passkeyId) { need(); return sb.auth.passkey.delete({ passkeyId }) },
+      async rename(passkeyId, friendlyName) { need(); return sb.auth.passkey.update({ passkeyId, friendlyName }) }
+    },
+    async updateName(full_name) { need(); const r = await sb.auth.updateUser({ data: { full_name } }); if (!r.error && r.data && r.data.user) user = r.data.user; return r },
+    safeNext
+  };
   async function logout() {
     await flush();                      // upload pending answers before the session ends
     if (sb) await sb.auth.signOut();
@@ -197,7 +219,7 @@
     if (document.readyState === 'loading') await new Promise(r => document.addEventListener('DOMContentLoaded', r));
     await new Promise(r => setTimeout(r)); mountPill();   // after the portal shell has created its header slot
     try { await loadLib() } catch (e) { paint(); return } // offline: keep working locally
-    sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' } });
+    sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce', experimental: { passkey: true } } });
     const { data } = await sb.auth.getSession();
     user = data.session ? data.session.user : null;
     sb.auth.onAuthStateChange((_ev, session) => {
