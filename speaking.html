@@ -60,7 +60,7 @@ textarea { width: 100%; min-height: 260px; resize: vertical; font-size: 14px; li
 .typealt { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 .typealt input { flex: 1 1 220px; }
 </style></head><body>
-<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"><a href="index.html">Home</a><a href="wortschatz.html">Wortschatz</a><a href="grammar-book.html">Grammar Book</a><a href="study-guide.html">Study Guide</a><a href="speaking.html" class=on>Sprechen</a><a href="Momente_A1_Grammar_Book.pdf">PDF</a></div></div></nav>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"><a href="index.html">Home</a><a href="wortschatz.html">Wortschatz</a><a href="practice.html">Mistakes</a><a href="progress.html">Progress</a><a href="grammar-book.html">Grammar Book</a><a href="study-guide.html">Study Guide</a><a href="speaking.html" class=on>Sprechen</a><a href="Momente_A1_Grammar_Book.pdf">PDF</a></div></div></nav>
 <header class="hero small"><div class="in"><div class="kicker">Speaking practice</div><h1>Sprechen</h1><p>Have a voice conversation with an AI tutor, play the study-guide dialogues, check your pronunciation and answer questions out loud.</p></div></header>
 <main class="speak">
   <div class="tabsx" role="tablist" id="tabs">
@@ -352,4 +352,4 @@ function route() {
 route(); window.addEventListener('hashchange', route);
 })();
 </script>
-<script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
+<script src="sync.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

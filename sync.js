@@ -1,0 +1,181 @@
+// Deutsch A1 · cloud sync (Supabase)
+// - Google login button in the top bar
+// - window.A1.record(...)  saves one answer + updates the mistake list
+// - window.A1.saveTest(...) saves a test result
+// - keeps the existing browser progress (Wortschatz cards, 8-week plan) in sync across devices
+// Works offline / logged out: answers are queued in this browser and uploaded after login.
+(function () {
+  const SB_URL = 'https://gvftmsctaxyllmtiztil.supabase.co';
+  const SB_KEY = 'sb_publishable_oEN1QiCiC8pTHLoCxWW2HA_2LvHaNgE'; // public key, safe in the browser (RLS protects the data)
+  const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.5/dist/umd/supabase.min.js';
+  const SYNC_KEYS = ['wz:v2', 'known', 'a1plan:v1'];   // localStorage keys mirrored to app_state
+  const QKEY = 'a1:queue', TSKEY = 'a1:ts';
+
+  const ls = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v) } catch (e) { return d } },
+    set(k, v) { try { rawSet.call(localStorage, k, JSON.stringify(v)) } catch (e) {} }
+  };
+  const rawSet = Storage.prototype.setItem;
+
+  let sb = null, user = null, pushTimer = null, applyingRemote = false;
+  const listeners = [];
+  const A1 = window.A1 = {
+    get user() { return user },
+    get client() { return sb },
+    onChange(fn) { listeners.push(fn); fn(user) },
+    record, saveTest, login, logout, flush,
+    ready: null
+  };
+
+  // ---------- local timestamps for synced keys ----------
+  function stamps() { return ls.get(TSKEY, {}) }
+  function stamp(k, t) { const s = stamps(); s[k] = t || new Date().toISOString(); ls.set(TSKEY, s) }
+
+  // Watch writes to the synced keys (the existing pages call localStorage.setItem)
+  Storage.prototype.setItem = function (k, v) {
+    rawSet.call(this, k, v);
+    // Only stamp after this browser has pulled once, so a fresh device never overwrites the cloud copy
+    if (this === localStorage && SYNC_KEYS.includes(k) && !applyingRemote && ls.get('a1:synced', null)) { stamp(k); schedulePush() }
+  };
+
+  // ---------- answer queue ----------
+  function queue() { return ls.get(QKEY, []) }
+  function enqueue(job) { const q = queue(); q.push(job); ls.set(QKEY, q.slice(-2000)) }
+
+  function record(a) {
+    // a = { item, lesson, kind, correct, answer, expected, prompt, source }
+    const job = { t: 'answer', at: new Date().toISOString(), a };
+    enqueue(job); flush();
+  }
+  function saveTest(r) {
+    // r = { id, title, score, max, seconds, wrong: [...] }
+    enqueue({ t: 'test', at: new Date().toISOString(), r }); flush();
+  }
+
+  let flushing = false;
+  async function flush() {
+    if (!sb || !user || flushing || !navigator.onLine) return;
+    flushing = true;
+    try {
+      let q = queue();
+      while (q.length) {
+        const job = q[0];
+        let error = null;
+        if (job.t === 'answer') {
+          const a = job.a;
+          ({ error } = await sb.rpc('record_answer', {
+            p_item_id: String(a.item), p_lesson: a.lesson ?? null, p_kind: a.kind || 'vocab',
+            p_correct: !!a.correct, p_answer: a.answer ?? null, p_expected: a.expected ?? null,
+            p_prompt: a.prompt ?? null, p_source: a.source || 'practice'
+          }));
+        } else if (job.t === 'test') {
+          const r = job.r;
+          ({ error } = await sb.from('test_results').insert({
+            test_id: r.id, title: r.title || null, score: r.score, max_score: r.max,
+            duration_sec: r.seconds ?? null, wrong_items: r.wrong || [], created_at: job.at
+          }));
+        }
+        if (error) { console.warn('[A1 sync]', error.message); break }
+        q = queue(); q.shift(); ls.set(QKEY, q);
+      }
+    } finally { flushing = false; paint() }
+  }
+
+  // ---------- app_state sync (existing localStorage progress) ----------
+  async function pull() {
+    const { data, error } = await sb.from('app_state').select('key,value,updated_at').in('key', SYNC_KEYS);
+    if (error) { console.warn('[A1 sync]', error.message); return }
+    const local = stamps(); let changed = false;
+    const remote = Object.fromEntries((data || []).map(r => [r.key, r]));
+    for (const k of SYNC_KEYS) {
+      const r = remote[k];
+      const hasLocal = localStorage.getItem(k) != null;
+      if (r && (!hasLocal || !local[k] || r.updated_at > local[k])) {
+        applyingRemote = true;
+        try { rawSet.call(localStorage, k, JSON.stringify(r.value)) } finally { applyingRemote = false }
+        stamp(k, r.updated_at); changed = true;
+      } else if (hasLocal && (!r || (local[k] && local[k] > r.updated_at))) {
+        if (!local[k]) stamp(k);
+        schedulePush(0);
+      }
+    }
+    ls.set('a1:synced', user.id);
+    // Reload once so the page shows the newer progress from another device
+    if (changed && !sessionStorage.getItem('a1:pulled')) { sessionStorage.setItem('a1:pulled', '1'); location.reload() }
+  }
+  function schedulePush(ms = 1500) { clearTimeout(pushTimer); pushTimer = setTimeout(push, ms) }
+  async function push() {
+    if (!sb || !user) return;
+    const s = stamps();
+    const rows = SYNC_KEYS.filter(k => localStorage.getItem(k) != null).map(k => ({
+      user_id: user.id, key: k, value: ls.get(k, null), updated_at: s[k] || new Date().toISOString()
+    }));
+    if (!rows.length) return;
+    const { error } = await sb.from('app_state').upsert(rows, { onConflict: 'user_id,key' });
+    if (error) console.warn('[A1 sync]', error.message);
+  }
+
+  // ---------- login UI ----------
+  function login() {
+    if (!sb) return;
+    const back = location.href.split('#')[0];
+    sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: back } });
+  }
+  async function logout() { if (sb) await sb.auth.signOut(); sessionStorage.removeItem('a1:pulled'); try { localStorage.removeItem('a1:synced') } catch (e) {} }
+
+  let pill;
+  function mountPill() {
+    if (pill) return;
+    pill = document.createElement('span'); pill.className = 'a1-acct';
+    const css = document.createElement('style');
+    css.textContent = `.a1-acct{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 Inter,system-ui,sans-serif}
+.a1-acct button,.a1-acct a{font:inherit;cursor:pointer;border:1px solid var(--line,#e0e3ee);background:var(--paper,#fff);color:var(--ink,#1b1e2b);padding:6px 10px;border-radius:8px;text-decoration:none}
+.a1-acct button.pri{background:var(--accent,#5363cf);border-color:var(--accent,#5363cf);color:#fff}
+.a1-acct .q{color:var(--muted,#5b6072);font-weight:500}
+.a1-acct.float{position:fixed;right:12px;bottom:12px;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.12);border-radius:10px;background:var(--paper,#fff);padding:4px}`;
+    document.head.appendChild(css);
+    const host = document.querySelector('nav.top .in');
+    if (host) host.appendChild(pill); else { pill.classList.add('float'); document.body.appendChild(pill) }
+    paint();
+  }
+  function paint() {
+    if (!pill) return;
+    const n = queue().length;
+    if (!sb) { pill.innerHTML = n ? `<span class="q" title="Saved in this browser, uploads when online">${n} unsynced</span>` : ''; return }
+    if (!user) {
+      pill.innerHTML = `${n ? `<span class="q">${n} unsynced</span>` : ''}<button class="pri" data-a1="in">Sign in with Google</button>`;
+    } else {
+      const name = (user.user_metadata && (user.user_metadata.given_name || user.user_metadata.name)) || user.email;
+      pill.innerHTML = `<a href="progress.html" title="Your progress">📈 ${esc(String(name).split(' ')[0])}</a>${n ? `<span class="q">${n} pending</span>` : ''}<button data-a1="out" title="Sign out">Sign out</button>`;
+    }
+  }
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-a1]'); if (!b) return;
+    if (b.dataset.a1 === 'in') login(); else logout();
+  });
+
+  // ---------- boot ----------
+  function loadLib() {
+    return new Promise((res, rej) => {
+      if (window.supabase) return res();
+      const s = document.createElement('script'); s.src = LIB; s.onload = res; s.onerror = rej; document.head.appendChild(s);
+    });
+  }
+  A1.ready = (async () => {
+    if (document.readyState === 'loading') await new Promise(r => document.addEventListener('DOMContentLoaded', r));
+    mountPill();
+    try { await loadLib() } catch (e) { paint(); return } // offline: keep working locally
+    sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' } });
+    const { data } = await sb.auth.getSession();
+    user = data.session ? data.session.user : null;
+    sb.auth.onAuthStateChange((_ev, session) => {
+      const was = user && user.id; user = session ? session.user : null;
+      paint(); listeners.forEach(f => { try { f(user) } catch (e) {} });
+      if (user && user.id !== was) { pull().then(flush) }
+    });
+    paint(); listeners.forEach(f => { try { f(user) } catch (e) {} });
+    if (user) { await pull(); flush() }
+  })();
+  window.addEventListener('online', flush);
+})();

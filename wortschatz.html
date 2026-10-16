@@ -130,7 +130,7 @@ td.ln{font-family:var(--mono);font-size:12px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
 
-<div class="wrap"><a class="back" href="index.html">← All materials</a> <a class="back" href="speaking.html" style="margin-left:14px">🎤 Speaking practice</a>
+<div class="wrap"><a class="back" href="index.html">← All materials</a> <a class="back" href="speaking.html" style="margin-left:14px">🎤 Speaking practice</a> <a class="back" href="practice.html" style="margin-left:14px">🔁 Mistakes</a> <a class="back" href="progress.html" style="margin-left:14px">📈 Progress</a>
   <header>
     <div>
       <h1>Momente A1 Wortschatz</h1>
@@ -1035,6 +1035,8 @@ const isDue = w => { const c = S.cards[w.id]; return !!c && (c.s === 'learning' 
 function markKnown(w) { const c = S.cards[w.id] || { b: 0 }; const b = Math.min(5, (c.s === 'known' ? c.b : 0) + 1); S.cards[w.id] = { s: 'known', b, d: Date.now() + INTERVAL[b] * DAY }; }
 function markLearning(w) { S.cards[w.id] = { s: 'learning', b: 0, d: Date.now() }; }
 function markNew(w) { delete S.cards[w.id]; }
+// cloud sync: record each answer (sync.js)
+function rec(w, ok, kind, answer) { try { window.A1 && A1.record({ item: 'vocab:' + w.id, lesson: w.lesson, kind, correct: ok, answer, expected: w.de, prompt: w.en, source: 'practice' }) } catch (e) {} }
 
 // ---------- helpers ----------
 const $ = id => document.getElementById(id);
@@ -1140,6 +1142,7 @@ function renderCards() {
 }
 function answerCard(knew) {
   const x = deck[ci];
+  rec(x, knew, 'flashcard', knew ? 'knew it' : 'did not know');
   if (knew) { markKnown(x); tallyK++; deck.splice(ci, 1) }
   else { markLearning(x); tallyL++; deck.splice(ci, 1) }
   if (ci >= deck.length) ci = 0;
@@ -1179,11 +1182,12 @@ function renderWrite() {
       if (r.empty) { $('wFb').className = 'feedback no'; $('wFb').textContent = r.msg; return }
       wres = Object.assign(r, { input });
       if (r.ok) { wscore++; markKnown(x) } else markLearning(x);
+      rec(x, r.ok, 'write', input);
       save(); renderStats(); renderRail(); renderFilters(); renderWrite();
     };
   } else {
     $('wNext').focus(); $('wNext').onclick = () => { wi++; wres = null; renderWrite() };
-    if ($('wOverride')) $('wOverride').onclick = () => { wscore++; markKnown(x); wres.ok = true; wres.msg = ''; save(); renderStats(); renderRail(); renderFilters(); renderWrite() };
+    if ($('wOverride')) $('wOverride').onclick = () => { wscore++; markKnown(x); rec(x, true, 'write', wres.input + ' (override)'); wres.ok = true; wres.msg = ''; save(); renderStats(); renderRail(); renderFilters(); renderWrite() };
   }
 }
 
@@ -1208,6 +1212,7 @@ function renderQuiz() {
   $('vQuiz').querySelectorAll('.opt').forEach(b => b.onclick = () => {
     if (answered) return; answered = true;
     const ok = b.dataset.id === x.id; if (ok) { score++; markKnown(x) } else markLearning(x);
+    rec(x, ok, 'mc', b.textContent);
     $('vQuiz').querySelectorAll('.opt').forEach(o => { o.disabled = true; if (o.dataset.id === x.id) o.classList.add('right') });
     if (!ok) b.classList.add('wrong');
     const fb = $('fb'); fb.className = 'feedback ' + (ok ? 'ok' : 'no'); fb.innerHTML = ok ? 'Richtig!' : `The answer is: ${deFirst ? esc(x.en) : deHTML(x.de)}`;
@@ -1264,4 +1269,4 @@ document.addEventListener('keydown', e => {
 window.addEventListener('hashchange', () => { const m = location.hash.match(/^#L(\d{1,2})$/); if (m && LESSONS.some(l => l.n === +m[1])) { S.lesson = +m[1]; save(); render() } });
 render();
 </script>
-<script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
+<script src="sync.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

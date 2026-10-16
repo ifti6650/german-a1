@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mistake practice · Deutsch A1</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="site.css"><script src="sync.js"></script>
+<style>
+main.pg{max-width:720px;margin:0 auto;padding:8px 16px 56px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;font-size:14px;color:var(--muted)}
+select{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.prompt small{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.prompt .big{font:800 clamp(24px,5vw,34px)/1.2 var(--display);margin:6px 0 4px}
+.prompt .hint{font-size:13px;color:var(--muted)}
+form{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:0;font:inherit;font-size:18px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.btn{font:700 15px var(--body);padding:12px 18px;border-radius:10px;background:var(--accent);color:var(--paper);border:0;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.fb{margin-top:14px;min-height:28px;font-weight:600}
+.fb.ok{color:#15803d}.fb.no{color:#c2410c}
+@media (prefers-color-scheme: dark){.fb.ok{color:#4ade80}.fb.no{color:#fb923c}}
+.dots{display:inline-flex;gap:4px;vertical-align:middle;margin-left:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--accent)}
+.row{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap}
+.linkish{background:none;border:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;padding:0}
+.say{background:none;border:0;cursor:pointer;font-size:18px}
+.empty{color:var(--muted)}
+.big-result{font:800 40px var(--display)}
+</style></head><body>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"><a href="index.html">Home</a><a href="wortschatz.html">Wortschatz</a><a href="practice.html" class=on>Mistakes</a><a href="progress.html">Progress</a><a href="grammar-book.html">Grammar Book</a><a href="study-guide.html">Study Guide</a><a href="speaking.html">Sprechen</a></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">Fehlerkiste</div><h1>Practise your mistakes</h1><p>Everything you got wrong comes back here. Answer it right 3 times in a row and it leaves the list.</p></div></header>
+<main class="pg"><div class="panel" id="app"><p class="empty">Loading…</p></div></main>
+<script>
+(function () {
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// same answer check as the Wortschatz trainer
+const norm = s => String(s).toLowerCase().replace(/\(.*?\)/g, '').replace(/ß/g, 'ss').replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/[!?.,;:…"'„“–-]/g, ' ').replace(/\s+/g, ' ').trim();
+const variants = de => { const v = String(de).split(/\s*\/\s*/).map(norm); v.push(norm(de)); return v.filter(Boolean) };
+function check(expected, input) {
+  const a = norm(input); if (!a) return { empty: true };
+  const vs = variants(expected); if (vs.includes(a)) return { ok: true };
+  const noArt = s => s.replace(/^(der|die|das)\s/, '');
+  if (vs.some(v => noArt(v) === noArt(a))) return { ok: false, msg: 'Right word, wrong or missing article.' };
+  return { ok: false };
+}
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a };
+function speak(t) { try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(String(t).replace(/\(.*?\)/g, '')); u.lang = 'de-DE'; u.rate = .9; speechSynthesis.speak(u) } catch (e) {} }
+
+let all = [], deck = [], i = 0, res = null, right = 0, lesson = 0;
+{ const m = location.hash.match(/^#L(\d{1,2})$/); if (m) lesson = +m[1] }
+
+async function load(user) {
+  if (!user) { $('app').innerHTML = `<h2 style="margin-top:0">Sign in to practise</h2><p class="empty">Your mistake list is saved in your account. Use “Sign in with Google” at the top.</p>`; return }
+  const { data, error } = await A1.client.from('review_items').select('item_id,lesson,kind,prompt,expected,last_answer,times_wrong,correct_streak').eq('mastered', false).limit(1000);
+  if (error) { $('app').innerHTML = `<p class="empty">Could not load: ${esc(error.message)}</p>`; return }
+  all = (data || []).filter(x => x.expected);
+  start();
+}
+function start() {
+  // weakest first: most wrong, then random
+  const pool = all.filter(x => !lesson || x.lesson === lesson);
+  deck = shuffle(pool.slice()).sort((a, b) => b.times_wrong - a.times_wrong).slice(0, 20);
+  i = 0; res = null; right = 0; render();
+}
+function lessonPicker() {
+  const ls = [...new Set(all.map(x => x.lesson).filter(x => x != null))].sort((a, b) => a - b);
+  return `<label>Lesson <select id="lsel"><option value="0">All (${all.length})</option>${ls.map(l => `<option value="${l}" ${l === lesson ? 'selected' : ''}>L${l} (${all.filter(x => x.lesson === l).length})</option>`).join('')}</select></label>`;
+}
+const dots = n => `<span class="dots" title="${n} of 3 correct in a row">${[0, 1, 2].map(k => `<i class="${k < n ? 'on' : ''}"></i>`).join('')}</span>`;
+function bind() { const s = $('lsel'); if (s) s.onchange = () => { lesson = +s.value; history.replaceState(null, '', lesson ? '#L' + lesson : '#'); start() } }
+
+function render() {
+  if (!all.length) { $('app').innerHTML = `<h2 style="margin-top:0">Your mistake list is empty 🎉</h2><p class="empty">Wrong answers from the <a href="wortschatz.html">Wortschatz trainer</a> (flashcards, write and quiz) land here automatically.</p>`; return }
+  if (!deck.length) { $('app').innerHTML = `<div class="bar">${lessonPicker()}</div><p class="empty">No open mistakes for this lesson.</p>`; bind(); return }
+  if (i >= deck.length) {
+    $('app').innerHTML = `<div class="bar">${lessonPicker()}<a href="progress.html">See progress →</a></div>
+      <div class="prompt"><small>Round finished</small><div class="big-result">${right} / ${deck.length}</div><p class="empty">Items with 3 right in a row are now mastered and leave the list.</p></div>
+      <div class="row"><button class="btn" id="again">Next round</button></div>`;
+    bind(); $('again').onclick = () => load(A1.user); return;
+  }
+  const x = deck[i];
+  const isWord = x.kind === 'flashcard' || x.kind === 'write' || x.kind === 'mc' || String(x.item_id).startsWith('vocab:');
+  $('app').innerHTML = `<div class="bar">${lessonPicker()}<span>${i + 1} of ${deck.length} · ${right} right</span></div>
+    <div class="prompt"><small>${isWord ? 'Write it in German' + (/^(der|die|das)\s/.test(x.expected) ? ' · with the article' : '') : 'Your answer'}${x.lesson ? ' · L' + x.lesson : ''}</small>
+      <div class="big">${esc(x.prompt || x.item_id)}</div>
+      <div class="hint">Wrong ${x.times_wrong}× · streak ${dots(x.correct_streak)}</div></div>
+    <form id="f" autocomplete="off"><input type="text" id="in" lang="de" spellcheck="false" autocapitalize="off" aria-label="Your answer" ${res ? 'disabled' : ''} value="${res ? esc(res.input) : ''}">
+      ${res ? `<button class="btn" type="button" id="next">Next →</button>` : `<button class="btn" type="submit">Check</button>`}</form>
+    <div class="fb ${res ? (res.ok ? 'ok' : 'no') : ''}" id="fb">${res ? (res.ok ? 'Richtig! ' : (res.msg ? esc(res.msg) + ' ' : '') + 'Correct: ') + `<b>${esc(x.expected)}</b> <button class="say" id="say" title="Listen" aria-label="Listen">🔊</button>` : ''}</div>
+    <div class="row"><span class="empty" style="font-size:13px">Last time you wrote: ${esc(x.last_answer || '–')}</span>${res && !res.ok ? '<button class="linkish" id="ovr">I was right</button>' : ''}</div>`;
+  bind();
+  if ($('say')) $('say').onclick = () => speak(x.expected);
+  if (!res) {
+    $('in').focus();
+    $('f').onsubmit = e => {
+      e.preventDefault(); const input = $('in').value; const r = check(x.expected, input);
+      if (r.empty) { $('fb').className = 'fb no'; $('fb').textContent = 'Type your answer first.'; return }
+      res = Object.assign(r, { input });
+      A1.record({ item: x.item_id, lesson: x.lesson, kind: x.kind, correct: r.ok, answer: input, expected: x.expected, prompt: x.prompt, source: 'review' });
+      if (r.ok) { right++; x.correct_streak++ } else { x.correct_streak = 0; x.times_wrong++; x.last_answer = input }
+      if (r.ok) speak(x.expected);
+      render();
+    };
+  } else {
+    $('next').focus(); $('next').onclick = () => { i++; res = null; render() };
+    if ($('ovr')) $('ovr').onclick = () => {
+      A1.record({ item: x.item_id, lesson: x.lesson, kind: x.kind, correct: true, answer: res.input + ' (override)', expected: x.expected, prompt: x.prompt, source: 'review' });
+      right++; x.correct_streak = 1; res.ok = true; res.msg = ''; render();
+    };
+  }
+}
+let last;
+A1.onChange(u => { if (!A1.client) return; const id = u ? u.id : null; if (id === last) return; last = id; load(u) });
+A1.ready.then(() => { if (!A1.client) $('app').innerHTML = `<p class="empty">You're offline. Mistake practice needs a connection to load your list.</p>`; else if (last === undefined) { last = A1.user ? A1.user.id : null; load(A1.user) } });
+})();
+</script>
+<footer class="foot">Deutsch A1 · mistake practice</footer>
+<script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
