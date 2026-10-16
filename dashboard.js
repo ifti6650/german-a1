@@ -53,6 +53,19 @@
       <div class="d">Momente ${name} · a lesson counts as completed when its quiz is passed. All of A1: ${cp.completed}/24.</div>
     </section>`;
   }
+  // Study Guide reading progress (guide-progress.js; a part counts only when the learner marks it done)
+  function guideCard() {
+    const IDX = window.GUIDE_INDEX, G = window.GUIDE_PROGRESS; if (!IDX || !G) return '';
+    const o = G.overall(IDX); const c = o.current; const x = c ? IDX[c.n - 1] : null;
+    const last = o.last && c && o.last.n === c.n && o.last.part ? o.last : null;
+    const href = c ? `study-guide.html?l=${c.n}${last ? '#' + last.part + (last.part === 'situations' && last.sit ? '-' + last.sit : '') : ''}` : 'study-guide.html';
+    return `<section class="db-card s12 db-guide" aria-labelledby="guideT">
+      <div class="db-guide-row"><div><h2 id="guideT" style="margin:0">Study Guide · Deutsch im echten Leben</h2>
+        <p class="cap" style="margin:4px 0 0">${o.completed} of 24 lessons completed · ${o.lessons.reduce((a, l) => a + l.sits, 0)} of 192 situations practised${x ? ` · ${c.started ? 'continue with' : 'next:'} <b lang="de">Lektion ${x.n}: ${esc(x.title)}</b>${c.started ? ` (${c.done}/${c.total} parts)` : ''}` : ''}</p></div>
+        <a class="ui-btn ${c && c.started ? '' : 'ghost'}" href="${href}">${c && c.started ? 'Resume Study Guide' : 'Open Study Guide'} <span aria-hidden="true">→</span></a></div>
+      <span class="sh-meter" role="progressbar" aria-label="Study Guide lessons completed" aria-valuemin="0" aria-valuemax="24" aria-valuenow="${o.completed}"><i style="width:${pct(o.completed, 24)}%"></i></span>
+    </section>`;
+  }
   function kpi(key, icon, title, value, detail, href) {
     return `<section class="db-card db-kpi s3"><div class="k">${svg(icon)}${title}</div><div class="v">${value}</div><div class="d">${detail}${href ? ` <a href="${href[0]}">${href[1]}</a>` : ''}</div></section>`;
   }
@@ -120,7 +133,7 @@
     const cp = PM.course(); header(user, cp);
     const an = data ? PM.analytics(data.attempts, data.reviews, data.tests) : null;
     const why = err || 'Not available offline.';
-    $('db').innerHTML = resumeCard(cp) + completionCard(cp) + kpis(cp, an, why) + activityCard(an, why) + recCard(cp, an) + testsCard(an, why) + weakCard(an, why);
+    $('db').innerHTML = resumeCard(cp) + completionCard(cp) + guideCard() + kpis(cp, an, why) + activityCard(an, why) + recCard(cp, an) + testsCard(an, why) + weakCard(an, why);
     $('db').setAttribute('aria-busy', 'false');
   }
 

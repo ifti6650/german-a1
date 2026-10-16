@@ -23,10 +23,10 @@
     const t = w.lessons.map((l, i) => ({
       id: `${w.n}-d${i}`, day: DAYS[i],
       title: `Lektion ${l.n} · ${l.title}`,
-      body: `${esc(l.topic)}. Read ${l.steps.map(s => `<a href="${s.href}">Step ${s.n}</a>`).join(' and ')} and the <a href="${l.guide}">study-guide box</a>, say every example out loud, then learn the words in the <a href="wortschatz.html#L${l.n}">Wortschatz trainer (L${l.n})</a>. Extra: <a href="speaking.html#ai-L${l.n}">talk about it with the AI tutor</a>.`
+      body: `${esc(l.topic)}. Read ${l.steps.map(s => `<a href="${s.href}">Step ${s.n}</a>`).join(' and ')} and the <a href="${l.guide}">real-life dialogues in the study guide</a>, say them out loud, then learn the words in the <a href="wortschatz.html#L${l.n}">Wortschatz trainer (L${l.n})</a>. Extra: <a href="speaking.html#ai-L${l.n}">talk about it with the AI tutor</a>.`
     }));
     t.push({ id: `${w.n}-thu`, day: 'Thu', title: 'Self-test and speaking',
-      body: `Do the <button class="linkish" data-goto="self">self-test</button> below, then the <a href="${w.speakingHref}">speaking practice</a>: read the dialogue aloud and answer the questions about yourself. You can also play the dialogue in the <a href="speaking.html#m${w.n}">speaking trainer</a> with your microphone.` });
+      body: `Do the <button class="linkish" data-goto="self">self-test</button> below, then the <a href="${w.speakingHref}">speaking practice</a>: play the dialogue in the speaking trainer with your microphone and answer the questions about yourself out loud.` });
     t.push({ id: `${w.n}-fri`, day: 'Fri', title: 'Flashcards for the words you don’t know yet',
       body: `Open each lesson in the trainer, choose the <b>Learning</b> or <b>New</b> filter and go through the Flashcards; mark each card “I know it” or “Still learning”. <span class="kw" data-kw></span>` });
     t.push({ id: `${w.n}-sat`, day: 'Sat', title: 'Word test and dialogues',
@@ -124,15 +124,10 @@
             : `<button class="btn" data-show="${k}">Show answer</button>`}
         </li>`;
       }).join('')}</ol>
-      <p class="hint">Got one wrong? Re-read the grammar boxes for <a href="${MOD_HREF[w.modul]}">Modul ${w.modul} in the study guide</a>, say the correct sentence three times, then mark it again.</p>`;
+      <p class="hint">Got one wrong? Re-read the matching steps in the <a href="${MOD_HREF[w.modul]}">Grammar Book</a>, say the correct sentence three times, then mark it again.</p>`;
   }
 
-  const MOD_HREF = {
-    1: 'study-guide.html#modul-1-lektion-1-3-a1-1', 2: 'study-guide.html#modul-2-lektion-4-6-a1-1',
-    3: 'study-guide.html#modul-3-lektion-7-9-a1-1', 4: 'study-guide.html#modul-4-lektion-10-12-a1-1',
-    5: 'study-guide.html#modul-5-lektion-13-15-a1-2', 6: 'study-guide.html#modul-6-lektion-16-18-a1-2',
-    7: 'study-guide.html#modul-7-lektion-19-21-a1-2', 8: 'study-guide.html#modul-8-lektion-22-24-a1-2'
-  };
+  const MOD_HREF = Object.fromEntries((window.PLAN_WEEKS || []).map(w => [w.modul, (w.lessons[0].steps[0] || {}).href || 'grammar-book.html'])); // first grammar step of the module
 
   function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
   function newQuiz(w) {

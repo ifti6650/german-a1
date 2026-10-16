@@ -9,7 +9,7 @@ Grammar, vocabulary and speaking practice following Momente A1.1 and A1.2 (Huebe
 | `onboarding.html` | First sign-in: choose Momente A1.1 or A1.2 |
 | `wortschatz.html` | Vocabulary trainer: 783 words, flashcards, quiz |
 | `grammar-book.html` | Grammar book, 25 steps + 4 bonus chapters |
-| `study-guide.html` | 8-week revision guide |
+| `study-guide.html` | Study Guide “Deutsch im echten Leben”: 24 lessons, 192 real-life situations (content in `guide/*.md`) |
 | `speaking.html` | Speaking practice |
 | `course.html` / `lesson.html?l=N` | My Course: 24 lessons, each with Learn · Wortschatz · Practice · Apply · Quiz · Review |
 | `practice.html` | Practice hub: mix exercises by lesson, skill, topic, type |
