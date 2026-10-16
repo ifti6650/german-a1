@@ -253,6 +253,37 @@ async function journey(name, fn) {
       await c2.close();
     });
 
+    await journey('8c · Forgot password → reset link → new password → sign in', async () => {
+      const { ctx, page: p } = await context({ as: 'fresh', realAuth: true });
+      await p.goto(BASE + 'index.html'); await settle(p);
+      await p.click('.lp-hero [data-start]'); await p.fill('#siPwName', 'Ana'); await p.fill('#siPwEmail', 'ana@example.org'); await p.fill('#siPw', 'Alt-Passwort1');
+      await Promise.all([p.waitForURL(/onboarding\.html/), p.click('#siPwGo')]); await settle(p);
+      await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
+      await p.click('#sh-avatar'); await Promise.all([p.waitForURL(/index\.html/), p.click('#sh-signout')]); await settle(p);
+      await p.click('.lp-actions [data-signin]'); await p.fill('#siPwEmail', 'ana@example.org');
+      ok(await p.isVisible('#siForgot'), 'no "Forgot your password?" link');
+      await p.click('#siForgot'); ok(await p.isVisible('#siStepForgot') && (await p.inputValue('#siFgEmail')) === 'ana@example.org', 'reset step not shown / e-mail not carried over');
+      await p.click('#siFgGo'); await p.waitForTimeout(300);
+      ok(/Check your inbox/.test(await p.textContent('#siMsg')), 'no confirmation after requesting reset');
+      const req = await p.evaluate(() => JSON.parse(localStorage.getItem('mock:reset')));
+      ok(req.email === 'ana@example.org' && /account\.html\?reset=1$/.test(req.redirectTo), 'reset requested wrongly: ' + JSON.stringify(req));
+      await shot(p, 'j8c-forgot');
+      // the e-mail link signs the learner in and opens account.html?reset=1 (simulated: session + code)
+      await p.evaluate(() => { const c = JSON.parse(localStorage.getItem('mock:cfg')); c.loginAs = Object.values(JSON.parse(localStorage.getItem('mock:users'))).find(u => u.email === 'ana@example.org'); localStorage.setItem('mock:cfg', JSON.stringify(c)) });
+      await p.goto(BASE + 'account.html?reset=1&code=mock'); await settle(p);
+      ok((await p.textContent('#wT')) === 'Choose a new password', 'reset page not shown');
+      await p.fill('#acPw1', 'Neues-Passwort2'); await p.fill('#acPw2', 'Anderes'); await p.click('#acPwGo');
+      ok(/do not match/.test(await p.textContent('#acMsg')), 'mismatch not caught');
+      await p.fill('#acPw2', 'Neues-Passwort2'); await shot(p, 'j8c-new-password');
+      await p.click('#acPwGo'); await p.waitForURL(/dashboard\.html/); await settle(p);
+      await p.click('#sh-avatar'); await Promise.all([p.waitForURL(/index\.html/), p.click('#sh-signout')]); await settle(p);
+      await p.click('.lp-actions [data-signin]'); await p.fill('#siPwEmail', 'ana@example.org'); await p.fill('#siPw', 'Alt-Passwort1'); await p.click('#siPwGo'); await p.waitForTimeout(300);
+      ok(/not correct/.test(await p.textContent('#siMsg')), 'old password still works');
+      await p.fill('#siPw', 'Neues-Passwort2'); await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#siPwGo')]); await settle(p);
+      ok((await p.textContent('#dbHello')).includes('Ana'), 'sign-in with new password failed');
+      await ctx.close();
+    });
+
     await journey('9 · Sign in with Microsoft → dashboard', async () => {
       const { ctx, page: p } = await context({ as: 'returning' });
       await p.goto(BASE + 'index.html'); await settle(p);
