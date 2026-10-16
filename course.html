@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Course · Deutsch A1</title><meta name="description" content="All 24 lessons of German A1 (Momente A1.1 and A1.2) with your progress."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
+<script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+</head><body>
+<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">My Course · German A1</div><h1>24 lessons, one path</h1><p>Each lesson: Learn → Wortschatz → Practice → Apply → Quiz → Review. Lektion 1 is fully built; the others already have vocabulary practice and a vocabulary quiz from the Wortschatz word list.</p></div></header>
+<main class="pg" id="main">
+  <div class="tiles" id="sum"></div>
+  <div class="filters" role="group" aria-label="Filters">
+    <div class="seg" id="fLevel"><button data-v="all" aria-pressed="true">All</button><button data-v="A1.1" aria-pressed="false">A1.1 · L1–12</button><button data-v="A1.2" aria-pressed="false">A1.2 · L13–24</button></div>
+    <select id="fStatus" aria-label="Status"><option value="all">Any status</option><option value="todo">Not started</option><option value="doing">In progress</option><option value="done">Completed</option></select>
+  </div>
+  <div id="map"></div>
+</main>
+<script>
+(function () {
+  const esc = ENGINE.esc; let level = 'all', status = 'all';
+  try { const p = JSON.parse(localStorage.getItem('a1:prefs') || '{}'); if (p.courseLevel) level = p.courseLevel } catch (e) {}
+  function render() {
+    const cp = PM.course();
+    document.getElementById('sum').innerHTML = `
+      <div class="tile"><div class="k">A1.1</div><div class="v">${cp.a11.done}/12</div><div class="s">lessons completed · ${cp.a11.pct}% of sections</div></div>
+      <div class="tile"><div class="k">A1.2</div><div class="v">${cp.a12.done}/12</div><div class="s">lessons completed · ${cp.a12.pct}% of sections</div></div>
+      <div class="tile"><div class="k">Continue</div><div class="v" style="font-size:20px">Lektion ${cp.current.n}</div><div class="s"><a href="lesson.html?l=${cp.current.n}">${esc(cp.current.lesson.title)} →</a></div></div>`;
+    let h = '', mod = 0;
+    COURSE.modules.forEach(m => {
+      if (level !== 'all' && m.level !== level) return;
+      const cards = m.lessons.map(n => cp.lessons[n - 1]).filter(x => status === 'all' || (status === 'done' ? x.completed : status === 'doing' ? (x.started && !x.completed) : !x.started));
+      if (!cards.length) return;
+      h += `<div class="modhead">${m.level} · Modul ${m.n} <a class="muted" style="font-weight:600;letter-spacing:0;text-transform:none;margin-left:8px" href="test.html?id=module-${m.n}">Modul test →</a></div><div class="lessons">`;
+      cards.forEach(x => {
+        const full = COURSE.status(x.n) === 'complete';
+        const quiz = x.quiz ? `Quiz best ${x.quiz.best}%` : 'Quiz not taken';
+        h += `<a class="lcard" href="lesson.html?l=${x.n}">
+          <div class="row between"><span class="n">LEKTION ${x.n}</span>${x.completed ? '<span class="pill ok">✓ Completed</span>' : x.started ? '<span class="pill">In progress</span>' : '<span class="pill dim">Not started</span>'}</div>
+          <h3 lang="de">${esc(x.lesson.title)}</h3><div class="topic">${esc(x.lesson.topic)}</div>
+          <span class="pbar" aria-label="Lesson progress ${x.pct}%"><i style="width:${x.pct}%"></i></span>
+          <div class="row between muted" style="font-size:12.5px"><span>${x.pct}% · ${quiz}</span><span>${full ? 'Full lesson' : 'Vocabulary + links'}</span></div></a>`;
+      });
+      h += '</div>';
+    });
+    document.getElementById('map').innerHTML = h || '<div class="panel empty-state">No lessons match these filters.</div>';
+    document.querySelectorAll('#fLevel button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === level));
+  }
+  document.getElementById('fLevel').onclick = e => { const b = e.target.closest('button'); if (!b) return; level = b.dataset.v; try { const p = JSON.parse(localStorage.getItem('a1:prefs') || '{}'); p.courseLevel = level; localStorage.setItem('a1:prefs', JSON.stringify(p)) } catch (e) {} render() };
+  document.getElementById('fStatus').onchange = e => { status = e.target.value; render() };
+  render(); A1D.whenAuth(() => render()); window.addEventListener('storage', render);
+})();
+</script>
+<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
+<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

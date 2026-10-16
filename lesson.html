@@ -1,0 +1,126 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lektion · Deutsch A1</title><meta name="description" content="A lesson of German A1: learn, practise, apply, quiz and review."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
+<script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+</head><body>
+<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker" id="kick">Lektion</div><h1 id="ttl" lang="de">…</h1><p id="tpc"></p>
+  <div class="row" style="margin-top:12px"><a class="btn ghost small" href="course.html">← My Course</a><span id="lnav" class="row"></span></div></div></header>
+<main class="pg" id="main">
+  <div class="ltabs" role="tablist" id="tabs" aria-label="Lesson sections"></div>
+  <div id="pane" role="tabpanel" tabindex="-1"></div>
+</main>
+<script>
+(function () {
+  const esc = ENGINE.esc, $ = id => document.getElementById(id);
+  const n = Math.min(24, Math.max(1, +(new URLSearchParams(location.search).get('l') || 1)));
+  const L = COURSE.lesson(n), C = COURSE.content(n), full = !!C;
+  const TABS = full ? ['learn', 'wortschatz', 'practice', 'apply', 'test', 'review'] : ['learn', 'wortschatz', 'practice', 'test', 'review'];
+  const LABEL = { learn: 'Learn', wortschatz: 'Wortschatz', practice: 'Practice', apply: 'Apply', test: 'Quiz', review: 'Review' };
+  document.title = `Lektion ${n}: ${L.title} · Deutsch A1`;
+  $('kick').textContent = `Lektion ${n} · ${L.level} · Modul ${L.modul}`; $('ttl').textContent = L.title; $('tpc').textContent = L.topic;
+  $('lnav').innerHTML = (n > 1 ? `<a class="btn ghost small" href="lesson.html?l=${n - 1}">← L${n - 1}</a>` : '') + (n < 24 ? `<a class="btn ghost small" href="lesson.html?l=${n + 1}">L${n + 1} →</a>` : '');
+  let tab = (location.hash || '').slice(1); if (!TABS.includes(tab)) tab = (PM.lesson(n).lastSection && TABS.includes(PM.lesson(n).lastSection)) ? PM.lesson(n).lastSection : 'learn';
+
+  function tabs() {
+    const p = PM.lesson(n);
+    $('tabs').innerHTML = TABS.map(t => `<button role="tab" id="t-${t}" aria-controls="pane" aria-selected="${t === tab}" class="${p.done[t] ? 'done' : ''}" data-t="${t}">${LABEL[t]}</button>`).join('');
+  }
+  $('tabs').onclick = e => { const b = e.target.closest('[data-t]'); if (b) go(b.dataset.t) };
+  $('tabs').onkeydown = e => { const i = TABS.indexOf(tab); if (e.key === 'ArrowRight') go(TABS[(i + 1) % TABS.length]); if (e.key === 'ArrowLeft') go(TABS[(i + TABS.length - 1) % TABS.length]) };
+  function go(t) { tab = t; history.replaceState(null, '', '#' + t); A1.lessons.visit(n, t); render(); $('t-' + t).focus() }
+  window.addEventListener('hashchange', () => { const t = location.hash.slice(1); if (TABS.includes(t) && t !== tab) { tab = t; render() } });
+
+  const grammarLinks = () => L.grammar.map(g => `<li><a href="${g.href}">Grammar Book · Step ${g.step}: ${esc(g.title)}</a></li>`).join('') + `<li><a href="${L.guideHref}">Study Guide · Lektion ${n}</a></li>`;
+
+  function learn() {
+    const p = PM.lesson(n);
+    if (!full) return `<div class="panel"><h2>Learn</h2>
+      <div class="notice">The detailed Learn pages for this lesson are not written yet. Use the Grammar Book chapter and Study Guide below; vocabulary practice and the vocabulary quiz already work.</div>
+      <h3>Communication topic</h3><p>${esc(L.topic)}</p><h3>Grammar in this lesson</h3><ul>${grammarLinks()}</ul>
+      <div class="row"><button class="btn" id="readOk">${p.done.learn ? '✓ Marked as read' : 'I’ve read the chapter'}</button></div></div>`;
+    return `<div class="panel"><h2>What you will learn</h2><ol class="objectives">${C.objectives.map(o => `<li>${esc(o.text)} <span class="pill dim">${o.kind}</span></li>`).join('')}</ol>
+      <p class="muted" style="margin-top:10px">Lesson title and topic follow Momente A1.1. The explanations and exercises here are original and were not copied from the Kursbuch or Arbeitsbuch.</p></div>
+      <div class="panel">${C.learn.map(s => `<section class="learn-card" id="learn-${s.id}"><h3>${esc(s.title)}</h3>
+        ${s.text ? `<p>${esc(s.text)}</p>` : ''}
+        ${s.table ? `<div class="tw"><table lang="de">${s.table.map(r => `<tr><td>${esc(r[0])}</td><td lang="en">${esc(r[1])}</td></tr>`).join('')}</table></div>` : ''}
+        ${s.examples ? `<ul class="ex-list">${s.examples.map(e => `<li><span class="de" lang="de">${esc(e[0])}</span> ${ENGINE.canSpeak ? `<button class="ex-link" data-say="${esc(e[0])}" aria-label="Listen">🔊</button>` : ''}<br><span class="en">${esc(e[1])}</span></li>`).join('')}</ul>` : ''}
+        ${s.mistakes ? s.mistakes.map(m => `<div class="mistake">✗ <s lang="de">${esc(m[0])}</s> → ✓ <b lang="de">${esc(m[1])}</b> — ${esc(m[2])}</div>`).join('') : ''}
+        ${s.href ? `<a href="${s.href}">More in the Grammar Book →</a>` : ''}</section>`).join('')}
+        <div class="row" style="margin-top:14px"><button class="btn" id="readOk">${p.done.learn ? '✓ Marked as read' : 'I’ve read this'}</button><button class="btn ghost" data-tabgo="practice">Go to Practice →</button></div></div>
+      <div class="panel"><h3 style="margin-top:0">More resources</h3><ul>${grammarLinks()}<li><a href="speaking.html">Sprechen: speaking practice</a></li></ul></div>`;
+  }
+  function wortschatz() {
+    const p = PM.lesson(n);
+    return `<div class="panel"><div class="row between"><div><h2>Wortschatz · Lektion ${n}</h2><p class="sub" style="margin:0">${L.words.length} words · ${p.wordsKnown}% marked Known (this section is done at ${Math.round(PM.WZ_DONE * 100)}%).</p></div>
+      <a class="btn" href="${L.wortschatzHref}">Open the Wortschatz trainer →</a></div>
+      <span class="pbar" style="margin:12px 0"><i style="width:${p.wordsKnown}%"></i></span>
+      <div class="tw"><table class="t"><thead><tr><th>German</th><th>English</th><th>Status</th></tr></thead><tbody>${L.words.map(w => { const c = p && PM.wortschatz().cards[w.id]; const s = c ? c.s : 'new'; return `<tr><td lang="de"><b>${esc(w.de)}</b></td><td>${esc(w.en)}</td><td><span class="pill ${s === 'known' ? 'ok' : s === 'learning' ? 'warn' : 'dim'}">${s}</span></td></tr>` }).join('')}</tbody></table></div></div>`;
+  }
+  function practiceIntro() {
+    const vq = A1D.vocabFor(n);
+    return `<div class="panel"><h2>Practice</h2><p class="sub">Immediate feedback with explanations. Wrong answers go to your <a href="mistakes.html?lesson=${n}">mistake list</a>.</p>
+      <div class="grid">${full ? `<div><h3>Lesson exercises</h3><p class="muted">${C.practice.length} exercises · ${[...new Set(C.practice.map(q => ENGINE.TYPE_LABEL[q.type]))].join(', ')}</p><button class="btn" data-run="lesson">Start</button></div>` : ''}
+      <div><h3>Vocabulary practice</h3><p class="muted">12 random questions from this lesson’s ${L.words.length} words (articles, meanings, writing).</p><button class="btn ${full ? 'ghost' : ''}" data-run="vocab" ${vq.length ? '' : 'disabled'}>Start</button></div></div></div><div class="panel" id="runner" hidden></div>`;
+  }
+  function apply() {
+    return `<div class="panel"><h2>Apply: Hören · Lesen · Schreiben · Sprechen</h2><p class="sub">Listening uses the browser’s computer voice (text-to-speech). Writing and speaking are self-checked against a checklist and a model answer; nothing is graded automatically.</p>
+      <button class="btn" data-run="apply">Start (${C.apply.length} tasks)</button></div><div class="panel" id="runner" hidden></div>`;
+  }
+  function test() {
+    const p = PM.lesson(n), t = COURSE.test('lesson-' + n);
+    return `<div class="panel"><h2>${esc(t.title)}</h2>
+      <p class="sub">${full ? `${C.quiz.length} questions on vocabulary, grammar, listening and reading` : '15 vocabulary questions from this lesson’s word list'} · about ${t.minutes} minutes · pass mark ${COURSE.PASS_PCT}%. Answers are shown only after you submit.</p>
+      ${p.quiz ? `<p>Best: <b>${p.quiz.best}%</b> · last: ${p.quiz.last}% · ${p.quiz.passed ? '<span class="pill ok">Passed</span>' : '<span class="pill warn">Not passed yet</span>'}</p>` : '<p class="muted">Not taken yet.</p>'}
+      <a class="btn" href="test.html?id=lesson-${n}">${p.quiz ? 'Retake quiz' : 'Start quiz'} →</a> <a class="btn ghost" href="test.html?id=module-${L.modul}">Modul ${L.modul} test</a></div>`;
+  }
+  async function review() {
+    let h = `<div class="panel"><h2>Review</h2><p class="sub">Your open mistakes from this lesson. They come back until you get them right in 3 separate sessions.</p><div id="rv" class="skeleton">Loading…</div>
+      <div class="row"><a class="btn" href="mistakes.html?lesson=${n}">Review Lektion ${n} mistakes →</a><a class="btn ghost" href="mistakes.html">All mistakes</a></div></div>`;
+    setTimeout(async () => {
+      const el = $('rv'); if (!el) return;
+      if (!A1.user || !A1.client) { el.className = 'notice'; el.innerHTML = 'Sign in with Google to keep a personal mistake list.'; return }
+      const { data, error } = await A1.client.from('review_items').select('*').eq('lesson', n).eq('mastered', false).order('times_wrong', { ascending: false }).limit(50);
+      if (error) { el.textContent = 'Could not load: ' + error.message; return }
+      el.className = '';
+      el.innerHTML = data.length ? `<table class="t"><thead><tr><th>Question</th><th>Correct answer</th><th>Status</th></tr></thead><tbody>${data.map(r => `<tr><td>${esc((r.prompt || r.item_id).slice(0, 90))}</td><td lang="de"><b>${esc(r.expected)}</b></td><td><span class="pill">${REVIEW.LABEL[REVIEW.state(r)]}</span></td></tr>`).join('')}</tbody></table>` : '<p class="muted">No open mistakes for this lesson. 🎉</p>';
+      A1.lessons.mark(n, 'review');
+    }, 0);
+    return h;
+  }
+
+  function startRun(kind) {
+    const el = $('runner'); el.hidden = false;
+    let qs, title, section;
+    if (kind === 'lesson') { qs = C.practice; title = `Lektion ${n} · Practice`; section = 'practice' }
+    else if (kind === 'apply') { qs = C.apply; title = `Lektion ${n} · Apply`; section = 'apply' }
+    else { qs = ENGINE.shuffle(A1D.vocabFor(n)).slice(0, 12); title = `Lektion ${n} · Vocabulary`; section = 'practice' }
+    ENGINE.runPractice(el, qs, {
+      title,
+      onRecord: (q, res, resp) => { if (res.graded) A1D.record(q, res, resp, 'practice'); else saveWriting(q, resp) },
+      onFinish: sc => { A1.lessons.mark(n, section, { score: sc.pct, kind }); tabs() }
+    });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function saveWriting(q, resp) {
+    try { const w = JSON.parse(localStorage.getItem('a1:writing') || '{}'); w[q.id] = { text: resp.text || '', checks: resp.checks, at: new Date().toISOString() }; localStorage.setItem('a1:writing', JSON.stringify(w)) } catch (e) {}
+  }
+
+  async function render() {
+    tabs();
+    const html = { learn, wortschatz, practice: practiceIntro, apply, test, review }[tab];
+    $('pane').innerHTML = await html();
+    $('pane').onclick = e => {
+      const r = e.target.closest('[data-run]'); if (r) return startRun(r.dataset.run);
+      const g = e.target.closest("[data-tabgo]"); if (g) return go(g.dataset.tabgo);
+      const s = e.target.closest('[data-say]'); if (s) return ENGINE.speak(s.dataset.say);
+      if (e.target.id === 'readOk') { A1.lessons.mark(n, 'learn'); render() }
+    };
+  }
+  A1.lessons.visit(n, tab); render();
+  A1D.whenAuth(() => { if (tab === 'review') render() });
+})();
+</script>
+<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
+<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

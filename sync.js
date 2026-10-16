@@ -8,7 +8,7 @@
   const SB_URL = 'https://gvftmsctaxyllmtiztil.supabase.co';
   const SB_KEY = 'sb_publishable_oEN1QiCiC8pTHLoCxWW2HA_2LvHaNgE'; // public key, safe in the browser (RLS protects the data)
   const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.5/dist/umd/supabase.min.js';
-  const SYNC_KEYS = ['wz:v2', 'known', 'a1plan:v1'];   // localStorage keys mirrored to app_state
+  const SYNC_KEYS = ['wz:v2', 'known', 'a1plan:v1', 'a1:lessons', 'a1:prefs', 'a1:writing'];   // localStorage keys mirrored to app_state
   const QKEY = 'a1:queue', TSKEY = 'a1:ts';
 
   const ls = {
@@ -24,8 +24,22 @@
     get client() { return sb },
     onChange(fn) { listeners.push(fn); fn(user) },
     record, saveTest, login, logout, flush,
+    get v2() { return v2 !== false },   // true unless the 002 migration is missing
+    lessons: {                          // lesson progress, stored in 'a1:lessons' (synced via app_state)
+      all() { return ls.get('a1:lessons', {}) },
+      get(n) { return ls.get('a1:lessons', {})[n] || { sections: {} } },
+      mark(n, section, extra) {
+        const all = ls.get('a1:lessons', {}); const l = all[n] = all[n] || { sections: {} };
+        l.sections[section] = Object.assign({ at: new Date().toISOString() }, l.sections[section] || {}, extra || {});
+        l.last = new Date().toISOString(); l.lastSection = section;
+        localStorage.setItem('a1:lessons', JSON.stringify(all));
+        return l;
+      },
+      visit(n, section) { const all = ls.get('a1:lessons', {}); const l = all[n] = all[n] || { sections: {} }; l.last = new Date().toISOString(); l.lastSection = section || l.lastSection; localStorage.setItem('a1:lessons', JSON.stringify(all)) }
+    },
     ready: null
   };
+  let v2 = (Date.now() - (ls.get('a1:v2no', 0) || 0) < 6 * 3600e3) ? false : null; // re-check for migration 002 every 6 h
 
   // ---------- local timestamps for synced keys ----------
   function stamps() { return ls.get(TSKEY, {}) }
@@ -63,17 +77,21 @@
         let error = null;
         if (job.t === 'answer') {
           const a = job.a;
-          ({ error } = await sb.rpc('record_answer', {
-            p_item_id: String(a.item), p_lesson: a.lesson ?? null, p_kind: a.kind || 'vocab',
-            p_correct: !!a.correct, p_answer: a.answer ?? null, p_expected: a.expected ?? null,
+          const base = {
+            p_item_id: String(a.item).slice(0, 200), p_lesson: a.lesson ?? null, p_kind: a.kind || 'vocab',
+            p_correct: !!a.correct, p_answer: a.answer == null ? null : String(a.answer).slice(0, 2000), p_expected: a.expected ?? null,
             p_prompt: a.prompt ?? null, p_source: a.source || 'practice'
-          }));
+          };
+          if (v2 !== false) {
+            ({ error } = await sb.rpc('record_answer_v2', Object.assign({}, base, { p_topic: a.topic ?? null, p_skill: a.skill ?? null, p_explanation: a.explanation ?? null, p_test_id: a.testId ?? null })));
+            if (error && (error.code === 'PGRST202' || /record_answer_v2/.test(error.message))) { v2 = false; ls.set('a1:v2no', Date.now()); error = null; ({ error } = await sb.rpc('record_answer', base)) }
+            else if (!error) v2 = true;
+          } else ({ error } = await sb.rpc('record_answer', base));
         } else if (job.t === 'test') {
           const r = job.r;
-          ({ error } = await sb.from('test_results').insert({
-            test_id: r.id, title: r.title || null, score: r.score, max_score: r.max,
-            duration_sec: r.seconds ?? null, wrong_items: r.wrong || [], created_at: job.at
-          }));
+          const row = { test_id: r.id, title: r.title || null, score: r.score, max_score: r.max, duration_sec: r.seconds ?? null, wrong_items: r.wrong || [], created_at: job.at };
+          ({ error } = await sb.from('test_results').insert(Object.assign({ test_kind: r.kind || null, breakdown: r.breakdown || {}, answers: r.answers || [] }, row)));
+          if (error && /test_kind|breakdown|answers|column/.test(error.message)) ({ error } = await sb.from('test_results').insert(row)); // before migration 002
         }
         if (error) { console.warn('[A1 sync]', error.message); break }
         q = queue(); q.shift(); ls.set(QKEY, q);

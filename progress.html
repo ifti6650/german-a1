@@ -1,110 +1,61 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My progress · Deutsch A1</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
-<link rel="stylesheet" href="site.css"><script src="sync.js"></script>
-<style>
-main.pg{max-width:1080px;margin:0 auto;padding:8px 16px 56px}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:20px}
-.tile{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.tile .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.tile .v{font:800 34px/1.1 var(--display);margin-top:6px}
-.tile .s{font-size:13px;color:var(--muted)}
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
-.panel h2{font:800 20px var(--display);margin:0 0 4px}
-.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
-.bars{display:flex;align-items:flex-end;gap:4px;height:150px;border-bottom:1px solid var(--line);padding-top:8px}
-.bars .b{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative;cursor:default}
-.bars .b i{display:block;background:var(--accent);border-radius:4px 4px 0 0;min-height:0}
-.bars .b:hover i{background:var(--accent-2)}
-.bars .b .tip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font-size:12px;padding:4px 8px;border-radius:6px;white-space:nowrap;z-index:2}
-.bars .b:hover .tip{display:block}
-.axis{display:flex;gap:4px;font-size:11px;color:var(--muted);margin-top:4px}.axis span{flex:1;text-align:center;min-width:0;overflow:hidden}
-table.t{width:100%;border-collapse:collapse;font-size:14px}
-table.t th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:6px 8px;border-bottom:1px solid var(--line)}
-table.t td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-table.t td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.meter{display:inline-block;width:80px;height:6px;border-radius:3px;background:var(--line);vertical-align:middle;margin-left:6px;overflow:hidden}.meter i{display:block;height:100%;background:var(--accent)}
-.btn{display:inline-block;font:700 14px var(--body);padding:10px 16px;border-radius:10px;background:var(--accent);color:var(--paper);text-decoration:none;border:0;cursor:pointer}
-.empty{color:var(--muted);font-size:14px}
-.gate{text-align:center;padding:40px 20px}
-.wrong{color:#c2410c}
-@media (prefers-color-scheme: dark){.wrong{color:#fb923c}}
-</style></head><body>
-<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"><a href="index.html">Home</a><a href="wortschatz.html">Wortschatz</a><a href="practice.html">Mistakes</a><a href="progress.html" class=on>Progress</a><a href="grammar-book.html">Grammar Book</a><a href="study-guide.html">Study Guide</a><a href="speaking.html">Sprechen</a></div></div></nav>
-<header class="hero small"><div class="in"><div class="kicker">Track record</div><h1>My progress</h1><p>Every answer from the Wortschatz trainer, mistake practice and tests, saved to your account.</p></div></header>
-<main class="pg" id="app"><div class="panel gate" id="gate"><p class="empty">Loading…</p></div></main>
+<title>My progress · Deutsch A1</title><meta name="description" content="Your German A1 progress: lessons, accuracy, mastery and tests."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
+<script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+</head><body>
+<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">Progress</div><h1>My progress</h1><p>Lesson completion, accuracy, mastery and tests, calculated from your saved answers. See “How these numbers work” at the bottom.</p></div></header>
+<main class="pg" id="main"><div id="app"><div class="panel skeleton">Loading…</div></div>
+<details class="panel"><summary style="cursor:pointer;font-weight:700">How these numbers work</summary>
+<ul class="muted">
+  <li><b>Lesson progress</b> = done sections ÷ available sections. Learn is done when you press “I’ve read this”; Wortschatz is done when ≥ 80% of the lesson's words are Known in the trainer; Practice and Apply when you finish a round; Quiz when you pass it (≥ 60%).</li>
+  <li><b>Lesson completed</b> = lesson quiz passed. Completion is not the same as mastery.</li>
+  <li><b>Accuracy</b> = correct answers ÷ all graded answers you gave (practice, tests, reviews, Wortschatz). Self-checked writing and speaking are not counted.</li>
+  <li><b>Mastered mistakes</b> = mistakes answered right in 3 separate sessions, at least 12 hours apart.</li>
+  <li><b>Vocabulary retention</b> = words marked Known in the Wortschatz trainer (its own spaced repetition).</li>
+  <li><b>Streak</b> = consecutive days with at least one saved answer.</li></ul></details></main>
 <script>
 (function () {
-const $ = id => document.getElementById(id);
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
-const dayKey = d => { const x = new Date(d); return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0') };
-
-async function load(user) {
-  const app = $('app');
-  if (!user) { app.innerHTML = `<div class="panel gate"><h2>Sign in to see your progress</h2><p class="sub">Use the “Sign in with Google” button at the top.</p></div>`; return }
-  const sb = A1.client;
-  const since = new Date(Date.now() - 30 * 864e5).toISOString();
-  const [att, open, mastered, tests] = await Promise.all([
-    sb.from('attempts').select('created_at,correct,lesson,kind,source').gte('created_at', since).order('created_at', { ascending: false }).limit(10000),
-    sb.from('review_items').select('item_id,lesson,prompt,expected,last_answer,times_wrong,correct_streak').eq('mastered', false).order('times_wrong', { ascending: false }).limit(500),
-    sb.from('review_items').select('item_id', { count: 'exact', head: true }).eq('mastered', true),
-    sb.from('test_results').select('title,test_id,score,max_score,duration_sec,created_at').order('created_at', { ascending: false }).limit(15)
-  ]);
-  const err = [att, open, mastered, tests].find(r => r.error);
-  if (err) { app.innerHTML = `<div class="panel"><p class="empty">Could not load data: ${esc(err.error.message)}</p></div>`; return }
-  const A = att.data || [], O = open.data || [], T = tests.data || [];
-
-  const today = dayKey(Date.now());
-  const tA = A.filter(a => dayKey(a.created_at) === today);
-  const w7 = A.filter(a => new Date(a.created_at) > Date.now() - 7 * 864e5);
-  // streak: consecutive days with at least one answer, ending today or yesterday
-  const days = new Set(A.map(a => dayKey(a.created_at)));
-  let streak = 0; for (let i = days.has(today) ? 0 : 1; i < 31; i++) { if (days.has(dayKey(Date.now() - i * 864e5))) streak++; else break }
-
-  // 14-day bars
-  const bars = []; for (let i = 13; i >= 0; i--) { const k = dayKey(Date.now() - i * 864e5); const d = A.filter(a => dayKey(a.created_at) === k); bars.push({ k, n: d.length, ok: d.filter(a => a.correct).length }) }
-  const maxN = Math.max(1, ...bars.map(b => b.n));
-  const wd = k => new Date(k + 'T12:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' });
-
-  // per lesson
-  const byL = {}; A.forEach(a => { if (a.lesson == null) return; const l = byL[a.lesson] = byL[a.lesson] || { n: 0, ok: 0 }; l.n++; if (a.correct) l.ok++ });
-  const openByL = {}; O.forEach(o => { if (o.lesson != null) openByL[o.lesson] = (openByL[o.lesson] || 0) + 1 });
-  const lessons = [...new Set([...Object.keys(byL), ...Object.keys(openByL)].map(Number))].sort((a, b) => a - b);
-
-  app.innerHTML = `
-  <section class="tiles">
-    <div class="tile"><div class="k">Today</div><div class="v">${tA.length}</div><div class="s">answers · ${pct(tA.filter(a => a.correct).length, tA.length)}% right</div></div>
-    <div class="tile"><div class="k">Last 7 days</div><div class="v">${pct(w7.filter(a => a.correct).length, w7.length)}%</div><div class="s">right of ${w7.length} answers</div></div>
-    <div class="tile"><div class="k">Streak</div><div class="v">${streak}</div><div class="s">day${streak === 1 ? '' : 's'} in a row</div></div>
-    <div class="tile"><div class="k">Mistake list</div><div class="v">${O.length}</div><div class="s">open · ${mastered.count || 0} mastered</div></div>
-  </section>
-  <div class="panel"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><div><h2>Answers per day</h2><p class="sub" style="margin:0">Last 14 days · hover a bar for details</p></div>${O.length ? `<a class="btn" href="practice.html">Practise ${O.length} mistake${O.length === 1 ? '' : 's'} →</a>` : ''}</div>
-    <div class="bars" role="img" aria-label="Answers per day for the last 14 days">${bars.map(b => `<div class="b"><span class="tip">${wd(b.k)}: ${b.n} answers, ${pct(b.ok, b.n)}% right</span><i style="height:${b.n / maxN * 100}%"></i></div>`).join('')}</div>
-    <div class="axis">${bars.map((b, i) => `<span>${i % 2 ? '' : wd(b.k)}</span>`).join('')}</div>
-  </div>
-  <div class="grid2">
-    <div class="panel"><h2>By lesson</h2><p class="sub">Last 30 days</p>
-      ${lessons.length ? `<table class="t"><thead><tr><th>Lektion</th><th class="n">Answers</th><th class="n">Right</th><th class="n">Open mistakes</th></tr></thead><tbody>
-      ${lessons.map(l => { const x = byL[l] || { n: 0, ok: 0 }; return `<tr><td>L${l}</td><td class="n">${x.n}</td><td class="n">${pct(x.ok, x.n)}%<span class="meter"><i style="width:${pct(x.ok, x.n)}%"></i></span></td><td class="n">${openByL[l] ? `<a href="practice.html#L${l}">${openByL[l]}</a>` : '–'}</td></tr>` }).join('')}
-      </tbody></table>` : `<p class="empty">No answers yet. Start with the <a href="wortschatz.html">Wortschatz trainer</a>.</p>`}
-    </div>
-    <div class="panel"><h2>Hardest items</h2><p class="sub">Most often wrong, still open</p>
-      ${O.length ? `<table class="t"><thead><tr><th>Question</th><th>Correct</th><th>You wrote</th><th class="n">Wrong</th></tr></thead><tbody>
-      ${O.slice(0, 12).map(o => `<tr><td>${esc(o.prompt || o.item_id)}</td><td><b>${esc(o.expected)}</b></td><td class="wrong">${esc(o.last_answer)}</td><td class="n">${o.times_wrong}×</td></tr>`).join('')}
-      </tbody></table>` : `<p class="empty">Nothing on your mistake list. 🎉</p>`}
-    </div>
-  </div>
-  <div class="panel"><h2>Test results</h2><p class="sub">Most recent first</p>
-    ${T.length ? `<table class="t"><thead><tr><th>Test</th><th>Date</th><th class="n">Score</th><th class="n">Time</th></tr></thead><tbody>
-    ${T.map(t => `<tr><td>${esc(t.title || t.test_id)}</td><td>${new Date(t.created_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</td><td class="n">${+t.score}/${+t.max_score} · ${pct(t.score, t.max_score)}%</td><td class="n">${t.duration_sec ? Math.round(t.duration_sec / 60) + ' min' : '–'}</td></tr>`).join('')}
-    </tbody></table>` : `<p class="empty">No tests yet. Lesson tests are coming next.</p>`}
-  </div>`;
-}
-let last;
-A1.onChange(u => { if (!A1.client) return; const id = u ? u.id : null; if (id === last) return; last = id; load(u) });
-A1.ready.then(() => { if (!A1.client) $('app').innerHTML = `<div class="panel gate"><p class="empty">You're offline. Progress will show when you're back online.</p></div>`; else if (last === undefined) { last = A1.user ? A1.user.id : null; load(A1.user) } });
+  const esc = ENGINE.esc, $ = id => document.getElementById(id);
+  const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+  function render(user, data) {
+    const cp = PM.course();
+    const an = data ? PM.analytics(data.attempts, data.reviews, data.tests) : null;
+    const wd = k => new Date(k + 'T12:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' });
+    const maxN = an ? Math.max(1, ...an.perDay.map(d => d.n)) : 1;
+    const trow = (rows, lab) => rows.map(r => `<tr><td>${esc(lab(r.key))}</td><td class="n">${r.n}</td><td class="n">${r.acc}%<span class="meter"><i style="width:${r.acc}%"></i></span></td></tr>`).join('');
+    // test improvement: first vs best per test id
+    const tg = {}; (an ? an.tests : []).slice().reverse().forEach(t => { const p = Math.round(t.score / t.max_score * 100); const g = tg[t.test_id] = tg[t.test_id] || { title: t.title || t.test_id, first: p, best: p, n: 0, last: p }; g.best = Math.max(g.best, p); g.last = p; g.n++ });
+    const ach = [];
+    if (cp.completed >= 1) ach.push('🎓 First lesson completed'); if (cp.a11.done === 12) ach.push('🏅 A1.1 completed'); if (cp.a12.done === 12) ach.push('🏆 A1.2 completed');
+    if (an && an.streak >= 7) ach.push('🔥 7-day streak'); if (an && an.total >= 100) ach.push('💯 100 answers'); if (an && (an.reviews.mastered || 0) >= 10) ach.push('🧠 10 mistakes mastered'); if (cp.wz.known >= 100) ach.push('🗂️ 100 words known');
+    $('app').innerHTML = `
+      ${user ? '' : '<div class="notice">Sign in with Google to see accuracy, mistakes and test history from your saved answers. Course progress below comes from this browser.</div>'}
+      <section class="tiles">
+        <div class="tile"><div class="k">Course</div><div class="v">${cp.completed}/24</div><div class="s">lessons completed</div></div>
+        <div class="tile"><div class="k">A1.1</div><div class="v">${cp.a11.pct}%</div><div class="s">${cp.a11.done}/12 completed</div></div>
+        <div class="tile"><div class="k">A1.2</div><div class="v">${cp.a12.pct}%</div><div class="s">${cp.a12.done}/12 completed</div></div>
+        <div class="tile"><div class="k">Accuracy</div><div class="v">${an && an.accuracy != null ? an.accuracy + '%' : '–'}</div><div class="s">${an ? an.total : 0} answers · 90 days</div></div>
+        <div class="tile"><div class="k">Streak</div><div class="v">${an ? an.streak : '–'}</div><div class="s">${an ? an.activeDays : 0} active days</div></div>
+        <div class="tile"><div class="k">Words known</div><div class="v">${cp.wz.known}</div><div class="s">of 783 · ${cp.wz.due} due</div></div>
+        <div class="tile"><div class="k">Mistakes</div><div class="v">${an ? (an.reviews.mastered || 0) : '–'}</div><div class="s">mastered · ${an ? an.reviewDue : 0} due · ${an ? (an.reviews.learning || 0) + (an.reviews.improving || 0) : 0} in progress</div></div>
+      </section>
+      ${an ? `<div class="panel"><h2>Daily activity</h2><p class="sub">Answers per day, last 14 days (hover for accuracy)</p>
+        <div class="bars" role="img" aria-label="Answers per day">${an.perDay.map(d => `<div class="b" tabindex="0"><span class="tip">${wd(d.k)}: ${d.n} answers${d.n ? ', ' + d.acc + '% right' : ''}</span><i style="height:${d.n / maxN * 100}%"></i></div>`).join('')}</div>
+        <div class="axis">${an.perDay.map((d, i) => `<span>${i % 2 ? '' : wd(d.k)}</span>`).join('')}</div></div>` : ''}
+      <div class="grid">
+        ${an && an.bySkill.length ? `<div class="panel"><h2>By skill</h2><table class="t"><thead><tr><th>Skill</th><th class="n">Answers</th><th class="n">Right</th></tr></thead><tbody>${trow(an.bySkill, k => k)}</tbody></table></div>` : ''}
+        ${an && an.byTopic.length ? `<div class="panel"><h2>By topic (weakest first)</h2><table class="t"><thead><tr><th>Topic</th><th class="n">Answers</th><th class="n">Right</th></tr></thead><tbody>${trow(an.byTopic.slice(0, 10), PM.label)}</tbody></table></div>` : ''}
+      </div>
+      <div class="panel"><h2>Lessons</h2><div class="tw"><table class="t"><thead><tr><th>Lektion</th><th>Sections</th><th class="n">Progress</th><th class="n">Quiz</th><th class="n">Accuracy</th></tr></thead><tbody>
+        ${cp.lessons.map(x => { const a = an && an.byLesson.find(b => +b.key === x.n); return `<tr><td><a href="lesson.html?l=${x.n}">L${x.n} · ${esc(x.lesson.title)}</a></td><td>${x.sections.map(s => `<span class="pill ${x.done[s] ? 'ok' : 'dim'}" style="margin:1px">${PM.SECTION_LABEL[s]}</span>`).join('')}</td><td class="n">${x.pct}%</td><td class="n">${x.quiz ? x.quiz.best + '%' + (x.quiz.passed ? ' ✓' : '') : '–'}</td><td class="n">${a ? a.acc + '% (' + a.n + ')' : '–'}</td></tr>` }).join('')}</tbody></table></div></div>
+      ${Object.keys(tg).length ? `<div class="panel"><h2>Test improvement</h2><table class="t"><thead><tr><th>Test</th><th class="n">Tries</th><th class="n">First</th><th class="n">Last</th><th class="n">Best</th></tr></thead><tbody>${Object.entries(tg).map(([id, g]) => `<tr><td><a href="test.html?id=${esc(id)}">${esc(g.title)}</a></td><td class="n">${g.n}</td><td class="n">${g.first}%</td><td class="n">${g.last}%</td><td class="n"><b>${g.best}%</b></td></tr>`).join('')}</tbody></table></div>` : ''}
+      <div class="panel"><h2>Achievements</h2>${ach.length ? `<div class="row">${ach.map(a => `<span class="pill">${a}</span>`).join('')}</div>` : '<p class="muted">Complete a lesson quiz to earn your first achievement.</p>'}</div>`;
+  }
+  render(null, null);
+  A1D.whenAuth(async u => { if (!u) return render(null, null); let d = null; try { d = await A1D.loadAll(90) } catch (e) { console.warn(e) } render(u, d) });
 })();
 </script>
-<footer class="foot">Deutsch A1 · your progress is private to your account</footer>
-<script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
+<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
+<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>

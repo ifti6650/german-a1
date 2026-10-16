@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mistakes · Deutsch A1</title><meta name="description" content="Your personal mistake list with spaced review."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
+<script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+</head><body>
+<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">Fehlerkiste · Mistake trainer</div><h1>Turn mistakes into mastery</h1><p>Every wrong answer from practice, quizzes, tests and the Wortschatz trainer lands here. An item is mastered after you answer it right in 3 separate sessions (at least 12 hours apart); a new error reopens it.</p></div></header>
+<main class="pg" id="main">
+  <div class="tiles" id="sum"></div>
+  <div class="panel" id="box"><div class="skeleton">Loading…</div></div>
+  <div class="panel" id="runner" hidden></div>
+</main>
+<script>
+(function () {
+  const esc = ENGINE.esc, $ = id => document.getElementById(id);
+  const P = new URLSearchParams(location.search);
+  let F = { lesson: P.get('lesson') || 'all', topic: P.get('topic') || 'all', skill: P.get('skill') || 'all', status: P.get('status') || 'open' };
+  let items = [];
+  const ORDER = ['due', 'new', 'learning', 'improving', 'mastered'];
+  const st = r => REVIEW.state(r);
+  function topicOf(r) { return r.topic || (/:article$/.test(r.item_id) ? 'articles' : /^vocab:/.test(r.item_id) ? 'vocabulary' : (A1D.findQuestion(r.item_id) || {}).topic || 'other') }
+  function skillOf(r) { return r.skill || (/^vocab:/.test(r.item_id) ? 'vocabulary' : (A1D.findQuestion(r.item_id) || {}).skill || 'other') }
+  function filtered() {
+    return items.filter(r => (F.lesson === 'all' || String(r.lesson) === F.lesson) && (F.topic === 'all' || topicOf(r) === F.topic) && (F.skill === 'all' || skillOf(r) === F.skill)
+      && (F.status === 'all' || (F.status === 'open' ? !r.mastered : F.status === 'due' ? ['due', 'new'].includes(st(r)) : st(r) === F.status)));
+  }
+  const opts = (vals, cur, lab) => vals.map(v => `<option value="${esc(v)}" ${String(v) === String(cur) ? 'selected' : ''}>${esc(lab ? lab(v) : v)}</option>`).join('');
+  function render() {
+    const counts = {}; items.forEach(r => { const s = st(r); counts[s] = (counts[s] || 0) + 1 });
+    $('sum').innerHTML = ORDER.map(s => `<div class="tile"><div class="k">${REVIEW.LABEL[s]}</div><div class="v">${counts[s] || 0}</div></div>`).join('');
+    const xs = filtered().sort((a, b) => ORDER.indexOf(st(a)) - ORDER.indexOf(st(b)) || b.times_wrong - a.times_wrong);
+    const lessons = [...new Set(items.map(r => r.lesson).filter(x => x != null))].sort((a, b) => a - b);
+    const topics = [...new Set(items.map(topicOf))].sort(); const skills = [...new Set(items.map(skillOf))].sort();
+    const noSched = items.length && !items.some(r => 'next_review_at' in r);
+    $('box').innerHTML = `<div class="row between"><h2>Your mistakes</h2><button class="btn" id="go" ${xs.filter(r => !r.mastered).length ? '' : 'disabled'}>Review ${Math.min(20, xs.filter(r => !r.mastered).length)} now →</button></div>
+      ${noSched ? '<div class="notice warn">Review dates are not active yet (database update 002 pending). Until then every open item counts as due.</div>' : ''}
+      <div class="filters" style="margin-top:10px">
+        <select id="fs" aria-label="Status">${opts(['open', 'due', 'new', 'learning', 'improving', 'mastered', 'all'], F.status, v => ({ open: 'All open', due: 'Due now', all: 'Everything' })[v] || REVIEW.LABEL[v])}</select>
+        <select id="fl" aria-label="Lesson"><option value="all">All lessons</option>${opts(lessons, F.lesson, v => 'Lektion ' + v)}</select>
+        <select id="ft" aria-label="Topic"><option value="all">All topics</option>${opts(topics, F.topic, PM.label)}</select>
+        <select id="fk" aria-label="Skill"><option value="all">All skills</option>${opts(skills, F.skill)}</select></div>
+      ${xs.length ? `<div class="tw"><table class="t"><thead><tr><th>Question</th><th>Correct</th><th>You wrote</th><th>L</th><th class="n">Wrong</th><th>Status</th><th>Next</th></tr></thead><tbody>
+        ${xs.slice(0, 300).map(r => `<tr><td>${esc((r.prompt || r.item_id).slice(0, 110))}</td><td lang="de"><b>${esc(r.expected)}</b>${r.explanation ? `<div class="muted" style="font-size:12.5px">${esc(r.explanation)}</div>` : ''}</td><td class="wrongtxt" lang="de">${esc(r.last_answer || '')}</td><td>${r.lesson ?? ''}</td><td class="n">${r.times_wrong}×</td>
+          <td><span class="pill ${st(r) === 'mastered' ? 'ok' : st(r) === 'due' ? 'warn' : ''}">${REVIEW.LABEL[st(r)]}</span> <span class="muted" title="right answers in separate sessions">${r.correct_streak || 0}/3</span></td><td class="muted">${r.next_review_at && !r.mastered ? new Date(r.next_review_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) : ''}</td></tr>`).join('')}</tbody></table></div>`
+        : `<div class="empty-state">${items.length ? 'Nothing matches these filters.' : 'No mistakes yet. Wrong answers from practice and tests will appear here.'}</div>`}`;
+    ['fs', 'fl', 'ft', 'fk'].forEach((id, i) => $(id).onchange = e => { F[['status', 'lesson', 'topic', 'skill'][i]] = e.target.value; render() });
+    $('go').onclick = () => session(xs.filter(r => !r.mastered).slice(0, 20));
+  }
+  function toQuestion(r) {
+    const q = A1D.findQuestion(r.item_id);
+    if (q) return q;
+    return { id: r.item_id, lesson: r.lesson, topic: topicOf(r), skill: skillOf(r), type: 'translate', instructions: 'Answer again.', prompt: r.prompt || r.item_id, answer: r.expected, explanation: r.explanation || '' };
+  }
+  function session(list) {
+    const qs = ENGINE.shuffle(list).map(toQuestion);
+    const el = $('runner'); el.hidden = false; el.scrollIntoView({ behavior: 'smooth' });
+    ENGINE.runPractice(el, qs, { title: 'Mistake review', onRecord: (q, res, resp) => {
+      if (!res.graded) return; A1D.record(q, res, resp, 'review');
+      const id = A1D.itemId(q); const i = items.findIndex(r => r.item_id === id);
+      if (i >= 0) items[i] = Object.assign(items[i], REVIEW.apply(items[i], res.correct));
+    }, onFinish: () => render() });
+  }
+  A1D.whenAuth(async u => {
+    if (!u) { $('sum').innerHTML = ''; $('box').innerHTML = `<h2>Sign in to use the mistake trainer</h2><p class="muted">Your mistake list is personal and saved to your account. Answers you give while signed out are kept in this browser and uploaded when you sign in.</p>`; return }
+    const { data, error } = await A1.client.from('review_items').select('*').limit(5000);
+    if (error) { $('box').innerHTML = `<p class="notice warn">Could not load your mistakes: ${esc(error.message)}</p>`; return }
+    items = data || []; render();
+  });
+})();
+</script>
+<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
+<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
