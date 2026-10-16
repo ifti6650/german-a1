@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tests · Deutsch A1</title><meta name="description" content="Lesson quizzes, module tests and A1.1/A1.2 assessments."><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#5363cf"><link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="app.css">
+<script src="plan-data.js"></script><script src="lessons/l01.js"></script><script src="course.js"></script><script src="engine.js"></script><script src="review.js"></script><script src="progress-model.js"></script><script src="sync.js"></script><script src="data.js"></script>
+</head><body>
+<a class="skip" href="#main" style="position:absolute;left:-999px">Skip to content</a>
+<nav class="top"><div class="in"><a class="brand" href="index.html">Deutsch A1</a><div class="links"></div></div></nav>
+<header class="hero small"><div class="in"><div class="kicker">Tests</div><h1>Check what you know</h1><p>Lesson quizzes, module tests after every 3 lessons, and an assessment for A1.1 and A1.2. Answers are revealed after you submit; every mistake goes to your mistake list.</p></div></header>
+<main class="pg" id="main">
+  <div class="panel"><h2>Level assessments</h2><p class="sub">Readiness checks after Lektion 12 and Lektion 24. Practice assessments for self-study, not official exam results.</p><div class="lessons" id="lvl"></div></div>
+  <div class="panel"><h2>Module tests</h2><p class="sub">Cumulative tests for each group of 3 lessons.</p><div class="lessons" id="mod"></div></div>
+  <div class="panel"><h2>Lesson quizzes</h2><div class="filters"><div class="seg" id="fl"><button data-v="A1.1" aria-pressed="true">A1.1</button><button data-v="A1.2" aria-pressed="false">A1.2</button></div></div><div class="lessons" id="les"></div></div>
+  <div class="panel"><h2>A1 mock exam <span class="pill dim">not available yet</span></h2>
+    <p class="sub">Planned exam-style structure. Its scoring will be an internal rubric for this site, not a Goethe or telc result.</p>
+    <div class="tw"><table class="t"><thead><tr><th>Part</th><th>Task types (planned)</th><th class="n">Points</th></tr></thead><tbody>
+      <tr><td>Hören</td><td>Short announcements and dialogues (computer voice), multiple choice</td><td class="n">25</td></tr>
+      <tr><td>Lesen</td><td>Short texts, notices and e-mails, true/false and multiple choice</td><td class="n">25</td></tr>
+      <tr><td>Schreiben</td><td>Fill in a form; a short message (30 words), rubric: task, vocabulary, grammar</td><td class="n">25</td></tr>
+      <tr><td>Sprechen</td><td>Introduce yourself, ask and answer questions, make a request (self-check rubric)</td><td class="n">25</td></tr></tbody></table></div>
+    <p class="muted">Needs: reviewed listening and reading items for all 24 lessons first.</p></div>
+  <div class="panel"><h2>History</h2><div id="hist" class="skeleton">Loading…</div></div>
+</main>
+<script>
+(function () {
+  const esc = ENGINE.esc, $ = id => document.getElementById(id); let lvl = 'A1.1', history = [];
+  const best = tid => { const xs = history.filter(h => h.test_id === tid); return xs.length ? Math.max(...xs.map(h => Math.round(h.score / h.max_score * 100))) : null };
+  const card = t => { const b = best(t.id); const full = t.lessons.every(n => COURSE.content(n)); const some = t.lessons.some(n => COURSE.content(n));
+    return `<a class="lcard" href="test.html?id=${t.id}"><div class="row between"><span class="n">${t.kind.toUpperCase()}</span>${b == null ? '<span class="pill dim">Not taken</span>' : `<span class="pill ${b >= COURSE.PASS_PCT ? 'ok' : 'warn'}">Best ${b}%</span>`}</div>
+      <h3>${esc(t.title)}</h3><div class="topic">${t.kind === 'lesson' ? esc(COURSE.lesson(t.lessons[0]).title) : `${t.lessons.length} lessons`} · ${t.minutes} min</div>
+      <div class="muted" style="font-size:12.5px">${full ? 'Full content' : some ? 'Full + vocabulary questions' : 'Vocabulary questions only'}</div></a>` };
+  function render() {
+    const T = COURSE.tests();
+    $('lvl').innerHTML = T.filter(t => t.kind === 'level').map(card).join('');
+    $('mod').innerHTML = T.filter(t => t.kind === 'module').map(card).join('');
+    $('les').innerHTML = T.filter(t => t.kind === 'lesson' && t.level === lvl).map(card).join('');
+    document.querySelectorAll('#fl button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === lvl));
+    $('hist').className = '';
+    $('hist').innerHTML = history.length ? `<div class="tw"><table class="t"><thead><tr><th>Test</th><th>Date</th><th class="n">Score</th></tr></thead><tbody>${history.slice(0, 30).map(h => `<tr><td><a href="test.html?id=${esc(h.test_id)}">${esc(h.title || h.test_id)}</a></td><td>${new Date(h.created_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</td><td class="n">${+h.score}/${+h.max_score} · ${Math.round(h.score / h.max_score * 100)}%</td></tr>`).join('')}</tbody></table></div>` : '<p class="muted">No tests taken yet.</p>';
+  }
+  $('fl').onclick = e => { const b = e.target.closest('button'); if (b) { lvl = b.dataset.v; render() } };
+  const local = () => { try { return JSON.parse(localStorage.getItem('a1:testhist') || '[]') } catch (e) { return [] } };
+  history = local(); render();
+  A1D.whenAuth(async u => {
+    if (!u) { history = local(); return render() }
+    const { data, error } = await A1.client.from('test_results').select('test_id,title,score,max_score,created_at').order('created_at', { ascending: false }).limit(200);
+    history = error ? local() : data; render();
+  });
+})();
+</script>
+<footer class="foot">Deutsch A1 · original exercises aligned with the lesson topics of Momente A1.1/A1.2 (Hueber). Not affiliated with Hueber, Goethe-Institut or telc.</footer>
+<script src="nav.js"></script><script src="install.js"></script><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script></body></html>
