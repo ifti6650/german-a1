@@ -80,7 +80,7 @@ async function journey(name, fn) {
       await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
       const txt = (await p.textContent('main')).replace(/\s+/g, ' ');
       ok(/You’re all set: German A1\.1/.test(txt), 'no success state after onboarding');
-      ok(/Lektion 1: Ich heiße Miriam/.test(txt) && /Start lesson/.test(txt), 'new learner should start Lektion 1');
+      ok(/Lektion 1: Begrüßen und sich kennenlernen/.test(txt) && /Start lesson/.test(txt), 'new learner should start Lektion 1');
       ok(/No activity yet/.test(txt) && /No tests yet/.test(txt), 'empty states missing');
       ok((await kpis(p))['Practice accuracy'] === '–', 'accuracy must not show a number without answers');
       await shot(p, 'j2-dashboard-new');
