@@ -416,7 +416,7 @@ async function journey(name, fn) {
       ok(await p.isVisible('#tab-situations[aria-selected="true"]') && await p.isVisible('.sg-sits [data-sit="3"][aria-pressed="true"]'), 'refresh lost the situation');
       ok((await p.textContent('#sgProg')).includes('1 von 9'), 'progress not kept after refresh');
       // Grammar Book link resolves
-      await p.click('#tab-patterns'); const gb = await p.$eval('.sg-body a[href^="grammar-book.html#step-"]', a => a.getAttribute('href'));
+      await p.click('#tab-patterns'); const gb = await p.$eval('.sg-body a[href^="grammar-lab.html?s="]', a => a.getAttribute('href'));
       // can-do checks remembered
       await p.click('#tab-review'); await p.check('.sg-can input >> nth=0'); await p.reload(); await settle(p);
       ok(await p.isChecked('.sg-can input >> nth=0'), 'can-do tick not remembered');
@@ -439,7 +439,7 @@ async function journey(name, fn) {
       await p.waitForTimeout(1800);
       const row = await p.evaluate(() => (JSON.parse(localStorage.getItem('mock:db')).app_state || []).find(r => r.key === 'a1:guide'));
       ok(row && row.user_id && row.value.l[2], 'a1:guide not synced to app_state');
-      await p.goto(BASE + 'grammar-book.html'); await settle(p); ok(await p.$('#' + gb.split('#')[1]), 'Grammar Book anchor missing: ' + gb);
+      await p.goto(BASE + gb); await settle(p); ok(await p.$('#gl'), 'Grammar Lab did not open: ' + gb);
       await p.goto(BASE + 'lesson.html?l=7'); await settle(p);
       ok(await p.$('a[href="study-guide.html?l=7"]'), 'lesson page does not link to the Study Guide lesson');
       await ctx.close();
@@ -458,7 +458,7 @@ async function journey(name, fn) {
       ok(await p.evaluate(() => document.activeElement.getAttribute('role') === 'menuitem'), 'menu does not move focus to first item');
       await p.keyboard.press('ArrowDown'); await p.keyboard.press('Escape'); await p.waitForTimeout(100);
       ok(await p.evaluate(() => document.getElementById('sh-menu').hidden && document.activeElement.id === 'sh-avatar'), 'Escape does not close the menu and restore focus');
-      const map = { 'course.html': 'My Course', 'wortschatz.html': 'Wortschatz', 'practice.html': 'Practice', 'tests.html': 'Tests', 'test.html?id=lesson-1': 'Tests', 'mistakes.html': 'Mistakes', 'progress.html': 'Progress', 'grammar-book.html': 'Grammar Book', 'study-guide.html': 'Study Guide', 'speaking.html': 'Sprechen' };
+      const map = { 'course.html': 'My Course', 'wortschatz.html': 'Wortschatz', 'practice.html': 'Practice', 'tests.html': 'Tests', 'test.html?id=lesson-1': 'Tests', 'mistakes.html': 'Mistakes', 'progress.html': 'Progress', 'grammar-lab.html': 'Grammar Lab', 'study-guide.html': 'Study Guide', 'speaking.html': 'Sprechen' };
       for (const [pg, label] of Object.entries(map)) { await p.goto(BASE + pg); await settle(p); ok(await current(p) === label, `${pg}: active item is ${await current(p)}`); ok((await p.$$('nav.top')).length === 0, pg + ': old top nav still present') }
       await ctx.close();
     });
