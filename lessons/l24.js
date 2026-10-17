@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 24, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const ORD = GB + '251-ordinal-numbers', DATE = GB + '252-dates', WUE = GB + '253-würde--infinitive-would', FEST = GB + '254-festivals-and-congratulations';
+  const ORD = GB + '25', DATE = GB + '25', WUE = GB + '25', FEST = GB + '25';
   const ord = (id, prompt, a, ex) => q({ id, topic: 'ordinals', skill: 'vocabulary', type: 'translate', objective: 'L24-O1', instructions: 'Write the ordinal number (der …).', prompt, answer: a, explanation: ex, learnHref: ORD });
   const date = (id, prompt, a, ex) => q({ id, topic: 'dates', skill: 'grammar', grammar: 'dates', type: 'gap', objective: 'L24-O2', instructions: 'Write the date in words.', prompt, answer: a, explanation: ex, learnHref: DATE });
   const wue = (id, prompt, a, ex) => q({ id, topic: 'wuerde', skill: 'grammar', grammar: 'wuerde', type: 'gap', objective: 'L24-O3', instructions: 'Fill in würde.', prompt, answer: a, explanation: ex, learnHref: WUE });

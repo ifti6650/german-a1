@@ -3,7 +3,7 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 6, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
 
@@ -17,50 +17,50 @@
   ];
 
   const learn = [
-    { id: 'plurals', title: 'Plurals: five patterns', objective: 'L6-O1', href: GB + '71-plurals-five-patterns',
+    { id: 'plurals', title: 'Plurals: five patterns', objective: 'L6-O1', href: GB + '7',
       text: 'The plural article is always die. The ending has to be learned with the noun — these patterns help.',
       table: [['-e: der Tisch → die Tische', 'often with der words'], ['-(e)n: die Lampe → die Lampen', 'most die words'], ['-er (+ umlaut): das Buch → die Bücher', 'many das words'], ['-s: das Handy → die Handys, das Büro → die Büros', 'foreign words, words ending in a vowel'], ['– (no ending): der Computer → die Computer', 'many words ending in -er, -el']] },
-    { id: 'subject-object', title: 'Subject and object', objective: 'L6-O2', href: GB + '72-subject-and-object',
+    { id: 'subject-object', title: 'Subject and object', objective: 'L6-O2', href: GB + '7',
       text: 'The subject does the action (nominative). The object is what the action is done to (accusative).',
       examples: [['Der Kollege braucht den Drucker.', 'The colleague (subject) needs the printer (object).']] },
-    { id: 'accusative', title: 'The accusative: only the masculine changes', objective: 'L6-O2', href: GB + '73-the-accusative-only-the-masculine-changes',
+    { id: 'accusative', title: 'The accusative: only the masculine changes', objective: 'L6-O2', href: GB + '7',
       table: [['der → den', 'Ich suche den Kalender.'], ['ein → einen', 'Ich brauche einen Laptop.'], ['kein → keinen', 'Wir haben keinen Drucker.'], ['das / die / plural: no change', 'Ich suche die Rechnung. Ich habe ein Handy.']],
       mistakes: [['Ich brauche ein Laptop.', 'Ich brauche einen Laptop.', 'der Laptop → einen Laptop (accusative).']] },
-    { id: 'acc-verbs', title: 'Verbs that take an accusative object', objective: 'L6-O3', href: GB + '74-verbs-that-take-an-accusative-object',
+    { id: 'acc-verbs', title: 'Verbs that take an accusative object', objective: 'L6-O3', href: GB + '7',
       table: [['haben · brauchen · suchen', 'to have · to need · to look for'], ['kaufen · sehen · finden', 'to buy · to see · to find'], ['schreiben · drucken', 'to write · to print']],
       examples: [['Ich schreibe eine E-Mail.', 'I am writing an e-mail.'], ['Sie druckt den Zettel.', 'She prints the note.']] },
-    { id: 'pronouns', title: 'ihn, es, sie: pronouns as objects', objective: 'L6-O4', href: GB + '75-ihn-es-sie-pronouns-as-objects',
+    { id: 'pronouns', title: 'ihn, es, sie: pronouns as objects', objective: 'L6-O4', href: GB + '7',
       table: [['der Kalender → ihn', 'Ich suche ihn.'], ['das Telefon → es', 'Ich brauche es.'], ['die Maus → sie', 'Ich sehe sie nicht.'], ['plural → sie', 'Die Rechnungen? Ich drucke sie.']],
       mistakes: [['Der Kuli? Ich finde er nicht.', 'Ich finde ihn nicht.', 'As an object, er becomes ihn.']] },
-    { id: 'broken', title: 'Broken and missing things', objective: 'L6-O5', href: GB + '76-sentence-building-the-full-pattern-so-far',
+    { id: 'broken', title: 'Broken and missing things', objective: 'L6-O5', href: GB + '7',
       examples: [['Der Drucker funktioniert nicht.', 'The printer doesn’t work.'], ['Die Tastatur ist kaputt.', 'The keyboard is broken.'], ['Ich brauche einen Termin.', 'I need an appointment.']] },
-    { id: 'phone', title: 'On the phone at work', objective: 'L6-O6', href: GB + '77-on-the-phone-at-work',
+    { id: 'phone', title: 'On the phone at work', objective: 'L6-O6', href: GB + '7',
       table: [['Firma Berger, guten Tag.', 'answering the phone'], ['Hier ist … / Hier spricht …', 'This is … speaking'], ['Moment, bitte.', 'One moment, please.'], ['Können Sie das wiederholen?', 'Can you repeat that?'], ['Bitte langsam.', 'Slowly, please.']] }
   ];
 
   const art = (id, noun, hint, a) => q({ id, topic: 'articles', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L6-O5', instructions: 'Choose the article.', prompt: noun, hint, options: ['der', 'die', 'das'], answer: a, explanation: `${a} ${noun}.` });
-  const pl = (id, sg, opts, a) => q({ id, topic: 'plurals', skill: 'grammar', grammar: 'plural', type: 'mc', objective: 'L6-O1', instructions: 'Choose the plural.', prompt: `${sg} → die …`, options: opts, answer: a, explanation: `${sg} → die ${a}.`, learnHref: GB + '71-plurals-five-patterns' });
+  const pl = (id, sg, opts, a) => q({ id, topic: 'plurals', skill: 'grammar', grammar: 'plural', type: 'mc', objective: 'L6-O1', instructions: 'Choose the plural.', prompt: `${sg} → die …`, options: opts, answer: a, explanation: `${sg} → die ${a}.`, learnHref: GB + '7' });
   const practice = [
     pl('L06-P-01', 'der Tisch', ['Tische', 'Tischen', 'Tischer', 'Tisch'], 'Tische'),
     pl('L06-P-02', 'die Lampe', ['Lampen', 'Lampe', 'Lampes', 'Lämper'], 'Lampen'),
     pl('L06-P-03', 'das Buch', ['Bücher', 'Buche', 'Buchs', 'Büchen'], 'Bücher'),
     q({ id: 'L06-P-04', topic: 'plurals', skill: 'grammar', grammar: 'plural', type: 'translate', objective: 'L6-O1', instructions: 'Write the plural (without die).', prompt: 'das Handy → die …', answer: 'Handys', explanation: 'das Handy → die Handys.' }),
     pl('L06-P-05', 'der Computer', ['Computer', 'Computers', 'Computeren', 'Computere'], 'Computer'),
-    q({ id: 'L06-P-06', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L6-O2', instructions: 'Fill in einen, eine or ein.', prompt: 'Ich brauche ___ Laptop.', answer: [['einen']], explanation: 'der Laptop → einen Laptop.', learnHref: GB + '73-the-accusative-only-the-masculine-changes' }),
+    q({ id: 'L06-P-06', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L6-O2', instructions: 'Fill in einen, eine or ein.', prompt: 'Ich brauche ___ Laptop.', answer: [['einen']], explanation: 'der Laptop → einen Laptop.', learnHref: GB + '7' }),
     q({ id: 'L06-P-07', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L6-O2', instructions: 'Fill in keinen, keine or kein.', prompt: 'Wir haben ___ Drucker.', answer: [['keinen']], explanation: 'der Drucker → keinen Drucker.' }),
     q({ id: 'L06-P-08', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L6-O2', instructions: 'Fill in den, die or das.', prompt: 'Ich suche ___ Rechnung.', answer: [['die']], explanation: 'die stays die in the accusative.' }),
     q({ id: 'L06-P-09', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'mc', objective: 'L6-O2', instructions: 'Choose the article.', prompt: 'Er kauft … Computer.', options: ['einen', 'ein', 'eine'], answer: 'einen', explanation: 'der Computer → einen Computer.' }),
     q({ id: 'L06-P-10', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'mc', objective: 'L6-O2', instructions: 'Choose the article.', prompt: 'Sie braucht … Maus.', options: ['eine', 'einen', 'ein'], answer: 'eine', explanation: 'die Maus → eine Maus (no change).' }),
     q({ id: 'L06-P-11', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'mc', objective: 'L6-O2', instructions: 'Choose the article.', prompt: 'Hast du … Kalender?', options: ['den', 'der', 'dem'], answer: 'den', explanation: 'der Kalender → den Kalender.' }),
-    q({ id: 'L06-P-12', topic: 'accusative', skill: 'grammar', grammar: 'subject-object', type: 'mc', objective: 'L6-O2', instructions: 'Who is doing the action?', prompt: 'Der Kollege sucht die Rechnung.', options: ['der Kollege', 'die Rechnung'], answer: 'der Kollege', explanation: 'The subject (nominative) does the action.', learnHref: GB + '72-subject-and-object' }),
-    q({ id: 'L06-P-13', topic: 'object-pronouns', skill: 'grammar', grammar: 'accusative-pronoun', type: 'gap', objective: 'L6-O4', instructions: 'Fill in ihn, es or sie.', prompt: 'Wo ist der Laptop? Ich sehe ___ nicht.', answer: [['ihn']], explanation: 'der Laptop → ihn.', learnHref: GB + '75-ihn-es-sie-pronouns-as-objects' }),
+    q({ id: 'L06-P-12', topic: 'accusative', skill: 'grammar', grammar: 'subject-object', type: 'mc', objective: 'L6-O2', instructions: 'Who is doing the action?', prompt: 'Der Kollege sucht die Rechnung.', options: ['der Kollege', 'die Rechnung'], answer: 'der Kollege', explanation: 'The subject (nominative) does the action.', learnHref: GB + '7' }),
+    q({ id: 'L06-P-13', topic: 'object-pronouns', skill: 'grammar', grammar: 'accusative-pronoun', type: 'gap', objective: 'L6-O4', instructions: 'Fill in ihn, es or sie.', prompt: 'Wo ist der Laptop? Ich sehe ___ nicht.', answer: [['ihn']], explanation: 'der Laptop → ihn.', learnHref: GB + '7' }),
     q({ id: 'L06-P-14', topic: 'object-pronouns', skill: 'grammar', grammar: 'accusative-pronoun', type: 'gap', objective: 'L6-O4', instructions: 'Fill in ihn, es or sie.', prompt: 'Das Handy ist kaputt, aber ich brauche ___!', answer: [['es']], explanation: 'das Handy → es.' }),
     q({ id: 'L06-P-15', topic: 'object-pronouns', skill: 'grammar', grammar: 'accusative-pronoun', type: 'mc', objective: 'L6-O4', instructions: 'Choose the pronoun.', prompt: 'Die Tastatur? Ich habe … .', options: ['sie', 'ihn', 'es'], answer: 'sie', explanation: 'die Tastatur → sie.' }),
     q({ id: 'L06-P-16', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'order', objective: 'L6-O3', instructions: 'Put the words in order.', prompt: 'I need an appointment.', tokens: ['brauche', 'einen', 'Ich', 'Termin'], answer: 'Ich brauche einen Termin', explanation: 'der Termin → einen Termin.' }),
     q({ id: 'L06-P-17', topic: 'office', skill: 'grammar', grammar: 'negation-nicht', type: 'order', objective: 'L6-O5', instructions: 'Put the words in order.', prompt: 'The printer doesn’t work.', tokens: ['funktioniert', 'Der', 'nicht', 'Drucker'], answer: 'Der Drucker funktioniert nicht', explanation: 'nicht at the end.' }),
     q({ id: 'L06-P-18', topic: 'phone', skill: 'grammar', grammar: 'verb-first', type: 'order', objective: 'L6-O6', instructions: 'Put the words in order.', prompt: 'Can you repeat that?', tokens: ['Sie', 'Können', 'wiederholen', 'das'], answer: 'Können Sie das wiederholen', explanation: 'Können – Sie – das – wiederholen?' }),
     q({ id: 'L06-P-19', topic: 'office', skill: 'vocabulary', type: 'match', objective: 'L6-O5', instructions: 'Match the office word.', prompt: '', pairs: [['der Drucker', 'printer'], ['die Tastatur', 'keyboard'], ['der Bildschirm', 'screen'], ['die Rechnung', 'invoice'], ['der Schreibtisch', 'desk']], explanation: 'Office words.' }),
-    q({ id: 'L06-P-20', topic: 'phone', skill: 'communication', type: 'mc', objective: 'L6-O6', instructions: 'Choose the polite phrase.', prompt: 'On the phone, you did not understand the time.', options: ['Können Sie das wiederholen?', 'Was?', 'Tschüs!', 'Wie heißt du?'], answer: 'Können Sie das wiederholen?', explanation: 'Polite and clear.', learnHref: GB + '77-on-the-phone-at-work' }),
+    q({ id: 'L06-P-20', topic: 'phone', skill: 'communication', type: 'mc', objective: 'L6-O6', instructions: 'Choose the polite phrase.', prompt: 'On the phone, you did not understand the time.', options: ['Können Sie das wiederholen?', 'Was?', 'Tschüs!', 'Wie heißt du?'], answer: 'Können Sie das wiederholen?', explanation: 'Polite and clear.', learnHref: GB + '7' }),
     q({ id: 'L06-P-21', topic: 'accusative', skill: 'writing', type: 'translate', objective: 'L6-O2', instructions: 'Write it in German.', prompt: 'I need a printer.', answer: 'Ich brauche einen Drucker.', explanation: 'der Drucker → einen Drucker.' }),
     q({ id: 'L06-P-22', topic: 'office', skill: 'writing', type: 'translate', objective: 'L6-O5', instructions: 'Write it in German.', prompt: 'The computer is broken.', answer: 'Der Computer ist kaputt.', explanation: 'kaputt = broken.' }),
     q({ id: 'L06-P-23', topic: 'accusative', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L6-O2', instructions: 'Write it in German.', prompt: 'We have no appointment.', answer: 'Wir haben keinen Termin.', explanation: 'der Termin → keinen Termin.' }),

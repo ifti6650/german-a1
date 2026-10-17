@@ -3,12 +3,12 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 9, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
   const conj = (id, prompt, answer, ex, obj = 'L9-O2', g = 'vowel-change', topic = 'food-verbs') => q({ id, topic, skill: 'grammar', grammar: g, type: 'conjugation', objective: obj, instructions: 'Write the verb form.', prompt, answer, explanation: ex });
   const art = (id, noun, hint, a) => q({ id, topic: 'articles', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L9-O1', instructions: 'Choose the article.', prompt: noun, hint, options: ['der', 'die', 'das'], answer: a, explanation: `${a} ${noun}.` });
-  const comp = (id, a, b, art_, word) => q({ id, topic: 'compound-nouns', skill: 'grammar', grammar: 'compound-nouns', type: 'mc', objective: 'L9-O5', instructions: 'Choose the article of the compound noun.', prompt: `${a} + ${b} = … ${word}`, options: ['der', 'die', 'das'], answer: art_, explanation: `The last part decides: ${b} → ${art_} ${word}.`, learnHref: GB + '104-compound-nouns' });
+  const comp = (id, a, b, art_, word) => q({ id, topic: 'compound-nouns', skill: 'grammar', grammar: 'compound-nouns', type: 'mc', objective: 'L9-O5', instructions: 'Choose the article of the compound noun.', prompt: `${a} + ${b} = … ${word}`, options: ['der', 'die', 'das'], answer: art_, explanation: `The last part decides: ${b} → ${art_} ${word}.`, learnHref: GB + '10' });
 
   const objectives = [
     { id: 'L9-O1', text: 'Name food and drinks with their articles.', kind: 'communication' },
@@ -22,19 +22,19 @@
   const learn = [
     { id: 'food', title: 'Food and drinks', objective: 'L9-O1',
       table: [['das Brot · das Brötchen · der Käse · die Wurst', 'bread · roll · cheese · sausage'], ['das Fleisch · der Fisch · das Hähnchen · das Ei', 'meat · fish · chicken · egg'], ['das Gemüse · die Kartoffel · der Salat', 'vegetables · potato · salad'], ['das Obst · der Apfel · die Banane', 'fruit · apple · banana'], ['das Wasser · der Kaffee · der Tee · die Milch · der Saft', 'water · coffee · tea · milk · juice']] },
-    { id: 'food-verbs', title: 'Four verbs for food', objective: 'L9-O2', href: GB + '101-four-verbs-for-food',
+    { id: 'food-verbs', title: 'Four verbs for food', objective: 'L9-O2', href: GB + '10',
       table: [['essen → du isst, er isst', 'e → i (and du isst: only one s added)'], ['nehmen → du nimmst, er nimmt', 'irregular'], ['mögen → ich mag, du magst, er mag', 'to like'], ['möchte → ich möchte, du möchtest, er möchte, wir möchten', 'would like']],
       mistakes: [['du esst', 'du isst', 'e → i with du and er/sie.'], ['er nehmt', 'er nimmt', 'nehmen is irregular.']] },
-    { id: 'mag-moechte', title: 'mag, gern or möchte?', objective: 'L9-O3', href: GB + '102-mag-gern-or-möchte',
+    { id: 'mag-moechte', title: 'mag, gern or möchte?', objective: 'L9-O3', href: GB + '10',
       text: 'mögen + noun = you like it in general. verb + gern = you like doing it. möchte = you want it now (polite).',
       examples: [['Ich mag Fisch.', 'I like fish (in general).'], ['Ich esse gern Fisch.', 'I like eating fish.'], ['Ich möchte einen Kaffee, bitte.', 'I would like a coffee, please.']] },
-    { id: 'accusative', title: 'All four take the accusative', objective: 'L9-O4', href: GB + '103-all-four-take-the-accusative',
+    { id: 'accusative', title: 'All four take the accusative', objective: 'L9-O4', href: GB + '10',
       text: 'Remember: only der words change (den / einen / keinen).',
       examples: [['Ich nehme einen Salat und eine Suppe.', 'I’ll have a salad and a soup.'], ['Ich mag keinen Fisch.', 'I don’t like fish.']] },
-    { id: 'compounds', title: 'Compound nouns', objective: 'L9-O5', href: GB + '104-compound-nouns',
+    { id: 'compounds', title: 'Compound nouns', objective: 'L9-O5', href: GB + '10',
       text: 'German joins nouns into one word. The last part gives the meaning and the article.',
       table: [['der Apfel + der Saft = der Apfelsaft', 'apple juice'], ['die Tomate + die Suppe = die Tomatensuppe', 'tomato soup'], ['das Obst + der Kuchen = der Obstkuchen', 'fruit cake']] },
-    { id: 'restaurant', title: 'In the restaurant', objective: 'L9-O6', href: GB + '105-in-the-restaurant',
+    { id: 'restaurant', title: 'In the restaurant', objective: 'L9-O6', href: GB + '10',
       table: [['Die Speisekarte, bitte.', 'The menu, please.'], ['Ich möchte bestellen.', 'I would like to order.'], ['Ich nehme …', 'I’ll have …'], ['Wir möchten bezahlen. / Die Rechnung, bitte.', 'We would like to pay. / The bill, please.'], ['Das ist lecker!', 'That’s tasty!']] }
   ];
 
@@ -43,9 +43,9 @@
     conj('L09-P-02', 'er + nehmen →', 'nimmt', 'er nimmt.'),
     conj('L09-P-03', 'du + mögen →', 'magst', 'du magst.', 'L9-O3', 'moegen', 'mag-moechte'),
     conj('L09-P-04', 'er + möchte(n) (would like) →', 'möchte', 'er möchte (like ich möchte).', 'L9-O3', 'moechte', 'mag-moechte'),
-    q({ id: 'L09-P-05', topic: 'mag-moechte', skill: 'grammar', grammar: 'moegen-moechte', type: 'gap', objective: 'L9-O3', instructions: 'Fill in mag or möchte.', prompt: 'Ich ___ Fisch (in general), aber heute ___ ich Hähnchen.', answer: [['mag'], ['möchte']], explanation: 'mag = like in general; möchte = would like now.', learnHref: GB + '102-mag-gern-or-möchte' }),
+    q({ id: 'L09-P-05', topic: 'mag-moechte', skill: 'grammar', grammar: 'moegen-moechte', type: 'gap', objective: 'L9-O3', instructions: 'Fill in mag or möchte.', prompt: 'Ich ___ Fisch (in general), aber heute ___ ich Hähnchen.', answer: [['mag'], ['möchte']], explanation: 'mag = like in general; möchte = would like now.', learnHref: GB + '10' }),
     q({ id: 'L09-P-06', topic: 'mag-moechte', skill: 'communication', type: 'mc', objective: 'L9-O3', instructions: 'Choose the polite question.', prompt: 'What would you like? (polite)', options: ['Was möchten Sie?', 'Was mögen Sie?', 'Was magst du?', 'Was möchte Sie?'], answer: 'Was möchten Sie?', explanation: 'Sie möchten.' }),
-    q({ id: 'L09-P-07', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L9-O4', instructions: 'Fill in the article (a).', prompt: 'Ich nehme ___ Salat.', answer: [['einen']], explanation: 'der Salat → einen Salat.', learnHref: GB + '103-all-four-take-the-accusative' }),
+    q({ id: 'L09-P-07', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L9-O4', instructions: 'Fill in the article (a).', prompt: 'Ich nehme ___ Salat.', answer: [['einen']], explanation: 'der Salat → einen Salat.', learnHref: GB + '10' }),
     q({ id: 'L09-P-08', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'gap', objective: 'L9-O4', instructions: 'Fill in the article (a).', prompt: 'Er trinkt ___ Kaffee.', answer: [['einen']], explanation: 'der Kaffee → einen Kaffee.' }),
     q({ id: 'L09-P-09', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'mc', objective: 'L9-O4', instructions: 'Choose the article.', prompt: 'Wir möchten … Suppe.', options: ['eine', 'einen', 'ein'], answer: 'eine', explanation: 'die Suppe → eine Suppe.' }),
     comp('L09-P-10', 'der Apfel', 'der Saft', 'der', 'Apfelsaft'),
@@ -54,7 +54,7 @@
     q({ id: 'L09-P-13', topic: 'food', skill: 'vocabulary', type: 'match', objective: 'L9-O1', instructions: 'Match the food.', prompt: '', pairs: [['das Brot', 'bread'], ['der Käse', 'cheese'], ['das Ei', 'egg'], ['die Kartoffel', 'potato'], ['das Gemüse', 'vegetables']], explanation: 'Food.' }),
     q({ id: 'L09-P-14', topic: 'food', skill: 'vocabulary', type: 'match', objective: 'L9-O1', instructions: 'Match the drink.', prompt: '', pairs: [['das Wasser', 'water'], ['die Milch', 'milk'], ['der Saft', 'juice'], ['der Tee', 'tea'], ['das Bier', 'beer']], explanation: 'Drinks.' }),
     art('L09-P-15', 'Fleisch', 'meat', 'das'), art('L09-P-16', 'Wurst', 'sausage', 'die'), art('L09-P-17', 'Apfel', 'apple', 'der'),
-    q({ id: 'L09-P-18', topic: 'restaurant', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L9-O6', instructions: 'Put the words in order.', prompt: 'I would like to order.', tokens: ['möchte', 'Ich', 'bestellen'], answer: 'Ich möchte bestellen', explanation: 'möchte … bestellen (infinitive at the end).', learnHref: GB + '105-in-the-restaurant' }),
+    q({ id: 'L09-P-18', topic: 'restaurant', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L9-O6', instructions: 'Put the words in order.', prompt: 'I would like to order.', tokens: ['möchte', 'Ich', 'bestellen'], answer: 'Ich möchte bestellen', explanation: 'möchte … bestellen (infinitive at the end).', learnHref: GB + '10' }),
     q({ id: 'L09-P-19', topic: 'restaurant', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L9-O6', instructions: 'Put the words in order.', prompt: 'We would like to pay.', tokens: ['bezahlen', 'Wir', 'möchten'], answer: 'Wir möchten bezahlen', explanation: 'möchten … bezahlen.' }),
     q({ id: 'L09-P-20', topic: 'accusative', skill: 'grammar', grammar: 'accusative', type: 'order', objective: 'L9-O4', instructions: 'Put the words in order.', prompt: 'I’ll have the fish.', tokens: ['nehme', 'Ich', 'Fisch', 'den'], answer: 'Ich nehme den Fisch', explanation: 'der Fisch → den Fisch.' }),
     q({ id: 'L09-P-21', topic: 'restaurant', skill: 'communication', type: 'mc', objective: 'L9-O6', instructions: 'Choose the phrase.', prompt: 'You want to see the menu.', options: ['Die Speisekarte, bitte.', 'Die Rechnung, bitte.', 'Guten Appetit!', 'Ich bezahle.'], answer: 'Die Speisekarte, bitte.', explanation: 'die Speisekarte = the menu.' }),

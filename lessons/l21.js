@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 21, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const MD = GB + '221-müssen-and-dürfen', NOT = GB + '222-watch-out-nicht-müssen--must-not', MAN = GB + '223-man-one-you-people', ALL = GB + '224-all-the-modal-verbs-in-one-table', OP = GB + '225-giving-and-reacting-to-opinions';
+  const MD = GB + '22', NOT = GB + '22', MAN = GB + '22', ALL = GB + '22', OP = GB + '22';
   const mus = (id, prompt, a, ex) => q({ id, topic: 'muessen', skill: 'grammar', grammar: 'modal-muessen', type: 'gap', objective: 'L21-O1', instructions: 'Fill in müssen.', prompt, answer: a, explanation: ex, learnHref: MD });
   const dur = (id, prompt, a, ex) => q({ id, topic: 'duerfen', skill: 'grammar', grammar: 'modal-duerfen', type: 'gap', objective: 'L21-O1', instructions: 'Fill in dürfen.', prompt, answer: a, explanation: ex, learnHref: MD });
   const MODALS = ['kann', 'möchte', 'will', 'soll', 'muss', 'darf'];

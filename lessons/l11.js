@@ -3,13 +3,13 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 11, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
   const pp = (id, inf, a, opts, ex) => opts
-    ? q({ id, topic: 'participles', skill: 'grammar', grammar: 'past-participle', type: 'mc', objective: 'L11-O2', instructions: 'Choose the past participle.', prompt: `${inf} →`, options: opts, answer: a, explanation: ex, learnHref: GB + '122-making-the-past-participle-four-rules' })
-    : q({ id, topic: 'participles', skill: 'grammar', grammar: 'past-participle', type: 'translate', objective: 'L11-O2', instructions: 'Write the past participle.', prompt: `${inf} →`, answer: a, explanation: ex, learnHref: GB + '122-making-the-past-participle-four-rules' });
-  const perf = (id, prompt, a, ex, obj = 'L11-O1') => q({ id, topic: 'perfekt-haben', skill: 'grammar', grammar: 'perfekt', type: 'gap', objective: obj, instructions: 'Fill in haben and the past participle.', prompt, answer: a, explanation: ex, learnHref: GB + '121-the-structure-haben--past-participle' });
+    ? q({ id, topic: 'participles', skill: 'grammar', grammar: 'past-participle', type: 'mc', objective: 'L11-O2', instructions: 'Choose the past participle.', prompt: `${inf} →`, options: opts, answer: a, explanation: ex, learnHref: GB + '12' })
+    : q({ id, topic: 'participles', skill: 'grammar', grammar: 'past-participle', type: 'translate', objective: 'L11-O2', instructions: 'Write the past participle.', prompt: `${inf} →`, answer: a, explanation: ex, learnHref: GB + '12' });
+  const perf = (id, prompt, a, ex, obj = 'L11-O1') => q({ id, topic: 'perfekt-haben', skill: 'grammar', grammar: 'perfekt', type: 'gap', objective: obj, instructions: 'Fill in haben and the past participle.', prompt, answer: a, explanation: ex, learnHref: GB + '12' });
 
   const objectives = [
     { id: 'L11-O1', text: 'Talk about the past with haben + past participle (Ich habe gearbeitet).', kind: 'grammar' },
@@ -21,22 +21,22 @@
   ];
 
   const learn = [
-    { id: 'perfekt', title: 'The Perfekt: haben + past participle', objective: 'L11-O1', href: GB + '121-the-structure-haben--past-participle',
+    { id: 'perfekt', title: 'The Perfekt: haben + past participle', objective: 'L11-O1', href: GB + '12',
       text: 'Spoken German talks about the past with the Perfekt. haben goes in position 2, the past participle goes to the end — another sentence bracket.',
       table: [['Ich habe gestern gearbeitet.', 'I worked yesterday.'], ['Was hast du gemacht?', 'What did you do?'], ['Wir haben Pizza gegessen.', 'We ate pizza.']],
       mistakes: [['Ich habe gegessen Pizza.', 'Ich habe Pizza gegessen.', 'The participle goes to the very end.']] },
-    { id: 'participles', title: 'Making the past participle: four rules', objective: 'L11-O2', href: GB + '122-making-the-past-participle-four-rules',
+    { id: 'participles', title: 'Making the past participle: four rules', objective: 'L11-O2', href: GB + '12',
       table: [['1 regular: ge- + stem + -(e)t', 'machen → gemacht, kaufen → gekauft, arbeiten → gearbeitet'], ['2 irregular: ge- + (changed) stem + -en', 'essen → gegessen, trinken → getrunken, lesen → gelesen, schreiben → geschrieben, treffen → getroffen, sehen → gesehen, schlafen → geschlafen'], ['3 separable: prefix + ge + …', 'einkaufen → eingekauft, aufräumen → aufgeräumt'], ['4 verbs on -ieren: no ge-', 'telefonieren → telefoniert']] },
-    { id: 'time-words', title: 'Time words for the past', objective: 'L11-O3', href: GB + '123-time-words-for-the-past',
+    { id: 'time-words', title: 'Time words for the past', objective: 'L11-O3', href: GB + '12',
       table: [['gestern · vorgestern', 'yesterday · the day before yesterday'], ['letzte Woche · letztes Jahr', 'last week · last year'], ['am Wochenende', 'at the weekend']],
       examples: [['Gestern habe ich eingekauft.', 'Yesterday I went shopping. (time first → verb second)']] },
-    { id: 'sequence', title: 'Telling a story: zuerst, dann, danach', objective: 'L11-O4', href: GB + '124-telling-a-story-zuerst-dann-danach',
+    { id: 'sequence', title: 'Telling a story: zuerst, dann, danach', objective: 'L11-O4', href: GB + '12',
       text: 'These words count as position 1, so the verb comes right after them.',
       examples: [['Zuerst habe ich gefrühstückt. Dann habe ich gearbeitet. Danach habe ich gekocht.', 'First I had breakfast. Then I worked. After that I cooked.']],
       mistakes: [['Dann ich habe gekocht.', 'Dann habe ich gekocht.', 'Verb in position 2.']] },
     { id: 'routine', title: 'Daily routine (present tense)', objective: 'L11-O5',
       table: [['Ich stehe um 7 Uhr auf.', 'aufstehen (separable)'], ['Ich dusche und frühstücke.', 'duschen, frühstücken'], ['Ich kaufe ein. / Ich räume auf.', 'einkaufen, aufräumen'], ['Am Abend sehe ich fern.', 'fernsehen']] },
-    { id: 'opening', title: 'Times and opening hours', objective: 'L11-O6', href: GB + '125-times-and-opening-hours-von--bis-ab',
+    { id: 'opening', title: 'Times and opening hours', objective: 'L11-O6', href: GB + '12',
       table: [['Mo–Fr 9–18 Uhr', 'von Montag bis Freitag, von neun bis achtzehn Uhr'], ['ab 10 Uhr', 'from 10 o’clock (onwards)'], ['geöffnet · geschlossen', 'open · closed']] }
   ];
 
@@ -53,14 +53,14 @@
     q({ id: 'L11-P-10', topic: 'perfekt-haben', skill: 'grammar', grammar: 'perfekt', type: 'order', objective: 'L11-O1', instructions: 'Put the words in order.', prompt: 'I read a book.', tokens: ['habe', 'Ich', 'gelesen', 'ein', 'Buch'], answer: 'Ich habe ein Buch gelesen', explanation: 'habe … gelesen.' }),
     q({ id: 'L11-P-11', topic: 'perfekt-haben', skill: 'grammar', grammar: 'perfekt', type: 'order', objective: 'L11-O1', instructions: 'Put the words in order.', prompt: 'He worked yesterday.', tokens: ['hat', 'Er', 'gestern', 'gearbeitet'], answer: 'Er hat gestern gearbeitet', explanation: 'hat … gearbeitet.' }),
     q({ id: 'L11-P-12', topic: 'perfekt-haben', skill: 'grammar', grammar: 'perfekt', type: 'mc', objective: 'L11-O1', instructions: 'Choose the correct sentence.', prompt: 'We played football.', options: ['Wir haben Fußball gespielt.', 'Wir haben gespielt Fußball.', 'Wir gespielt haben Fußball.', 'Wir haben Fußball spielt.'], answer: 'Wir haben Fußball gespielt.', explanation: 'Participle at the end.' }),
-    q({ id: 'L11-P-13', topic: 'time-words', skill: 'grammar', grammar: 'inversion', type: 'order', objective: 'L11-O3', instructions: 'Start with the time. Put the words in order.', prompt: 'Yesterday I went shopping.', tokens: ['habe', 'Gestern', 'ich', 'eingekauft'], answer: 'Gestern habe ich eingekauft', explanation: 'Gestern – habe – ich – eingekauft.', learnHref: GB + '123-time-words-for-the-past' }),
+    q({ id: 'L11-P-13', topic: 'time-words', skill: 'grammar', grammar: 'inversion', type: 'order', objective: 'L11-O3', instructions: 'Start with the time. Put the words in order.', prompt: 'Yesterday I went shopping.', tokens: ['habe', 'Gestern', 'ich', 'eingekauft'], answer: 'Gestern habe ich eingekauft', explanation: 'Gestern – habe – ich – eingekauft.', learnHref: GB + '12' }),
     q({ id: 'L11-P-14', topic: 'time-words', skill: 'vocabulary', type: 'mc', objective: 'L11-O3', instructions: 'Choose the word.', prompt: 'the day before yesterday', options: ['vorgestern', 'gestern', 'morgen', 'übermorgen'], answer: 'vorgestern', explanation: 'vorgestern.' }),
     q({ id: 'L11-P-15', topic: 'time-words', skill: 'vocabulary', type: 'mc', objective: 'L11-O3', instructions: 'Choose the meaning.', prompt: 'letzte Woche', options: ['last week', 'next week', 'this week', 'every week'], answer: 'last week', explanation: 'letzte Woche = last week.' }),
-    q({ id: 'L11-P-16', topic: 'sequence', skill: 'grammar', grammar: 'inversion', type: 'order', objective: 'L11-O4', instructions: 'Put the words in order.', prompt: 'Then I had breakfast.', tokens: ['Dann', 'ich', 'habe', 'gefrühstückt'], answer: 'Dann habe ich gefrühstückt', explanation: 'Dann – habe – ich – gefrühstückt.', learnHref: GB + '124-telling-a-story-zuerst-dann-danach' }),
+    q({ id: 'L11-P-16', topic: 'sequence', skill: 'grammar', grammar: 'inversion', type: 'order', objective: 'L11-O4', instructions: 'Put the words in order.', prompt: 'Then I had breakfast.', tokens: ['Dann', 'ich', 'habe', 'gefrühstückt'], answer: 'Dann habe ich gefrühstückt', explanation: 'Dann – habe – ich – gefrühstückt.', learnHref: GB + '12' }),
     q({ id: 'L11-P-17', topic: 'sequence', skill: 'vocabulary', type: 'gap', objective: 'L11-O4', instructions: 'Write “first” and “then”.', prompt: '___ dusche ich, ___ frühstücke ich.', answer: [['Zuerst'], ['dann', 'danach']], explanation: 'Zuerst … dann …' }),
     q({ id: 'L11-P-18', topic: 'routine', skill: 'vocabulary', type: 'match', objective: 'L11-O5', instructions: 'Match the routine.', prompt: '', pairs: [['aufstehen', 'to get up'], ['duschen', 'to shower'], ['einkaufen', 'to go shopping'], ['aufräumen', 'to tidy up'], ['fernsehen', 'to watch TV']], explanation: 'Daily routine.' }),
     q({ id: 'L11-P-19', topic: 'routine', skill: 'grammar', grammar: 'separable-verbs', type: 'gap', objective: 'L11-O5', instructions: 'Fill in aufstehen (present tense).', prompt: 'Ich ___ um 7 Uhr ___.', answer: [['stehe'], ['auf']], explanation: 'stehe … auf.' }),
-    q({ id: 'L11-P-20', topic: 'opening-hours', skill: 'reading', type: 'mc', objective: 'L11-O6', instructions: 'What does the sign mean?', prompt: 'Mo–Fr 9–18 Uhr', options: ['von Montag bis Freitag, von 9 bis 18 Uhr', 'am Montag und Freitag um 9 Uhr', 'ab Freitag, 18 Uhr', 'bis Montag, 9 Uhr'], answer: 'von Montag bis Freitag, von 9 bis 18 Uhr', explanation: 'von … bis = from … until.', learnHref: GB + '125-times-and-opening-hours-von--bis-ab' }),
+    q({ id: 'L11-P-20', topic: 'opening-hours', skill: 'reading', type: 'mc', objective: 'L11-O6', instructions: 'What does the sign mean?', prompt: 'Mo–Fr 9–18 Uhr', options: ['von Montag bis Freitag, von 9 bis 18 Uhr', 'am Montag und Freitag um 9 Uhr', 'ab Freitag, 18 Uhr', 'bis Montag, 9 Uhr'], answer: 'von Montag bis Freitag, von 9 bis 18 Uhr', explanation: 'von … bis = from … until.', learnHref: GB + '12' }),
     q({ id: 'L11-P-21', topic: 'opening-hours', skill: 'vocabulary', type: 'mc', objective: 'L11-O6', instructions: 'Choose the meaning.', prompt: 'ab 10 Uhr geöffnet', options: ['open from 10 o’clock', 'open until 10 o’clock', 'closed at 10 o’clock', 'open only at 10 o’clock'], answer: 'open from 10 o’clock', explanation: 'ab = from (onwards).' }),
     q({ id: 'L11-P-22', topic: 'time-words', skill: 'vocabulary', type: 'match', objective: 'L11-O6', instructions: 'Match.', prompt: '', pairs: [['geöffnet', 'open'], ['geschlossen', 'closed'], ['gestern', 'yesterday'], ['zuerst', 'first'], ['danach', 'after that']], explanation: 'Useful words.' }),
     q({ id: 'L11-P-23', topic: 'perfekt-haben', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L11-O1', instructions: 'Write it in German.', prompt: 'I worked yesterday.', answer: 'Ich habe gestern gearbeitet.', accept: ['Gestern habe ich gearbeitet.'], explanation: 'habe … gearbeitet.' }),

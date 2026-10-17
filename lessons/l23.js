@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 23, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const CONJ = GB + '241-joining-sentences-und-aber-oder-denn', TWO = GB + '242-the-two-way-prepositions', WX = GB + '243-talking-about-the-weather', LOS = GB + '244-the-suffix--los--without', TRIP = GB + '245-wishes-for-a-trip';
+  const CONJ = GB + '24', TWO = GB + '24', WX = GB + '24', LOS = GB + '24', TRIP = GB + '24';
   const join = (id, prompt, a, ex, acc) => q({ id, topic: 'connectors', skill: 'grammar', grammar: 'coordinating-conjunctions', type: 'translate', difficulty: 2, objective: 'L23-O1', instructions: 'Join the two sentences.', prompt, answer: a, accept: acc, explanation: ex, learnHref: CONJ });
   const two = (id, prompt, a, ex) => q({ id, topic: 'two-way', skill: 'grammar', grammar: 'two-way-prepositions', type: 'gap', objective: 'L23-O2', instructions: 'Dative (Wo?) or accusative (Wohin?)? Fill in the article.', prompt, answer: a, explanation: ex, learnHref: TWO });
 

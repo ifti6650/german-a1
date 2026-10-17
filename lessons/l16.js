@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 16, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const TIME = GB + '171-in-vor-nach--dative-time', POL = GB + '172-polite-requests-können-and-könnten', HELP = GB + '173-offering-help-and-reacting', APPT = GB + '174-appointments';
+  const TIME = GB + '17', POL = GB + '17', HELP = GB + '17', APPT = GB + '17';
   const tp = (id, prompt, a, ex) => q({ id, topic: 'time-prepositions', skill: 'grammar', grammar: 'time-prepositions-dative', type: 'mc', objective: 'L16-O1', instructions: 'in, vor or nach?', prompt, options: ['in', 'vor', 'nach'].map(x => prompt.startsWith('…') ? x[0].toUpperCase() + x.slice(1) : x), answer: a, explanation: ex, learnHref: TIME });
   const dat = (id, prompt, a, ex) => q({ id, topic: 'time-prepositions', skill: 'grammar', grammar: 'time-prepositions-dative', type: 'gap', objective: 'L16-O1', instructions: 'Fill in the dative.', prompt, answer: a, explanation: ex, learnHref: TIME });
 

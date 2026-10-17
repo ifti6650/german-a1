@@ -3,11 +3,11 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 15, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const own = (id, prompt, a, ex, opts) => q({ id, topic: 'possessives', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O1', instructions: 'Choose the possessive article.', prompt, options: opts, answer: a, explanation: ex, learnHref: GB + '161-who-owns-it' });
-  const end = (id, prompt, a, ex) => q({ id, topic: 'possessive-endings', skill: 'grammar', grammar: 'possessive-endings', type: 'gap', objective: 'L15-O3', instructions: 'Fill in the possessive with the right ending.', prompt, answer: a, explanation: ex, learnHref: GB + '162-endings-the-same-as-ein--kein' });
+  const own = (id, prompt, a, ex, opts) => q({ id, topic: 'possessives', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O1', instructions: 'Choose the possessive article.', prompt, options: opts, answer: a, explanation: ex, learnHref: GB + '16' });
+  const end = (id, prompt, a, ex) => q({ id, topic: 'possessive-endings', skill: 'grammar', grammar: 'possessive-endings', type: 'gap', objective: 'L15-O3', instructions: 'Fill in the possessive with the right ending.', prompt, answer: a, explanation: ex, learnHref: GB + '16' });
 
   const objectives = [
     { id: 'L15-O1', text: 'Use all possessive articles: mein, dein, sein, ihr, unser, euer, ihr, Ihr.', kind: 'grammar' },
@@ -18,20 +18,20 @@
   ];
 
   const learn = [
-    { id: 'owners', title: 'Who owns it?', objective: 'L15-O1', href: GB + '161-who-owns-it',
+    { id: 'owners', title: 'Who owns it?', objective: 'L15-O1', href: GB + '16',
       table: [['ich → mein', 'du → dein'], ['er / es → sein', 'sie (she) → ihr'], ['wir → unser', 'ihr → euer'], ['sie (they) → ihr', 'Sie → Ihr (capital I)']],
       text: 'ihr has three meanings: her, their, and (with a capital I) your (polite). Context tells you which.' },
-    { id: 'sein-ihr', title: 'sein or ihr?', objective: 'L15-O2', href: GB + '161-who-owns-it',
+    { id: 'sein-ihr', title: 'sein or ihr?', objective: 'L15-O2', href: GB + '16',
       text: 'Look at the owner, not at the thing. A man’s thing → sein. A woman’s thing → ihr. Several people’s thing → ihr.',
       table: [['Jonas und seine Mutter', 'Jonas and his mother'], ['Lena und ihr Vater', 'Lena and her father'], ['Die Müllers und ihr Haus', 'The Müllers and their house']],
       mistakes: [['Lena und sein Bruder', 'Lena und ihr Bruder', 'The owner (Lena) is female → ihr.']] },
-    { id: 'endings', title: 'Endings: the same as ein / kein', objective: 'L15-O3', href: GB + '162-endings-the-same-as-ein--kein',
+    { id: 'endings', title: 'Endings: the same as ein / kein', objective: 'L15-O3', href: GB + '16',
       text: 'The ending depends on the gender and case of the thing, not of the owner.',
       table: [['Nominative', 'mein Balkon · mein Bad · meine Küche · meine Zimmer'], ['Accusative', 'meinen Balkon · mein Bad · meine Küche · meine Zimmer'], ['Dative', 'meinem Balkon · meinem Bad · meiner Küche · meinen Zimmern'], ['euer + ending', 'eure Wohnung, euren Garten (drop the second e)']],
       mistakes: [['Ich finde ihr Balkon schön.', 'Ich finde ihren Balkon schön.', 'finden + accusative; der Balkon → ihren.'], ['euere Küche', 'eure Küche', 'euer drops the e before an ending.']] },
-    { id: 'flat', title: 'Describing a flat', objective: 'L15-O4', href: GB + '163-describing-a-flat',
+    { id: 'flat', title: 'Describing a flat', objective: 'L15-O4', href: GB + '16',
       table: [['das Wohnzimmer · das Schlafzimmer · das Kinderzimmer', 'living room · bedroom · children’s room'], ['die Küche · das Bad · der Flur · der Balkon', 'kitchen · bathroom · hall · balcony'], ['das Bett · der Schrank · das Sofa · der Tisch', 'bed · wardrobe · sofa · table'], ['Die Wohnung hat drei Zimmer. Sie ist 70 Quadratmeter groß.', 'The flat has three rooms. It is 70 m².'], ['Sie liegt im Zentrum / im zweiten Stock.', 'It is in the centre / on the second floor.'], ['Die Miete ist 850 Euro warm.', 'The rent is €850 incl. heating.']] },
-    { id: 'finden', title: 'Opinions with finden', objective: 'L15-O5', href: GB + '163-describing-a-flat',
+    { id: 'finden', title: 'Opinions with finden', objective: 'L15-O5', href: GB + '16',
       text: 'Ich finde + accusative + adjective. Useful pairs: hell – dunkel, groß – klein, ruhig – laut, modern – alt, teuer – günstig, gemütlich.',
       examples: [['Ich finde eure Küche sehr gemütlich.', 'I think your kitchen is very cosy.'], ['Ich finde das Schlafzimmer zu dunkel.', 'I think the bedroom is too dark.']] }
   ];
@@ -41,9 +41,9 @@
     own('L15-P-02', 'Das ist Eva. … Wohnung ist hell.', 'Ihre', 'Eva (female) → ihr; die Wohnung → ihre.', ['Ihre', 'Seine', 'Ihr', 'Sein']),
     own('L15-P-03', 'Wir wohnen hier. … Haus ist alt.', 'Unser', 'wir → unser; das Haus → unser.', ['Unser', 'Unsere', 'Euer', 'Ihr']),
     own('L15-P-04', 'Frau Koch, ist das … Schlüssel?', 'Ihr', 'Sie (polite) → Ihr; der Schlüssel (nominative) → Ihr.', ['Ihr', 'ihr', 'Ihre', 'sein']),
-    q({ id: 'L15-P-05', topic: 'possessives', skill: 'grammar', grammar: 'possessive-articles', type: 'match', objective: 'L15-O1', instructions: 'Match the person and the possessive.', prompt: '', pairs: [['ich', 'mein'], ['er', 'sein'], ['sie (she)', 'ihr'], ['wir', 'unser'], ['ihr (you all)', 'euer']], explanation: 'Possessive articles.', learnHref: GB + '161-who-owns-it' }),
+    q({ id: 'L15-P-05', topic: 'possessives', skill: 'grammar', grammar: 'possessive-articles', type: 'match', objective: 'L15-O1', instructions: 'Match the person and the possessive.', prompt: '', pairs: [['ich', 'mein'], ['er', 'sein'], ['sie (she)', 'ihr'], ['wir', 'unser'], ['ihr (you all)', 'euer']], explanation: 'Possessive articles.', learnHref: GB + '16' }),
     q({ id: 'L15-P-06', topic: 'possessives', skill: 'grammar', grammar: 'possessive-articles', type: 'gap', objective: 'L15-O1', instructions: 'Fill in the possessive (nominative).', prompt: 'Kinder, wo ist ___ Ball? (ihr, you all)', answer: [['euer']], explanation: 'ihr (you all) → euer; der Ball → euer.' }),
-    q({ id: 'L15-P-07', topic: 'sein-ihr', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O2', instructions: 'sein or ihr?', prompt: 'Peter und … Schwester', options: ['seine', 'ihre', 'sein', 'ihr'], answer: 'seine', explanation: 'Peter → sein; die Schwester → seine.', learnHref: GB + '161-who-owns-it' }),
+    q({ id: 'L15-P-07', topic: 'sein-ihr', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O2', instructions: 'sein or ihr?', prompt: 'Peter und … Schwester', options: ['seine', 'ihre', 'sein', 'ihr'], answer: 'seine', explanation: 'Peter → sein; die Schwester → seine.', learnHref: GB + '16' }),
     q({ id: 'L15-P-08', topic: 'sein-ihr', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O2', instructions: 'sein or ihr?', prompt: 'Anna und … Bruder', options: ['ihr', 'sein', 'ihre', 'seine'], answer: 'ihr', explanation: 'Anna → ihr; der Bruder → ihr.' }),
     q({ id: 'L15-P-09', topic: 'sein-ihr', skill: 'grammar', grammar: 'possessive-articles', type: 'mc', objective: 'L15-O2', instructions: 'Choose the possessive.', prompt: 'Herr und Frau Weber und … Kinder', options: ['ihre', 'seine', 'ihr', 'unsere'], answer: 'ihre', explanation: 'Several owners → ihr; plural → ihre.' }),
     end('L15-P-10', 'Ich finde ___ Balkon schön. (ihr, her)', [['ihren']], 'finden + accusative; der Balkon → ihren.'),
@@ -52,7 +52,7 @@
     end('L15-P-13', 'Wie groß ist ___ Wohnung? (euer)', [['eure']], 'euer + e → eure (drop the second e).'),
     q({ id: 'L15-P-14', topic: 'possessive-endings', skill: 'grammar', grammar: 'possessive-endings', type: 'mc', objective: 'L15-O3', instructions: 'Choose the correct form.', prompt: 'Hast du … Schlüssel? (dein, der Schlüssel, accusative)', options: ['deinen', 'dein', 'deine', 'deinem'], answer: 'deinen', explanation: 'der → accusative -en: deinen.' }),
     q({ id: 'L15-P-15', topic: 'possessive-endings', skill: 'grammar', grammar: 'possessive-endings', type: 'mc', objective: 'L15-O3', instructions: 'Choose the correct form.', prompt: 'Ich spreche mit … Vermieter. (mein, der Vermieter, dative)', options: ['meinem', 'meinen', 'meiner', 'mein'], answer: 'meinem', explanation: 'mit + dative masculine → meinem.' }),
-    q({ id: 'L15-P-16', topic: 'flat', skill: 'vocabulary', type: 'match', objective: 'L15-O4', instructions: 'Match the rooms.', prompt: '', pairs: [['das Wohnzimmer', 'living room'], ['das Schlafzimmer', 'bedroom'], ['die Küche', 'kitchen'], ['das Bad', 'bathroom'], ['der Flur', 'hall']], explanation: 'Rooms.', learnHref: GB + '163-describing-a-flat' }),
+    q({ id: 'L15-P-16', topic: 'flat', skill: 'vocabulary', type: 'match', objective: 'L15-O4', instructions: 'Match the rooms.', prompt: '', pairs: [['das Wohnzimmer', 'living room'], ['das Schlafzimmer', 'bedroom'], ['die Küche', 'kitchen'], ['das Bad', 'bathroom'], ['der Flur', 'hall']], explanation: 'Rooms.', learnHref: GB + '16' }),
     q({ id: 'L15-P-17', topic: 'flat', skill: 'vocabulary', type: 'match', objective: 'L15-O4', instructions: 'Match the furniture.', prompt: '', pairs: [['das Bett', 'bed'], ['der Schrank', 'wardrobe / cupboard'], ['das Sofa', 'sofa'], ['der Stuhl', 'chair'], ['die Lampe', 'lamp']], explanation: 'Furniture.' }),
     q({ id: 'L15-P-18', topic: 'flat', skill: 'vocabulary', type: 'article', objective: 'L15-O4', instructions: 'Choose the article.', prompt: '… Küche', options: ['der', 'die', 'das'], answer: 'die', explanation: 'die Küche.' }),
     q({ id: 'L15-P-19', topic: 'flat', skill: 'vocabulary', type: 'article', objective: 'L15-O4', instructions: 'Choose the article.', prompt: '… Balkon', options: ['der', 'die', 'das'], answer: 'der', explanation: 'der Balkon.' }),
