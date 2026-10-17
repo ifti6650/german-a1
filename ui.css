@@ -463,3 +463,13 @@ html.sh-focus .sh-top .mlogo { display: inline-flex; }
   .lp-actions .lp-install-head{min-width:36px;padding:0 8px}
   .lp-actions .lp-install-label{display:none}
 }
+
+/* Fit logo, dashboard, install and navigation controls on narrow phones. */
+@media (max-width: 480px) {
+  .lp-header .lp-wrap { gap: 8px; }
+  .lp-header .ui-logo { flex: 0 0 auto; }
+  .lp-header .ui-logo > span { display: none; }
+  .lp-header .lp-actions { gap: 4px; min-width: 0; }
+  .lp-header .lp-actions [data-member] .ui-btn { padding: 0 8px; }
+  .lp-header .lp-burger { flex: 0 0 auto; }
+}
