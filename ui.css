@@ -455,3 +455,11 @@ html.sh-focus .sh-top .mlogo { display: inline-flex; }
 .db-guide-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
 .db-guide .cap { color: var(--ui-muted); font-size: 14px; }
 @media (max-width: 640px) { .db-guide-row .ui-btn { width: 100%; } }
+
+/* Public install actions: available before sign-in, compact on small screens. */
+.lp-actions .lp-install-head{white-space:nowrap;flex-shrink:0}
+.lp-cta .lp-install-cta{white-space:nowrap}
+@media (max-width: 640px){
+  .lp-actions .lp-install-head{min-width:36px;padding:0 8px}
+  .lp-actions .lp-install-label{display:none}
+}
