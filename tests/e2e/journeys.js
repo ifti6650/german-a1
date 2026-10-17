@@ -32,7 +32,8 @@ const file = p => new URL(p.url()).pathname.split('/').pop();
 async function kpis(p) { return p.$$eval('.db-kpi', cs => Object.fromEntries(cs.map(c => [c.querySelector('.k').textContent.trim(), c.querySelector('.v').textContent.replace(/\s+/g, ' ').trim()]))) }
 async function current(p) { return p.$eval('.sh-side [aria-current="page"]', e => e.textContent.trim()).catch(() => null) }
 async function noHScroll(p, label) { const [sw, iw] = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); ok(sw <= iw + 1, `${label}: horizontal overflow ${sw} > ${iw}`) }
-async function journey(name, fn) {\n  if (process.argv.includes('--mobile-only') && !name.startsWith('7 ·')) return;
+async function journey(name, fn) {
+  if (process.argv.includes('--mobile-only') && !name.startsWith('7 ·')) return;
   const t = Date.now();
   try { await fn(); results.push([name, 'PASS', Date.now() - t]) }
   catch (e) { results.push([name, 'FAIL: ' + e.message.split('\n')[0], Date.now() - t]) }
