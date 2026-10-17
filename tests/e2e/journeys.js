@@ -32,7 +32,7 @@ const file = p => new URL(p.url()).pathname.split('/').pop();
 async function kpis(p) { return p.$$eval('.db-kpi', cs => Object.fromEntries(cs.map(c => [c.querySelector('.k').textContent.trim(), c.querySelector('.v').textContent.replace(/\s+/g, ' ').trim()]))) }
 async function current(p) { return p.$eval('.sh-side [aria-current="page"]', e => e.textContent.trim()).catch(() => null) }
 async function noHScroll(p, label) { const [sw, iw] = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); ok(sw <= iw + 1, `${label}: horizontal overflow ${sw} > ${iw}`) }
-async function journey(name, fn) {
+async function journey(name, fn) {\n  if (process.argv.includes('--mobile-only') && !name.startsWith('7 ·')) return;
   const t = Date.now();
   try { await fn(); results.push([name, 'PASS', Date.now() - t]) }
   catch (e) { results.push([name, 'FAIL: ' + e.message.split('\n')[0], Date.now() - t]) }
@@ -191,7 +191,7 @@ async function journey(name, fn) {
       ok(!(await p.evaluate(() => document.documentElement.classList.contains('sh-open'))), 'Escape did not close the drawer');
       console.log('MOBILE stage=dashboard-tab'); await p.click('.sh-tabs a[href="dashboard.html"]'); await p.waitForURL(/dashboard\.html/); await settle(p);
       ok(/Lektion 2/.test(await p.textContent('.db-resume h2')), 'dashboard lost state');
-      await p.goto(BASE + 'index.html'); await settle(p); console.log('MOBILE stage=landing-burger'); await p.click('#lpBurger'); ok(await p.isVisible('#lpNav a[href="#courses"]'), 'landing mobile menu did not open');
+      await p.goto(BASE + 'index.html'); await settle(p); console.log('MOBILE stage=landing-burger', await p.evaluate(() => { const e = document.querySelector('#lpBurger'); const b = e.getBoundingClientRect(); const st = getComputedStyle(e); return { innerWidth, scrollWidth: document.documentElement.scrollWidth, rect: { x:b.x, y:b.y, width:b.width, height:b.height }, display:st.display, visibility:st.visibility, centerTop: document.elementFromPoint(b.x+b.width/2,b.y+b.height/2)?.id || document.elementFromPoint(b.x+b.width/2,b.y+b.height/2)?.outerHTML.slice(0,100) }; })); await p.click('#lpBurger', { timeout: 6000 }); ok(await p.isVisible('#lpNav a[href="#courses"]'), 'landing mobile menu did not open');
       await shot(p, 'j7-mobile-landing-menu');
       await ctx.close();
     });
