@@ -1,0 +1,41 @@
+name: Quality checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Node content and exercise tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run unit tests
+        run: node --test tests/*.test.js
+      - name: Verify Study Guide generated index
+        run: node tools/guide-build.js check
+
+  browser:
+    name: Browser learner journeys
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run mobile navigation smoke check
+        run: node tests/e2e/journeys.js --mobile-only
+      - name: Run simulated-Supabase browser journeys
+        run: node tests/e2e/journeys.js

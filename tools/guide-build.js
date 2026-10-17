@@ -10,9 +10,8 @@ const ROOT = path.join(__dirname, '..'), DIR = path.join(ROOT, 'guide');
 const pad = n => String(n).padStart(2, '0');
 
 function steps() {
-  const gb = fs.readFileSync(path.join(ROOT, 'grammar-book.html'), 'utf8'); const s = {};
-  for (const m of gb.matchAll(/id="(step-(\d+)-[a-z0-9-]+)"/g)) s[m[2]] = m[1];
-  return s;
+  // Stable Grammar Lab destinations; independent of the removed static Grammar Book.
+  return Object.fromEntries(Array.from({ length: 25 }, (_, i) => [i + 1, 'grammar-lab.html?s=' + (i + 1)]));
 }
 function importFull(file) {
   const md = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');

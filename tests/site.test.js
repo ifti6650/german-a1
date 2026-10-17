@@ -39,7 +39,7 @@ test('landing is public: no guard, no portal shell', () => {
   assert.ok(!landing.includes('guard.js') && !landing.includes('shell.js'));
   assert.ok(landing.includes('class="lp"'));
 });
-const PORTAL = ['dashboard.html', 'onboarding.html', 'account.html', 'course.html', 'lesson.html', 'wortschatz.html', 'practice.html', 'tests.html', 'test.html', 'mistakes.html', 'progress.html', 'grammar-book.html', 'study-guide.html', 'speaking.html'];
+const PORTAL = ['dashboard.html', 'onboarding.html', 'account.html', 'course.html', 'lesson.html', 'wortschatz.html', 'practice.html', 'tests.html', 'test.html', 'mistakes.html', 'progress.html', 'study-guide.html', 'speaking.html'];
 for (const f of PORTAL) test(`portal page ${f}: protected, uses the shell, no old navigation`, () => {
   const s = read(f);
   const head = s.slice(0, s.indexOf('</head>'));
@@ -61,4 +61,26 @@ test('auth-config.js lists every sign-in method the dialog knows', () => {
 test('service worker caches the new files', () => {
   const sw = read('sw.js');
   ['dashboard.html', 'onboarding.html', 'account.html', 'privacy.html', 'auth-config.js', 'ui.css', 'guard.js', 'shell.js', 'landing.js'].forEach(f => assert.ok(sw.includes(`'${f}'`), f));
+});
+
+test('Grammar Lab is public and the legacy Grammar Book redirects', () => {
+  const lab = read('grammar-lab.html');
+  const old = read('grammar-book.html');
+  assert.ok(!lab.includes('guard.js') && lab.includes('data-public="1"'));
+  assert.ok(lab.includes('grammar-lab.js') && lab.includes('grammar/data.js'));
+  assert.ok(old.includes('grammar-lab.html') && old.includes('location.replace'));
+});
+test('independent publisher-free branding on public pages', () => {
+  const files = ['index.html','manifest.webmanifest','onboarding.html','shell.js','grammar-lab.html'];
+  for (const file of files) assert.doesNotMatch(read(file), /Momente|Hueber|Kursbuch|Arbeitsbuch/i, file);
+});
+
+test('landing page offers installation before sign-in', () => {
+  const landing = read('index.html');
+  const install = read('install.js');
+  assert.match(landing, /<button[^>]*data-install-app/g);
+  assert.equal((landing.match(/data-install-app/g) || []).length, 2);
+  assert.ok(landing.includes('<script src="install.js"></script>'));
+  assert.ok(install.includes("querySelectorAll('[data-install-app]')"));
+  assert.ok(install.includes("beforeinstallprompt"));
 });

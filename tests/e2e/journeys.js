@@ -33,6 +33,7 @@ async function kpis(p) { return p.$$eval('.db-kpi', cs => Object.fromEntries(cs.
 async function current(p) { return p.$eval('.sh-side [aria-current="page"]', e => e.textContent.trim()).catch(() => null) }
 async function noHScroll(p, label) { const [sw, iw] = await p.evaluate(() => [document.documentElement.scrollWidth, innerWidth]); ok(sw <= iw + 1, `${label}: horizontal overflow ${sw} > ${iw}`) }
 async function journey(name, fn) {
+  if (process.argv.includes('--mobile-only') && !name.startsWith('7 ·')) return;
   const t = Date.now();
   try { await fn(); results.push([name, 'PASS', Date.now() - t]) }
   catch (e) { results.push([name, 'FAIL: ' + e.message.split('\n')[0], Date.now() - t]) }
@@ -48,6 +49,7 @@ async function journey(name, fn) {
       const { ctx, page: p } = await context({ as: 'returning' });
       await p.goto(BASE + 'index.html'); await settle(p);
       ok(await p.isVisible('.lp-hero h1'), 'landing hero missing');
+      ok(await p.isVisible('.lp-cta [data-install-app]'), 'public install button not visible');
       ok(!(await p.$('.sh-side')), 'landing must not use the portal shell');
       ok(await p.isVisible('.lp-actions [data-signin]'), 'Sign in button not visible');
       await shot(p, 'j1-landing');
@@ -56,7 +58,7 @@ async function journey(name, fn) {
       await Promise.all([p.waitForURL(/dashboard\.html/), p.click('[data-provider="google"]')]); await settle(p);
       ok(!/code=/.test(p.url()), 'OAuth code left in URL'); ok(file(p) === 'dashboard.html', 'not on dashboard: ' + p.url());
       ok((await p.textContent('#dbHello')).includes('Jade'), 'greeting without name');
-      ok((await p.textContent('#dbCourse')).includes('Momente A1.1'), 'course missing');
+      ok((await p.textContent('#dbCourse')).includes('German A1.1'), 'course missing');
       ok(await current(p) === 'Dashboard', 'Dashboard not active in sidebar');
       ok(/Lektion 2/.test(await p.textContent('.db-resume h2')), 'resume card is not Lektion 2');
       const txt = await p.textContent('#db'); const k = await kpis(p);
@@ -79,8 +81,8 @@ async function journey(name, fn) {
       await shot(p, 'j2-onboarding');
       await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
       const txt = (await p.textContent('main')).replace(/\s+/g, ' ');
-      ok(/You’re all set: Momente A1\.1/.test(txt), 'no success state after onboarding');
-      ok(/Lektion 1: Ich heiße Miriam/.test(txt) && /Start lesson/.test(txt), 'new learner should start Lektion 1');
+      ok(/You’re all set: German A1\.1/.test(txt), 'no success state after onboarding');
+      ok(/Lektion 1: Begrüßen und sich kennenlernen/.test(txt) && /Start lesson/.test(txt), 'new learner should start Lektion 1');
       ok(/No activity yet/.test(txt) && /No tests yet/.test(txt), 'empty states missing');
       ok((await kpis(p))['Practice accuracy'] === '–', 'accuracy must not show a number without answers');
       await shot(p, 'j2-dashboard-new');
@@ -107,7 +109,7 @@ async function journey(name, fn) {
       ok(await current(p) === 'Practice', 'Practice not active after deep link');
       await p.click('.sh-side a[href="dashboard.html"]'); await settle(p);
       await Promise.all([p.waitForURL(/lesson\.html\?l=2/), p.click('.db-resume .ui-btn')]); await settle(p);
-      ok((await p.textContent('h1')).includes('Was macht ihr beruflich'), 'resume opened the wrong lesson');
+      ok((await p.textContent('h1')).includes('Arbeit, Wohnort und persönliche Angaben'), 'resume opened the wrong lesson');
       ok(await current(p) === 'My Course', 'My Course not active on a lesson page');
       await p.goto(BASE + 'course.html'); await settle(p);
       ok((await p.$$('#weeks > li')).length === 8, '8-week plan missing on My Course');
@@ -180,17 +182,17 @@ async function journey(name, fn) {
       const sideOff = await p.$eval('.sh-side', e => e.inert && e.getBoundingClientRect().right <= 0);
       ok(await p.isVisible('.sh-tabs') && sideOff, 'mobile should show the tab bar, not the sidebar');
       await shot(p, 'j7-mobile-dashboard');
-      await p.click('.sh-tabs a[href="course.html"]'); await p.waitForURL(/course\.html/); await settle(p);
+      console.log('MOBILE stage=course-tab'); await p.click('.sh-tabs a[href="course.html"]'); await p.waitForURL(/course\.html/); await settle(p);
       ok(await p.$eval('.sh-tabs [aria-current="page"]', e => e.textContent.trim()) === 'Course', 'Course tab not active');
-      await p.click('a.lcard[href*="l=2"]'); await p.waitForURL(/lesson\.html\?l=2/); await settle(p);
-      await p.click('#sh-more'); await p.waitForTimeout(300);
+      console.log('MOBILE stage=lesson-card'); await p.click('a.lcard[href*="l=2"]'); await p.waitForURL(/lesson\.html\?l=2/); await settle(p);
+      console.log('MOBILE stage=more-menu'); await p.click('#sh-more'); await p.waitForTimeout(300);
       ok(await p.$eval('.sh-side', e => !e.inert && e.getBoundingClientRect().left >= 0), 'More did not open the navigation drawer');
       await shot(p, 'j7-mobile-drawer');
       await p.keyboard.press('Escape'); await p.waitForTimeout(300);
       ok(!(await p.evaluate(() => document.documentElement.classList.contains('sh-open'))), 'Escape did not close the drawer');
-      await p.click('.sh-tabs a[href="dashboard.html"]'); await p.waitForURL(/dashboard\.html/); await settle(p);
+      console.log('MOBILE stage=dashboard-tab'); await p.click('.sh-tabs a[href="dashboard.html"]'); await p.waitForURL(/dashboard\.html/); await settle(p);
       ok(/Lektion 2/.test(await p.textContent('.db-resume h2')), 'dashboard lost state');
-      await p.goto(BASE + 'index.html'); await settle(p); await p.click('#lpBurger'); ok(await p.isVisible('#lpNav a[href="#courses"]'), 'landing mobile menu did not open');
+      await p.goto(BASE + 'index.html'); await settle(p); console.log('MOBILE stage=landing-burger', await p.evaluate(() => { const e = document.querySelector('#lpBurger'); const b = e.getBoundingClientRect(); const st = getComputedStyle(e); return { innerWidth, scrollWidth: document.documentElement.scrollWidth, rect: { x:b.x, y:b.y, width:b.width, height:b.height }, display:st.display, visibility:st.visibility, centerTop: document.elementFromPoint(b.x+b.width/2,b.y+b.height/2)?.id || document.elementFromPoint(b.x+b.width/2,b.y+b.height/2)?.outerHTML.slice(0,100) }; })); await p.click('#lpBurger', { timeout: 6000 }); ok(await p.isVisible('#lpNav a[href="#courses"]'), 'landing mobile menu did not open');
       await shot(p, 'j7-mobile-landing-menu');
       await ctx.close();
     });
@@ -416,7 +418,7 @@ async function journey(name, fn) {
       ok(await p.isVisible('#tab-situations[aria-selected="true"]') && await p.isVisible('.sg-sits [data-sit="3"][aria-pressed="true"]'), 'refresh lost the situation');
       ok((await p.textContent('#sgProg')).includes('1 von 9'), 'progress not kept after refresh');
       // Grammar Book link resolves
-      await p.click('#tab-patterns'); const gb = await p.$eval('.sg-body a[href^="grammar-book.html#step-"]', a => a.getAttribute('href'));
+      await p.click('#tab-patterns'); const gb = await p.$eval('.sg-body a[href^="grammar-lab.html?s="]', a => a.getAttribute('href'));
       // can-do checks remembered
       await p.click('#tab-review'); await p.check('.sg-can input >> nth=0'); await p.reload(); await settle(p);
       ok(await p.isChecked('.sg-can input >> nth=0'), 'can-do tick not remembered');
@@ -431,15 +433,15 @@ async function journey(name, fn) {
       ok((await p.getAttribute('#sgResume', 'href')) === 'study-guide.html?l=5#expressions', 'resume link wrong: ' + await p.getAttribute('#sgResume', 'href'));
       // dashboard card
       await p.goto(BASE + 'dashboard.html'); await settle(p);
-      ok((await p.textContent('.db-guide')).includes('1 of 24 lessons completed'), 'dashboard Study Guide card wrong: ' + await p.textContent('.db-guide'));
-      ok((await p.getAttribute('.db-guide a', 'href')) === 'study-guide.html?l=5#expressions', 'dashboard resume link wrong');
+      ok((await p.textContent('section.db-guide:has(#guideT)')).includes('1 of 24 lessons completed'), 'dashboard Study Guide card wrong: ' + await p.textContent('.db-guide'));
+      ok((await p.getAttribute('section.db-guide:has(#guideT) a', 'href')) === 'study-guide.html?l=5#expressions', 'dashboard resume link wrong');
       // progress is stored under the synced key, per user
       const st = await p.evaluate(() => JSON.parse(localStorage.getItem('a1:guide')));
       ok(st.l[2].parts.situations && st.l[2].sit[3] && st.last.n === 5, 'a1:guide state wrong');
       await p.waitForTimeout(1800);
       const row = await p.evaluate(() => (JSON.parse(localStorage.getItem('mock:db')).app_state || []).find(r => r.key === 'a1:guide'));
       ok(row && row.user_id && row.value.l[2], 'a1:guide not synced to app_state');
-      await p.goto(BASE + 'grammar-book.html'); await settle(p); ok(await p.$('#' + gb.split('#')[1]), 'Grammar Book anchor missing: ' + gb);
+      await p.goto(BASE + gb); await settle(p); ok(await p.$('#gl'), 'Grammar Lab did not open: ' + gb);
       await p.goto(BASE + 'lesson.html?l=7'); await settle(p);
       ok(await p.$('a[href="study-guide.html?l=7"]'), 'lesson page does not link to the Study Guide lesson');
       await ctx.close();
@@ -458,7 +460,7 @@ async function journey(name, fn) {
       ok(await p.evaluate(() => document.activeElement.getAttribute('role') === 'menuitem'), 'menu does not move focus to first item');
       await p.keyboard.press('ArrowDown'); await p.keyboard.press('Escape'); await p.waitForTimeout(100);
       ok(await p.evaluate(() => document.getElementById('sh-menu').hidden && document.activeElement.id === 'sh-avatar'), 'Escape does not close the menu and restore focus');
-      const map = { 'course.html': 'My Course', 'wortschatz.html': 'Wortschatz', 'practice.html': 'Practice', 'tests.html': 'Tests', 'test.html?id=lesson-1': 'Tests', 'mistakes.html': 'Mistakes', 'progress.html': 'Progress', 'grammar-book.html': 'Grammar Book', 'study-guide.html': 'Study Guide', 'speaking.html': 'Sprechen' };
+      const map = { 'course.html': 'My Course', 'wortschatz.html': 'Wortschatz', 'practice.html': 'Practice', 'tests.html': 'Tests', 'test.html?id=lesson-1': 'Tests', 'mistakes.html': 'Mistakes', 'progress.html': 'Progress', 'grammar-lab.html': 'Grammar Lab', 'study-guide.html': 'Study Guide', 'speaking.html': 'Sprechen' };
       for (const [pg, label] of Object.entries(map)) { await p.goto(BASE + pg); await settle(p); ok(await current(p) === label, `${pg}: active item is ${await current(p)}`); ok((await p.$$('nav.top')).length === 0, pg + ': old top nav still present') }
       await ctx.close();
     });

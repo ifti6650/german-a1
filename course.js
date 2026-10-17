@@ -1,12 +1,11 @@
 // Deutsch A1 · course model (single source of truth for the lesson-based platform)
-// Built from the site's existing, verified data in plan-data.js (lesson titles, topics, grammar steps,
-// study-guide anchors, Wortschatz word ids). Nothing here invents textbook page numbers or exercise numbers.
+// Built from the site's independent learning data (lesson titles, topics, grammar steps,
+// Study Guide links and stable Wortschatz IDs. No external textbook affiliation or page references.
 //
 // contentStatus per lesson:
 //   'complete'   – full original lesson (Learn, Practice, Apply, Quiz) authored for this site
 //   'vocab-only' – Learn links + vocabulary practice/quiz generated from the Wortschatz word list
-// textbookMapping: 'title-and-topic' – lesson title/topic and grammar step order follow Momente;
-//                  exercise-level mapping to Kursbuch/Arbeitsbuch pages is NOT verified (no access to the books).
+// Curriculum follows independently written CEFR A1 communication goals.
 (function (root) {
   const W = (root.PLAN_WEEKS || []);
 
@@ -24,7 +23,7 @@
       guideHref: l.guide,
       wortschatzHref: 'wortschatz.html#L' + l.n,
       words: (w.words || []).filter(x => x.id.split('-')[0] == l.n),
-      textbookMapping: 'title-and-topic'
+      curriculumBasis: 'independent-cefr-a1'
     });
   }));
 

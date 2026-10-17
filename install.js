@@ -1,14 +1,22 @@
 // Permanent "Install app" button + instructions for every browser.
 (function () {
   var standalone = window.navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
-  if (standalone) return; // already running as the installed app
+  if (standalone) {
+    // The public landing page has its own persistent install actions.
+    var hideInstalled = function () { document.querySelectorAll('[data-install-app]').forEach(function (b) { b.hidden = true; }); };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hideInstalled); else hideInstalled();
+    return;
+  }
 
   var ua = navigator.userAgent;
   var ios = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var android = /android/i.test(ua);
   var deferred = null;
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; });
-  window.addEventListener('appinstalled', function () { var b = document.getElementById('installBtn'); if (b) b.hidden = true; });
+  window.addEventListener('appinstalled', function () {
+    document.querySelectorAll('[data-install-app]').forEach(function (b) { b.hidden = true; });
+    var b = document.getElementById('installBtn'); if (b) b.hidden = true;
+  });
 
   var css = '.inst-btn{font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:0;border-radius:8px;padding:6px 10px;background:var(--accent,#5363cf);color:#fff;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}' +
     '.inst-btn:focus-visible{outline:2px solid var(--accent,#5363cf);outline-offset:2px}' +
@@ -38,7 +46,7 @@
     if (!d) {
       d = document.createElement('dialog'); d.id = 'instDlg'; d.className = 'inst-dlg'; d.setAttribute('aria-labelledby', 'instTitle');
       d.innerHTML = '<div class="inst-in"><h2 id="instTitle">Install Deutsch A1 as an app</h2><ol>' + steps().map(function (s) { return '<li>' + s + '</li>'; }).join('') +
-        '</ol><p class="muted">The app gets its own icon on your home screen, opens full screen and also works offline. Progress inside the app is saved separately from the browser, so tick your words in the app from now on.</p>' +
+        '</ol><p class="muted">The app gets its own icon and can work offline after content has loaded. Your browser and installed app may keep separate local progress; sign in to sync supported learning progress across devices.</p>' +
         '<div class="row"><button class="go" id="instOk">Got it</button></div></div>';
       document.body.appendChild(d);
       d.querySelector('#instOk').onclick = function () { d.close(); };
@@ -48,11 +56,13 @@
   }
 
   function addButton() {
+    // The landing-page buttons must work without an account.
+    document.querySelectorAll('[data-install-app]').forEach(function (b) { b.addEventListener('click', openDialog); });
+    if (document.body.classList.contains('lp')) return;
     var b = document.createElement('button');
     b.id = 'installBtn'; b.className = 'inst-btn'; b.type = 'button';
     b.innerHTML = '<span aria-hidden="true">📲</span> Install app';
     b.onclick = openDialog;
-    if (document.body.classList.contains('lp')) return;              // public website: no install prompt
     var slot = document.getElementById('sh-install');                // learner portal: sidebar footer
     if (slot) { slot.appendChild(b); return; }
     var links = document.querySelector('nav.top .links');

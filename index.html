@@ -24,6 +24,7 @@
       <span data-guest><button class="ui-btn quiet hide-sm" type="button" data-signin>Sign in</button></span>
       <span data-guest><button class="ui-btn sm" type="button" data-start>Start learning</button></span>
       <span data-member hidden><a class="ui-btn sm" href="dashboard.html">Go to dashboard</a></span>
+      <button class="ui-btn sm quiet lp-install-head" type="button" data-install-app aria-label="Install Deutsch A1 app"><span aria-hidden="true">📲</span><span class="lp-install-label">Install app</span></button>
       <button class="ui-btn quiet sm lp-burger" type="button" id="lpBurger" aria-controls="lpNav" aria-expanded="false" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </div>
@@ -39,6 +40,7 @@
         <div class="lp-cta">
           <button class="ui-btn lg" type="button" data-start>Start learning</button>
           <a class="ui-btn lg ghost" href="#courses">Explore courses</a>
+          <button class="ui-btn lg ghost lp-install-cta" type="button" data-install-app><span aria-hidden="true">📲</span> Install app</button>
         </div>
         <div class="lp-trust">
           <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Progress synced across devices</span>
@@ -46,7 +48,7 @@
         </div>
       </div>
       <div class="lp-preview" aria-label="Example exercise from Lektion 1">
-        <div class="bar"><span>Lektion 1 · Ich heiße Miriam.</span><span class="tag">Example exercise</span></div>
+        <div class="bar"><span>Lektion 1 · Begrüßen und sich kennenlernen</span><span class="tag">Example exercise</span></div>
         <p class="hint">Choose the polite question.</p>
         <p class="q">Ask your new teacher how she is.</p>
         <div class="opts" role="group" aria-label="Answer options">
@@ -94,7 +96,7 @@
             </ul>
             <details><summary>Show all 12 lessons</summary>
               <ol start="1" data-lessons="A1.1">
-                <li>Ich heiße Miriam.</li><li>Was macht ihr beruflich?</li><li>Das ist meine Schwester.</li><li>Das Bild ist so schön.</li><li>Ist das ein Tisch?</li><li>Wir haben einen Termin.</li><li>Sie können super tanzen!</li><li>Ich habe leider keine Zeit.</li><li>Ich mag Hamburger.</li><li>Wann kommst du denn an?</li><li>Was haben Sie gestern gemacht?</li><li>Im Frühling bin ich nach Hamburg gefahren.</li>
+                <li>Begrüßen und sich kennenlernen</li><li>Arbeit, Wohnort und persönliche Angaben</li><li>Familie, Freunde und Sprachen</li><li>Im Geschäft: Preise und Meinungen</li><li>Gegenstände beschreiben und nachfragen</li><li>Im Büro: Termine, Dinge und Telefonate</li><li>Freizeit, Hobbys und Fähigkeiten</li><li>Uhrzeiten, Verabredungen und Pläne</li><li>Im Café und Restaurant</li><li>Unterwegs mit Bus und Bahn</li><li>Mein Alltag und was gestern passiert ist</li><li>Reisen, Jahreszeiten und Erinnerungen</li>
               </ol>
             </details>
             <div class="act"><button class="ui-btn" type="button" data-start="A1.1">Start A1.1</button></div>
@@ -116,7 +118,7 @@
             </ul>
             <details><summary>Show all 12 lessons</summary>
               <ol start="13" data-lessons="A1.2">
-                <li>Berlin gefällt mir.</li><li>Vor dem Kaufhaus nach rechts.</li><li>Ich finde ihr Zimmer schön.</li><li>Wir haben hier ein Problem.</li><li>Ich will Lehrerin werden.</li><li>Ich soll diese Übung machen.</li><li>Jetzt sei doch nicht gleich sauer!</li><li>Das Team sieht sehr sympathisch aus!</li><li>Darf man das?</li><li>Mehr, mehr, mehr?</li><li>Es regnet. Na und?</li><li>Der erste Oktober war mein Glückstag!</li>
+                <li>Meine Stadt: Orte und Eindrücke</li><li>Wegbeschreibung und Orientierung</li><li>Zu Hause: Zimmer und Wohnung</li><li>Wenn etwas nicht funktioniert</li><li>Wünsche, Ziele und Zukunftspläne</li><li>Beim Arzt und in der Apotheke</li><li>Zusammen wohnen und Aufgaben teilen</li><li>Menschen beschreiben und kennenlernen</li><li>Regeln und Erlaubnis im Alltag</li><li>Kleidung kaufen und vergleichen</li><li>Wetter, Kleidung und Reisepläne</li><li>Besondere Tage, Einladungen und Wünsche</li>
               </ol>
             </details>
             <div class="act"><button class="ui-btn" type="button" data-start="A1.2">Start A1.2</button></div>
@@ -251,6 +253,7 @@
 <script src="auth-config.js"></script>
 <script src="sync.js"></script>
 <script src="landing.js"></script>
+<script src="install.js"></script>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
 </body>
 </html>
