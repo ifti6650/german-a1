@@ -95,7 +95,7 @@ test('reading progress: opening never completes; all parts marked = lesson compl
 test('Study Guide progress syncs per user via app_state; plan links use the lesson URLs', () => {
   assert.match(read('sync.js'), /SYNC_KEYS = \[[^\]]*'a1:guide'/);
   const plan = read('plan-data.js');
-  for (let n = 1; n <= 24; n++) assert.ok(plan.includes(`"guide": "study-guide.html?l=${n}"`), 'plan link ' + n);
+  for (let n = 1; n <= 24; n++) assert.ok(plan.includes(`"guide":"study-guide.html?l=${n}"`), 'plan link ' + n);
   assert.ok(!/study-guide\.html#/.test(plan + read('plan.js') + read('lesson.html')), 'old study-guide anchors left');
   const sw = read('sw.js'); for (let n = 1; n <= 24; n++) assert.ok(sw.includes(`'guide/l${pad(n)}.md'`), 'offline cache ' + n);
 });
