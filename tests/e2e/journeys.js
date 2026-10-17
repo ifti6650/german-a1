@@ -108,7 +108,7 @@ async function journey(name, fn) {
       ok(await current(p) === 'Practice', 'Practice not active after deep link');
       await p.click('.sh-side a[href="dashboard.html"]'); await settle(p);
       await Promise.all([p.waitForURL(/lesson\.html\?l=2/), p.click('.db-resume .ui-btn')]); await settle(p);
-      ok((await p.textContent('h1')).includes('Was macht ihr beruflich'), 'resume opened the wrong lesson');
+      ok((await p.textContent('h1')).includes('Arbeit, Wohnort und persönliche Angaben'), 'resume opened the wrong lesson');
       ok(await current(p) === 'My Course', 'My Course not active on a lesson page');
       await p.goto(BASE + 'course.html'); await settle(p);
       ok((await p.$$('#weeks > li')).length === 8, '8-week plan missing on My Course');
@@ -432,8 +432,8 @@ async function journey(name, fn) {
       ok((await p.getAttribute('#sgResume', 'href')) === 'study-guide.html?l=5#expressions', 'resume link wrong: ' + await p.getAttribute('#sgResume', 'href'));
       // dashboard card
       await p.goto(BASE + 'dashboard.html'); await settle(p);
-      ok((await p.textContent('.db-guide')).includes('1 of 24 lessons completed'), 'dashboard Study Guide card wrong: ' + await p.textContent('.db-guide'));
-      ok((await p.getAttribute('.db-guide a', 'href')) === 'study-guide.html?l=5#expressions', 'dashboard resume link wrong');
+      ok((await p.textContent('section.db-guide:has(#guideT)')).includes('1 of 24 lessons completed'), 'dashboard Study Guide card wrong: ' + await p.textContent('.db-guide'));
+      ok((await p.getAttribute('section.db-guide:has(#guideT) a', 'href')) === 'study-guide.html?l=5#expressions', 'dashboard resume link wrong');
       // progress is stored under the synced key, per user
       const st = await p.evaluate(() => JSON.parse(localStorage.getItem('a1:guide')));
       ok(st.l[2].parts.situations && st.l[2].sit[3] && st.last.n === 5, 'a1:guide state wrong');
