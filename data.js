@@ -26,6 +26,7 @@
     id = String(id || '');
     let m = id.match(/^vocab:(\d+)-(\d+)(?::(article|meaning|write))?$/);
     if (m) { const kind = m[3] || 'write'; return vocabFor(+m[1]).find(q => q.id === `vocab:${m[1]}-${m[2]}:${kind}`) || null }
+    m = id.match(/^gl:(G\d\d-[A-Z0-9]+)$/); if (m) return root.GRAMMAR_LAB ? (/-B(\d)$/.test(m[1]) ? GRAMMAR_LAB.builder(+m[1].slice(1, 3), +m[1].slice(-1) - 1) : GRAMMAR_LAB.question(m[1])) : null; // Grammar Lab
     m = id.match(/^L(\d+)-/); if (m) { const c = COURSE.content(+m[1]); if (c) return [...c.practice, ...c.apply, ...c.quiz].find(q => q.id === id) || null }
     return null;
   }

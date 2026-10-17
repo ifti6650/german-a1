@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 19, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const DU = GB + '201-the-du-imperative', IHR = GB + '202-the-ihr-imperative', SOFT = GB + '203-making-requests-friendlier-bitte-doch-mal', COMP = GB + '204-complaining-and-reacting', PRON = GB + '205-all-personal-pronouns';
+  const DU = GB + '20', IHR = GB + '20', SOFT = GB + '20', COMP = GB + '20', PRON = GB + '20';
   const du = (id, prompt, a, ex, acc) => q({ id, topic: 'du-imperative', skill: 'grammar', grammar: 'du-imperative', type: 'translate', objective: 'L19-O1', instructions: 'Make a du-imperative.', prompt, answer: a, accept: acc, explanation: ex, learnHref: DU });
   const acc = (id, prompt, a, ex, opts) => q({ id, topic: 'pronouns', skill: 'grammar', grammar: 'accusative-pronouns', type: 'mc', objective: 'L19-O4', instructions: 'Choose the pronoun.', prompt, options: opts, answer: a, explanation: ex, learnHref: PRON });
 

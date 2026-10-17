@@ -215,7 +215,7 @@ function buildPrompt() {
   const l = LESSONS.find(x => x.n == $('aiLesson').value), type = $('aiType').value, lang = $('aiLang').value;
   const words = l.words.map(w => w.de.split(' / ')[0]).filter(w => w.length < 30).slice(0, 25).join(', ');
   const grammar = l.steps.map(s => s.title).join('; ');
-  const head = `You are my friendly German tutor in a spoken conversation. I am a beginner at level A1 and I study with the course book Momente A1, Lektion ${l.n} “${l.title}” (topic: ${l.topic}).\n\n`;
+  const head = `You are my friendly German tutor in a spoken conversation. I am a beginner at level A1 and I am working on Lektion ${l.n} “${l.title}” (topic: ${l.topic}).\n\n`;
   const task = {
     chat: `Have a natural conversation with me about myself and the topic “${l.topic}”. Ask me one short question at a time and wait for my answer.`,
     role: `Let's do a role-play: ${ROLEPLAY[l.n]}. You play the other person. Start the scene, keep it realistic and simple, and wait for my answer after each sentence.`,

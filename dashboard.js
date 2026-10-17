@@ -25,7 +25,7 @@
     const n = user && window.A1_SHELL ? A1_SHELL.names(user).first : '';
     $('dbHello').textContent = `${greet()}${n ? ', ' + n : ''}!`;
     $('dbDate').textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-    $('dbCourse').innerHTML = cp.course ? `Your course: <b>Momente ${cp.course}</b> · <a href="onboarding.html?change=1">change</a>` : '';
+    $('dbCourse').innerHTML = cp.course ? `Your course: <b>German ${cp.course}</b> · <a href="onboarding.html?change=1">change</a>` : '';
   }
   function notice(kind, title, text, action) {
     $('dbNotice').innerHTML = kind ? `<div class="ui-state ${kind}" role="${kind === 'error' ? 'alert' : 'status'}" style="margin-bottom:20px"><span class="ic">${kind === 'error' ? '!' : kind === 'success' ? '✓' : svg('info')}</span><div style="flex:1"><b>${title}</b>${text}</div>${action || ''}</div>` : '';
@@ -38,7 +38,7 @@
     const href = `lesson.html?l=${c.n}${c.started ? '#' + (c.lastSection && !c.done[c.lastSection] ? c.lastSection : nextS || 'learn') : ''}`;
     const label = c.completed ? 'Review lesson' : c.started ? 'Resume learning' : 'Start lesson';
     return `<section class="db-card db-resume s8" aria-labelledby="resumeT">
-      <div><div class="lv">${c.started ? 'Continue where you stopped' : 'Your next lesson'} · Momente ${l.level} · Modul ${l.modul}</div>
+      <div><div class="lv">${c.started ? 'Continue where you stopped' : 'Your next lesson'} · German ${l.level} · Modul ${l.modul}</div>
         <h2 id="resumeT">Lektion ${c.n}: ${esc(l.title)}</h2><p class="topic">${esc(l.topic)}${c.last ? ` · last opened ${fmtDate(c.last)}` : ''}</p></div>
       <a class="ui-btn lg" href="${href}">${label} <span aria-hidden="true">→</span></a>
       <div class="steps" role="list" aria-label="Lesson ${c.n} steps">${c.sections.map(s => `<div role="listitem" class="db-step ${c.done[s] ? 'done' : s === nextS ? 'next' : ''}"><i></i><span>${c.done[s] ? '✓ ' : ''}${PM.SECTION_LABEL[s]}<span class="ui-sr">${c.done[s] ? ' — done' : s === nextS ? ' — next' : ''}</span></span></div>`).join('')}</div>
@@ -49,8 +49,8 @@
     return `<section class="db-card db-kpi s4" aria-labelledby="compT">
       <div class="k" id="compT">${svg('course')}Course completion</div>
       <div class="v">${lv.done}<small> / ${lv.total} lessons</small></div>
-      <span class="sh-meter" role="progressbar" aria-label="Momente ${name} lessons completed" aria-valuemin="0" aria-valuemax="${lv.total}" aria-valuenow="${lv.done}"><i style="width:${pct(lv.done, lv.total)}%"></i></span>
-      <div class="d">Momente ${name} · a lesson counts as completed when its quiz is passed. All of A1: ${cp.completed}/24.</div>
+      <span class="sh-meter" role="progressbar" aria-label="German ${name} lessons completed" aria-valuemin="0" aria-valuemax="${lv.total}" aria-valuenow="${lv.done}"><i style="width:${pct(lv.done, lv.total)}%"></i></span>
+      <div class="d">German ${name} · a lesson counts as completed when its quiz is passed. All of A1: ${cp.completed}/24.</div>
     </section>`;
   }
   // Study Guide reading progress (guide-progress.js; a part counts only when the learner marks it done)
@@ -59,11 +59,24 @@
     const o = G.overall(IDX); const c = o.current; const x = c ? IDX[c.n - 1] : null;
     const last = o.last && c && o.last.n === c.n && o.last.part ? o.last : null;
     const href = c ? `study-guide.html?l=${c.n}${last ? '#' + last.part + (last.part === 'situations' && last.sit ? '-' + last.sit : '') : ''}` : 'study-guide.html';
-    return `<section class="db-card s12 db-guide" aria-labelledby="guideT">
+    return `<section class="db-card s6 db-guide" aria-labelledby="guideT">
       <div class="db-guide-row"><div><h2 id="guideT" style="margin:0">Study Guide · Deutsch im echten Leben</h2>
         <p class="cap" style="margin:4px 0 0">${o.completed} of 24 lessons completed · ${o.lessons.reduce((a, l) => a + l.sits, 0)} of 192 situations practised${x ? ` · ${c.started ? 'continue with' : 'next:'} <b lang="de">Lektion ${x.n}: ${esc(x.title)}</b>${c.started ? ` (${c.done}/${c.total} parts)` : ''}` : ''}</p></div>
         <a class="ui-btn ${c && c.started ? '' : 'ghost'}" href="${href}">${c && c.started ? 'Resume Study Guide' : 'Open Study Guide'} <span aria-hidden="true">→</span></a></div>
       <span class="sh-meter" role="progressbar" aria-label="Study Guide lessons completed" aria-valuemin="0" aria-valuemax="24" aria-valuenow="${o.completed}"><i style="width:${pct(o.completed, 24)}%"></i></span>
+    </section>`;
+  }
+  // Grammar Lab (grammar-core.js). Step completed = all 8 questions answered correctly; accuracy = right on the first try.
+  function grammarCard() {
+    const GL = window.GRAMMAR_LAB; if (!GL || !window.GRAMMAR) return '';
+    const o = GL.progress.overall(); const c = o.current; const st = c ? GL.step(c.n) : null;
+    const href = c ? `grammar-lab.html?s=${c.n}${o.last && o.last.s === c.n && o.last.tab ? '#' + o.last.tab : ''}` : 'grammar-lab.html';
+    const passed = Object.values(o.cps).filter(x => x.best >= 8).length;
+    return `<section class="db-card s6 db-guide" aria-labelledby="gramT">
+      <div class="db-guide-row"><div><h2 id="gramT" style="margin:0">Grammar Lab</h2>
+        <p class="cap" style="margin:4px 0 0">${o.done} of 25 steps completed · ${o.answered} of ${o.total} questions answered${o.accuracy != null ? ` · ${o.accuracy}% right on the first try` : ''} · ${passed} of 5 checkpoints passed${st ? ` · ${o.answered ? 'continue with' : 'start with'} <b>Step ${st.n}: ${esc(st.title)}</b>` : ''}${o.weak.length ? ` · weakest: <a href="grammar-lab.html?s=${o.weak[0].n}#practice">Step ${o.weak[0].n}</a> (${o.weak[0].firstPct}%)` : ''}</p></div>
+        <a class="ui-btn ${o.answered ? '' : 'ghost'}" href="${href}">${o.answered ? 'Continue grammar' : 'Open Grammar Lab'} <span aria-hidden="true">→</span></a></div>
+      <span class="sh-meter" role="progressbar" aria-label="Grammar steps completed" aria-valuemin="0" aria-valuemax="25" aria-valuenow="${o.done}"><i style="width:${pct(o.done, 25)}%"></i></span>
     </section>`;
   }
   function kpi(key, icon, title, value, detail, href) {
@@ -124,7 +137,7 @@
       if (!an.total) body = `<div class="ui-state empty"><span class="ic">${svg('target')}</span><div><b>No data yet</b>After a few exercises we show the topics where you lose the most points.</div></div>`;
       else if (!enough.length) body = `<div class="ui-state empty"><span class="ic">${svg('target')}</span><div><b>Not enough answers yet</b>A topic needs at least 6 answers before we rate it. You have ${an.total} answers so far.</div></div>`;
       else if (!weak.length) body = `<div class="ui-state success"><span class="ic">✓</span><div><b>No weak topics</b>All topics with 6 or more answers are at 70% or better. Weakest: ${esc(PM.label(enough[0].key))} (${enough[0].acc}%).</div></div>`;
-      else body = `<ul class="db-list">${weak.map(t => `<li><span class="ic">${svg('target')}</span><span class="tx"><b>${esc(PM.label(t.key))}</b>${t.acc}% correct over ${t.n} answers</span><a class="ui-btn sm ghost" href="practice.html?topic=${encodeURIComponent(t.key)}">Practise</a></li>`).join('')}</ul>`;
+      else body = `<ul class="db-list">${weak.map(t => `<li><span class="ic">${svg('target')}</span><span class="tx"><b>${esc(PM.label(t.key))}</b>${t.acc}% correct over ${t.n} answers</span><a class="ui-btn sm ghost" href="${PM.topicHref(t.key)}">Practise</a></li>`).join('')}</ul>`;
     }
     return `<section class="db-card s6" aria-labelledby="weakT"><h2 id="weakT">Topics to strengthen <a href="progress.html">By topic</a></h2><p class="cap">Topics with at least 6 answers and under 70% correct.</p>${body}</section>`;
   }
@@ -133,7 +146,7 @@
     const cp = PM.course(); header(user, cp);
     const an = data ? PM.analytics(data.attempts, data.reviews, data.tests) : null;
     const why = err || 'Not available offline.';
-    $('db').innerHTML = resumeCard(cp) + completionCard(cp) + guideCard() + kpis(cp, an, why) + activityCard(an, why) + recCard(cp, an) + testsCard(an, why) + weakCard(an, why);
+    $('db').innerHTML = resumeCard(cp) + completionCard(cp) + grammarCard() + guideCard() + kpis(cp, an, why) + activityCard(an, why) + recCard(cp, an) + testsCard(an, why) + weakCard(an, why);
     $('db').setAttribute('aria-busy', 'false');
   }
 
@@ -143,7 +156,7 @@
     catch (e) { console.warn('[dashboard]', e); err = 'The server did not respond.' }
     render(user, data, err);
     if (err && user) notice('error', 'We could not load your activity', ' Lesson progress and Wortschatz below come from this device. Accuracy, reviews, streak and tests need the server.', '<button class="ui-btn sm ghost" id="dbRetry">Try again</button>');
-    else if (P.get('welcome')) notice('success', `You’re all set${PM.course().course ? ': Momente ' + PM.course().course : ''}`, ' Your dashboard fills up as you learn. Start with the lesson below.');
+    else if (P.get('welcome')) notice('success', `You’re all set${PM.course().course ? ': German ' + PM.course().course : ''}`, ' Your dashboard fills up as you learn. Start with the lesson below.');
     else notice('');
     const r = $('dbRetry'); if (r) r.onclick = () => { notice(''); $('db').setAttribute('aria-busy', 'true'); load(user) };
   }

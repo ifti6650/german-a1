@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Deutsch A1"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#4f5fd6"><title>Momente A1 Wortschatz</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Deutsch A1"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="theme-color" content="#4f5fd6"><title>German A1 Wortschatz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -134,8 +134,8 @@ td.ln{font-family:var(--mono);font-size:12px;color:var(--muted)}
 <div class="wrap">
   <header>
     <div>
-      <h1>Momente A1 Wortschatz</h1>
-      <p class="sub">All 24 lessons of Momente A1.1 and A1.2 · mark each word as Learning or Known · words come back for review when they are due</p>
+      <h1>German A1 Wortschatz</h1>
+      <p class="sub">All 24 lessons of German A1.1 and A1.2 · mark each word as Learning or Known · words come back for review when they are due</p>
     </div>
     <div class="stats">
       <div class="counts" id="counts"></div>
@@ -1090,7 +1090,7 @@ function renderFilters() {
   $('filters').innerHTML = f('all', 'All') + f('new', 'New') + f('learning', 'Learning') + f('known', 'Known') + f('due', 'Due');
 }
 function renderHead() {
-  if (S.lesson === 0) { $('lTitle').textContent = 'All lessons'; $('lMeta').textContent = `${WORDS.length} words · Momente A1.1 + A1.2`; return }
+  if (S.lesson === 0) { $('lTitle').textContent = 'All lessons'; $('lMeta').textContent = `${WORDS.length} words · German A1.1 + A1.2`; return }
   const l = LESSONS.find(x => x.n === S.lesson); $('lTitle').textContent = `Lektion ${l.n} · ${l.title}`; $('lMeta').textContent = `${l.topic} · ${l.book}, Modul ${l.mod}`;
 }
 

@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 22, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const COMP = GB + '231-comparative-and-superlative', ALS = GB + '232-comparing-two-things-als-and-so--wie', GERN = GB + '233-gern--lieber--am-liebsten', WD = GB + '234-welch--which-and-dies--this', SHOP = GB + '235-in-the-clothes-shop';
+  const COMP = GB + '23', ALS = GB + '23', GERN = GB + '23', WD = GB + '23', SHOP = GB + '23';
   const cmp = (id, prompt, a, ex) => q({ id, topic: 'comparative', skill: 'grammar', grammar: 'comparative', type: 'gap', objective: 'L22-O1', instructions: 'Fill in the comparative.', prompt, answer: a, explanation: ex, learnHref: COMP });
   const sup = (id, prompt, a, ex) => q({ id, topic: 'superlative', skill: 'grammar', grammar: 'superlative', type: 'gap', objective: 'L22-O1', instructions: 'Fill in the superlative (am …sten).', prompt, answer: a, explanation: ex, learnHref: COMP });
   const wd = (id, prompt, a, ex, opts) => q({ id, topic: 'welch-dies', skill: 'grammar', grammar: 'welch-dies', type: 'mc', objective: 'L22-O4', instructions: 'Choose the right ending.', prompt, options: opts, answer: a, explanation: ex, learnHref: WD });

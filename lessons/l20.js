@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 20, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const INS = GB + '211-inseparable-prefixes-no-ge-', TEST = GB + '212-separable-or-inseparable-the-test', PEOPLE = GB + '213-describing-people', UN = GB + '214-the-prefix-un--makes-opposites', REACT = GB + '215-reacting-to-what-people-say';
+  const INS = GB + '21', TEST = GB + '21', PEOPLE = GB + '21', UN = GB + '21', REACT = GB + '21';
   const part = (id, prompt, a, ex) => q({ id, topic: 'no-ge', skill: 'grammar', grammar: 'past-participle', type: 'translate', objective: 'L20-O1', instructions: 'Write the past participle.', prompt, answer: a, explanation: ex, learnHref: INS });
   const perf = (id, prompt, a, ex) => q({ id, topic: 'no-ge', skill: 'grammar', grammar: 'perfekt-inseparable', type: 'gap', objective: 'L20-O1', instructions: 'Put it into the Perfekt.', prompt, answer: a, explanation: ex, learnHref: INS });
   const sep = (id, prompt, a, ex) => q({ id, topic: 'sep-test', skill: 'grammar', grammar: 'separable-inseparable', type: 'mc', objective: 'L20-O2', instructions: 'Separable or inseparable?', prompt, options: ['separable', 'inseparable'], answer: a, explanation: ex, learnHref: TEST });

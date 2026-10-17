@@ -1,14 +1,15 @@
 # Deutsch A1 – learning materials
 
-Grammar, vocabulary and speaking practice following Momente A1.1 and A1.2 (Hueber).
+German A1 (A1.1 and A1.2): grammar, vocabulary, real-life communication and speaking practice.
 
 | Page | What it is |
 | --- | --- |
 | `index.html` | Public website (landing page, course overview, sign-in) |
 | `dashboard.html` | Learner dashboard (signed-in learners only, like every page below) |
-| `onboarding.html` | First sign-in: choose Momente A1.1 or A1.2 |
+| `onboarding.html` | First sign-in: choose German A1.1 or A1.2 |
 | `wortschatz.html` | Vocabulary trainer: 783 words, flashcards, quiz |
-| `grammar-book.html` | Grammar book, 25 steps + 4 bonus chapters |
+| `grammar-lab.html` | Grammar Lab: 25 interactive steps, 200 graded questions, 5 checkpoints (content in `grammar/`; open to guests) |
+| `grammar-book.html` | Redirect: old Grammar Book links open the matching Grammar Lab step |
 | `study-guide.html` | Study Guide “Deutsch im echten Leben”: 24 lessons, 192 real-life situations (content in `guide/*.md`) |
 | `speaking.html` | Speaking practice |
 | `course.html` / `lesson.html?l=N` | My Course: 24 lessons, each with Learn · Wortschatz · Practice · Apply · Quiz · Review |
@@ -17,7 +18,7 @@ Grammar, vocabulary and speaking practice following Momente A1.1 and A1.2 (Huebe
 | `mistakes.html` | Mistake trainer with spaced review |
 | `progress.html` | Progress and analytics |
 | `sync.js` | Google login + cloud sync of progress (Supabase) |
-| `Momente_A1_Grammar_Book.pdf` | Print version of the grammar book |
+| `German_A1_Intensive_Grammar_Book.pdf` | Print version of the Grammar Lab content (supplied reference; corrections in `grammar/corrections.json` are not in the PDF) |
 
 Hosted with GitHub Pages: Settings → Pages → Deploy from a branch → `main` / `(root)`.
 

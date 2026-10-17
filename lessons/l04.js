@@ -3,7 +3,7 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 4, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
 
@@ -16,44 +16,44 @@
   ];
 
   const learn = [
-    { id: 'nouns', title: 'Nouns: capital letter and gender', objective: 'L4-O1', href: GB + '51-nouns-have-capital-letters-and-a-gender',
+    { id: 'nouns', title: 'Nouns: capital letter and gender', objective: 'L4-O1', href: GB + '5',
       text: 'Every German noun starts with a capital letter and has one of three genders: der, das or die. Always learn the noun together with its article.',
       table: [['der Tisch, der Stuhl, der Schrank', 'masculine (der)'], ['das Bett, das Sofa, das Regal', 'neuter (das)'], ['die Lampe, die Tasche', 'feminine (die)']] },
-    { id: 'gender-hints', title: 'Hints for guessing the gender', objective: 'L4-O1', href: GB + '52-hints-for-guessing-the-gender',
+    { id: 'gender-hints', title: 'Hints for guessing the gender', objective: 'L4-O1', href: GB + '5',
       text: 'A few endings help. Many nouns ending in -e are die (die Lampe), but not all. Nouns ending in -ung, -heit and -keit are always die. Nouns ending in -chen are always das.' },
-    { id: 'it', title: 'er, es, sie also mean “it”', objective: 'L4-O2', href: GB + '53-er-es-sie-also-mean-it',
+    { id: 'it', title: 'er, es, sie also mean “it”', objective: 'L4-O2', href: GB + '5',
       text: 'The pronoun follows the article of the noun, not whether it is a person or a thing.',
       table: [['der Tisch → er', 'Der Tisch? Er ist neu.'], ['das Sofa → es', 'Das Sofa? Es ist bequem.'], ['die Lampe → sie', 'Die Lampe? Sie ist schön.']],
       mistakes: [['Der Spiegel ist schön. Es kostet 40 Euro.', 'Er kostet 40 Euro.', 'der Spiegel → er.']] },
-    { id: 'describing', title: 'Describing things: sein + adjective', objective: 'L4-O3', href: GB + '54-describing-things-sein--adjective',
+    { id: 'describing', title: 'Describing things: sein + adjective', objective: 'L4-O3', href: GB + '5',
       text: 'After sein, the adjective does not change. zu = too.',
       table: [['groß ↔ klein', 'big ↔ small'], ['teuer ↔ billig / günstig', 'expensive ↔ cheap / good value'], ['neu ↔ alt', 'new ↔ old'], ['schön ↔ hässlich', 'beautiful ↔ ugly'], ['bequem · praktisch · modern', 'comfortable · practical · modern']],
       examples: [['Der Schrank ist zu groß.', 'The wardrobe is too big.'], ['Das Bild ist so schön!', 'The picture is so beautiful!']] },
-    { id: 'finden', title: 'Giving your opinion with finden', objective: 'L4-O4', href: GB + '55-giving-your-opinion-with-finden',
+    { id: 'finden', title: 'Giving your opinion with finden', objective: 'L4-O4', href: GB + '5',
       text: 'finden = to find / to think. Like arbeiten, it adds -e- with du and er/sie: du findest, er findet.',
       examples: [['Wie findest du das Sofa? – Ich finde es bequem.', 'What do you think of the sofa? – I find it comfortable.'], ['Ich finde die Lampe hässlich.', 'I think the lamp is ugly.']],
       mistakes: [['Er find das Bild toll.', 'Er findet das Bild toll.', 'Stem find- + e + t.']] },
-    { id: 'prices', title: 'Prices and numbers up to a million', objective: 'L4-O5', href: GB + '56-numbers-from-100-to-a-million-and-prices',
+    { id: 'prices', title: 'Prices and numbers up to a million', objective: 'L4-O5', href: GB + '5',
       table: [['100 · 200 · 350', 'hundert · zweihundert · dreihundertfünfzig'], ['1.000 · 1.200', 'tausend · tausendzweihundert'], ['1.000.000', 'eine Million'], ['2,50 €', 'zwei Euro fünfzig'], ['0,99 €', 'neunundneunzig Cent']],
       examples: [['Was kostet das Regal? – Es kostet 49 Euro.', 'How much is the shelf? – It costs 49 euros.']] }
   ];
 
-  const art = (id, noun, hint, a, ex) => q({ id, topic: 'articles', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L4-O1', instructions: 'Choose the article.', prompt: noun, hint, options: ['der', 'die', 'das'], answer: a, explanation: ex || `${a} ${noun}.`, learnHref: GB + '51-nouns-have-capital-letters-and-a-gender' });
+  const art = (id, noun, hint, a, ex) => q({ id, topic: 'articles', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L4-O1', instructions: 'Choose the article.', prompt: noun, hint, options: ['der', 'die', 'das'], answer: a, explanation: ex || `${a} ${noun}.`, learnHref: GB + '5' });
   const practice = [
     art('L04-P-01', 'Tisch', 'table', 'der'), art('L04-P-02', 'Lampe', 'lamp', 'die'), art('L04-P-03', 'Bett', 'bed', 'das'), art('L04-P-04', 'Schrank', 'wardrobe', 'der'), art('L04-P-05', 'Regal', 'shelf', 'das'),
     q({ id: 'L04-P-06', topic: 'articles', skill: 'grammar', grammar: 'capital-nouns', type: 'mc', objective: 'L4-O1', instructions: 'Which sentence is written correctly?', prompt: 'The chair is comfortable.', options: ['Der Stuhl ist bequem.', 'der stuhl ist bequem.', 'Der stuhl ist bequem.', 'Der Stuhl ist Bequem.'], answer: 'Der Stuhl ist bequem.', explanation: 'Nouns have a capital letter, adjectives do not.' }),
-    q({ id: 'L04-P-07', topic: 'articles', skill: 'grammar', grammar: 'gender-hints', type: 'mc', objective: 'L4-O1', instructions: 'Choose one.', prompt: 'Nouns with this ending are always die:', options: ['-ung', '-chen', '-er', '-o'], answer: '-ung', explanation: '-ung, -heit, -keit → die. -chen → das.', learnHref: GB + '52-hints-for-guessing-the-gender' }),
-    q({ id: 'L04-P-08', topic: 'it-pronouns', skill: 'grammar', grammar: 'er-es-sie', type: 'gap', objective: 'L4-O2', instructions: 'Fill in er, es or sie.', prompt: 'Das Sofa ist toll. ___ ist sehr bequem.', answer: [['Es']], explanation: 'das Sofa → es.', learnHref: GB + '53-er-es-sie-also-mean-it' }),
+    q({ id: 'L04-P-07', topic: 'articles', skill: 'grammar', grammar: 'gender-hints', type: 'mc', objective: 'L4-O1', instructions: 'Choose one.', prompt: 'Nouns with this ending are always die:', options: ['-ung', '-chen', '-er', '-o'], answer: '-ung', explanation: '-ung, -heit, -keit → die. -chen → das.', learnHref: GB + '5' }),
+    q({ id: 'L04-P-08', topic: 'it-pronouns', skill: 'grammar', grammar: 'er-es-sie', type: 'gap', objective: 'L4-O2', instructions: 'Fill in er, es or sie.', prompt: 'Das Sofa ist toll. ___ ist sehr bequem.', answer: [['Es']], explanation: 'das Sofa → es.', learnHref: GB + '5' }),
     q({ id: 'L04-P-09', topic: 'it-pronouns', skill: 'grammar', grammar: 'er-es-sie', type: 'gap', objective: 'L4-O2', instructions: 'Fill in er, es or sie.', prompt: 'Wie ist die Lampe? – ___ ist modern.', answer: [['Sie']], explanation: 'die Lampe → sie.' }),
     q({ id: 'L04-P-10', topic: 'it-pronouns', skill: 'grammar', grammar: 'er-es-sie', type: 'mc', objective: 'L4-O2', instructions: 'Choose the pronoun.', prompt: 'Der Spiegel ist schön. … kostet 40 Euro.', options: ['Er', 'Es', 'Sie'], answer: 'Er', explanation: 'der Spiegel → er.' }),
-    q({ id: 'L04-P-11', topic: 'adjectives', skill: 'vocabulary', type: 'match', objective: 'L4-O3', instructions: 'Match the adjective with its meaning.', prompt: '', pairs: [['teuer', 'expensive'], ['billig', 'cheap'], ['neu', 'new'], ['bequem', 'comfortable'], ['hässlich', 'ugly']], explanation: 'Adjectives for describing things.', learnHref: GB + '54-describing-things-sein--adjective' }),
+    q({ id: 'L04-P-11', topic: 'adjectives', skill: 'vocabulary', type: 'match', objective: 'L4-O3', instructions: 'Match the adjective with its meaning.', prompt: '', pairs: [['teuer', 'expensive'], ['billig', 'cheap'], ['neu', 'new'], ['bequem', 'comfortable'], ['hässlich', 'ugly']], explanation: 'Adjectives for describing things.', learnHref: GB + '5' }),
     q({ id: 'L04-P-12', topic: 'adjectives', skill: 'vocabulary', type: 'mc', objective: 'L4-O3', instructions: 'Choose the opposite.', prompt: 'Das Bett ist nicht neu, es ist …', options: ['alt', 'groß', 'teuer', 'modern'], answer: 'alt', explanation: 'neu ↔ alt.' }),
-    q({ id: 'L04-P-13', topic: 'finden', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'gap', objective: 'L4-O4', instructions: 'Fill in finden.', prompt: 'Wie ___ du das Bild? – Ich ___ es super.', answer: [['findest'], ['finde']], explanation: 'du findest, ich finde.', learnHref: GB + '55-giving-your-opinion-with-finden' }),
+    q({ id: 'L04-P-13', topic: 'finden', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'gap', objective: 'L4-O4', instructions: 'Fill in finden.', prompt: 'Wie ___ du das Bild? – Ich ___ es super.', answer: [['findest'], ['finde']], explanation: 'du findest, ich finde.', learnHref: GB + '5' }),
     q({ id: 'L04-P-14', topic: 'finden', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'conjugation', objective: 'L4-O4', instructions: 'Write the verb form.', prompt: 'er + finden →', answer: 'findet', explanation: 'er find-e-t.' }),
     q({ id: 'L04-P-15', topic: 'finden', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L4-O4', instructions: 'Put the words in order.', prompt: 'I think the lamp is beautiful.', tokens: ['finde', 'Ich', 'Lampe', 'die', 'schön'], answer: 'Ich finde die Lampe schön', explanation: 'Ich – finde – die Lampe – schön.' }),
     q({ id: 'L04-P-16', topic: 'adjectives', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L4-O3', instructions: 'Put the words in order.', prompt: 'The sofa is too expensive.', tokens: ['ist', 'zu', 'Das', 'Sofa', 'teuer'], answer: 'Das Sofa ist zu teuer', explanation: 'zu = too.' }),
     q({ id: 'L04-P-17', topic: 'prices', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L4-O5', instructions: 'Put the words in order.', prompt: 'How much is the shelf?', tokens: ['kostet', 'Was', 'Regal', 'das'], answer: 'Was kostet das Regal', explanation: 'Was kostet …?' }),
-    q({ id: 'L04-P-18', topic: 'numbers', skill: 'vocabulary', type: 'mc', objective: 'L4-O5', instructions: 'Choose the number.', prompt: 'Which word is 350?', options: ['dreihundertfünfzig', 'dreihundertfünfzehn', 'dreitausendfünfzig', 'fünfzigdreihundert'], answer: 'dreihundertfünfzig', explanation: 'drei-hundert-fünfzig.', learnHref: GB + '56-numbers-from-100-to-a-million-and-prices' }),
+    q({ id: 'L04-P-18', topic: 'numbers', skill: 'vocabulary', type: 'mc', objective: 'L4-O5', instructions: 'Choose the number.', prompt: 'Which word is 350?', options: ['dreihundertfünfzig', 'dreihundertfünfzehn', 'dreitausendfünfzig', 'fünfzigdreihundert'], answer: 'dreihundertfünfzig', explanation: 'drei-hundert-fünfzig.', learnHref: GB + '5' }),
     q({ id: 'L04-P-19', topic: 'numbers', skill: 'writing', type: 'translate', objective: 'L4-O5', instructions: 'Write the number in words.', prompt: '1000', answer: 'tausend', accept: ['eintausend'], explanation: '1000 = tausend / eintausend.' }),
     q({ id: 'L04-P-20', topic: 'numbers', skill: 'writing', type: 'translate', objective: 'L4-O5', instructions: 'Write the number in words.', prompt: '200', answer: 'zweihundert', explanation: '200 = zweihundert.' }),
     q({ id: 'L04-P-21', topic: 'prices', skill: 'listening', type: 'listen', objective: 'L4-O5', instructions: 'Listen and answer.', prompt: 'How much is the table?', audio: 'Der Tisch kostet neunundachtzig Euro.', options: ['89 €', '98 €', '19 €', '80 €'], answer: '89 €', explanation: 'neun-und-achtzig = 89.' }),

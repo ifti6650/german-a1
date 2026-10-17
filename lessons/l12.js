@@ -3,12 +3,12 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 12, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const hs = (id, prompt, a, ex, opts) => q({ id, topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'mc', objective: 'L12-O1', instructions: 'haben or sein?', prompt, options: opts || (a === a.toLowerCase() ? undefined : undefined) || ['bin', 'habe', 'ist', 'hat'], answer: a, explanation: ex, learnHref: GB + '131-haben-or-sein' });
-  const perf = (id, prompt, a, ex) => q({ id, topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'gap', objective: 'L12-O1', instructions: 'Fill in sein and the past participle.', prompt, answer: a, explanation: ex, learnHref: GB + '131-haben-or-sein' });
-  const prep = (id, prompt, a, ex, opts) => q({ id, topic: 'im-seit-nach', skill: 'grammar', grammar: 'prepositions-time-place', type: 'mc', objective: 'L12-O4', instructions: 'Choose the preposition.', prompt, options: opts, answer: a, explanation: ex, learnHref: GB + '134-im-seit-nach' });
+  const hs = (id, prompt, a, ex, opts) => q({ id, topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'mc', objective: 'L12-O1', instructions: 'haben or sein?', prompt, options: opts || (a === a.toLowerCase() ? undefined : undefined) || ['bin', 'habe', 'ist', 'hat'], answer: a, explanation: ex, learnHref: GB + '13' });
+  const perf = (id, prompt, a, ex) => q({ id, topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'gap', objective: 'L12-O1', instructions: 'Fill in sein and the past participle.', prompt, answer: a, explanation: ex, learnHref: GB + '13' });
+  const prep = (id, prompt, a, ex, opts) => q({ id, topic: 'im-seit-nach', skill: 'grammar', grammar: 'prepositions-time-place', type: 'mc', objective: 'L12-O4', instructions: 'Choose the preposition.', prompt, options: opts, answer: a, explanation: ex, learnHref: GB + '13' });
 
   const objectives = [
     { id: 'L12-O1', text: 'Choose haben or sein in the Perfekt (movement and change → sein, also bleiben).', kind: 'grammar' },
@@ -19,20 +19,20 @@
   ];
 
   const learn = [
-    { id: 'haben-sein', title: 'haben or sein?', objective: 'L12-O1', href: GB + '131-haben-or-sein',
+    { id: 'haben-sein', title: 'haben or sein?', objective: 'L12-O1', href: GB + '13',
       text: 'Most verbs use haben. Verbs of movement from A to B (gehen, fahren, fliegen, kommen, ankommen) and of change (aufstehen) use sein — and so does bleiben.',
       table: [['Ich bin nach Hamburg gefahren.', 'fahren → ist gefahren'], ['Wir sind spät angekommen.', 'ankommen → ist angekommen'], ['Er ist um 6 Uhr aufgestanden.', 'aufstehen → ist aufgestanden'], ['Sie sind zu Hause geblieben.', 'bleiben → ist geblieben'], ['Ich habe Pizza gegessen.', 'most verbs → haben']],
       mistakes: [['Ich habe nach Berlin gefahren.', 'Ich bin nach Berlin gefahren.', 'Movement to a place → sein.']] },
-    { id: 'war-hatte', title: 'war and hatte', objective: 'L12-O2', href: GB + '132-war-and-hatte',
+    { id: 'war-hatte', title: 'war and hatte', objective: 'L12-O2', href: GB + '13',
       text: 'For sein and haben, German usually uses the simple past instead of the Perfekt.',
       table: [['ich war · du warst · er/sie war', 'I was · you were · he/she was'], ['wir waren · ihr wart · sie/Sie waren', 'we · you (all) · they / you were'], ['ich hatte · du hattest · er/sie hatte', 'I had · you had · he/she had'], ['wir hatten · ihr hattet · sie/Sie hatten', 'we · you (all) · they / you had']],
       examples: [['Der Urlaub war toll. Wir hatten viel Zeit.', 'The holiday was great. We had a lot of time.']] },
-    { id: 'months', title: 'Months, seasons and festivals', objective: 'L12-O3', href: GB + '133-months-and-seasons',
+    { id: 'months', title: 'Months, seasons and festivals', objective: 'L12-O3', href: GB + '13',
       table: [['Januar · Februar · März · April · Mai · Juni', 'January … June'], ['Juli · August · September · Oktober · November · Dezember', 'July … December'], ['der Frühling · der Sommer · der Herbst · der Winter', 'spring · summer · autumn · winter'], ['Weihnachten · Ostern · Silvester · der Geburtstag', 'Christmas · Easter · New Year’s Eve · birthday']] },
-    { id: 'im-seit-nach', title: 'im, seit, nach', objective: 'L12-O4', href: GB + '134-im-seit-nach',
+    { id: 'im-seit-nach', title: 'im, seit, nach', objective: 'L12-O4', href: GB + '13',
       table: [['im Sommer, im Mai', 'im + season / month'], ['seit Mai, seit 2020', 'seit = since / for (still true now, present tense)'], ['nach Hamburg, nach Spanien', 'nach + city / country = to'], ['am Meer · in den Bergen', 'at the sea · in the mountains (learn as phrases)']],
       mistakes: [['Ich lerne Deutsch seit Mai.', 'Ich lerne seit Mai Deutsch.', 'Both are possible; seit + time usually comes before the object.']] },
-    { id: 'story', title: 'Putting it together: a holiday story', objective: 'L12-O5', href: GB + '135-putting-it-together-a-holiday-story',
+    { id: 'story', title: 'Putting it together: a holiday story', objective: 'L12-O5', href: GB + '13',
       examples: [['Im Juli bin ich nach Spanien geflogen. Ich war zwei Wochen am Meer. Das Hotel war schön, und wir hatten viel Spaß.', 'In July I flew to Spain. I was at the sea for two weeks. The hotel was nice, and we had a lot of fun.']] }
   ];
 
@@ -47,12 +47,12 @@
     q({ id: 'L12-P-08', topic: 'participles', skill: 'grammar', grammar: 'past-participle', type: 'mc', objective: 'L12-O1', instructions: 'Choose the past participle.', prompt: 'ankommen →', options: ['angekommen', 'geankommen', 'angekommt', 'ankommen'], answer: 'angekommen', explanation: 'Separable: an-ge-kommen.' }),
     q({ id: 'L12-P-09', topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'order', objective: 'L12-O1', instructions: 'Put the words in order.', prompt: 'I travelled to Hamburg.', tokens: ['bin', 'Ich', 'nach', 'Hamburg', 'gefahren'], answer: 'Ich bin nach Hamburg gefahren', explanation: 'bin … gefahren.' }),
     q({ id: 'L12-P-10', topic: 'haben-sein', skill: 'grammar', grammar: 'perfekt-sein', type: 'order', objective: 'L12-O1', instructions: 'Put the words in order.', prompt: 'We arrived late.', tokens: ['sind', 'Wir', 'angekommen', 'spät'], answer: 'Wir sind spät angekommen', explanation: 'sind … angekommen.' }),
-    q({ id: 'L12-P-11', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-sein', type: 'gap', objective: 'L12-O2', instructions: 'Fill in war or hatte.', prompt: 'Der Urlaub ___ super!', answer: [['war']], explanation: 'sein → war.', learnHref: GB + '132-war-and-hatte' }),
+    q({ id: 'L12-P-11', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-sein', type: 'gap', objective: 'L12-O2', instructions: 'Fill in war or hatte.', prompt: 'Der Urlaub ___ super!', answer: [['war']], explanation: 'sein → war.', learnHref: GB + '13' }),
     q({ id: 'L12-P-12', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-haben', type: 'gap', objective: 'L12-O2', instructions: 'Fill in war or hatte.', prompt: 'Gestern ___ ich keine Zeit.', answer: [['hatte']], explanation: 'haben → hatte.' }),
     q({ id: 'L12-P-13', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-sein', type: 'mc', objective: 'L12-O2', instructions: 'Choose the form.', prompt: 'Wo … ihr im Sommer?', options: ['wart', 'war', 'waren', 'warst'], answer: 'wart', explanation: 'ihr wart.' }),
     q({ id: 'L12-P-14', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-haben', type: 'conjugation', objective: 'L12-O2', instructions: 'Write the past form.', prompt: 'du + haben (past) →', answer: 'hattest', explanation: 'du hattest.' }),
     q({ id: 'L12-P-15', topic: 'war-hatte', skill: 'grammar', grammar: 'praeteritum-sein', type: 'conjugation', objective: 'L12-O2', instructions: 'Write the past form.', prompt: 'wir + sein (past) →', answer: 'waren', explanation: 'wir waren.' }),
-    q({ id: 'L12-P-16', topic: 'months', skill: 'vocabulary', type: 'match', objective: 'L12-O3', instructions: 'Match the months.', prompt: '', pairs: [['Januar', 'January'], ['März', 'March'], ['Mai', 'May'], ['Juli', 'July'], ['Oktober', 'October']], explanation: 'Months.', learnHref: GB + '133-months-and-seasons' }),
+    q({ id: 'L12-P-16', topic: 'months', skill: 'vocabulary', type: 'match', objective: 'L12-O3', instructions: 'Match the months.', prompt: '', pairs: [['Januar', 'January'], ['März', 'March'], ['Mai', 'May'], ['Juli', 'July'], ['Oktober', 'October']], explanation: 'Months.', learnHref: GB + '13' }),
     q({ id: 'L12-P-17', topic: 'months', skill: 'vocabulary', type: 'match', objective: 'L12-O3', instructions: 'Match the seasons.', prompt: '', pairs: [['der Frühling', 'spring'], ['der Sommer', 'summer'], ['der Herbst', 'autumn'], ['der Winter', 'winter'], ['die Jahreszeit', 'season']], explanation: 'Seasons (all der).' }),
     prep('L12-P-18', '… Sommer fahren wir ans Meer.', 'Im', 'im + season.', ['Im', 'Am', 'Um', 'Seit']),
     prep('L12-P-19', 'Ich lerne … Mai Deutsch.', 'seit', 'seit = since (still true now).', ['seit', 'im', 'nach', 'um']),

@@ -3,10 +3,10 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 17, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const WOL = GB + '181-wollen-to-want-to', WER = GB + '182-werden-to-become', PREP = GB + '183-mit--dative-ohne--accusative', IMP = GB + '184-saying-what-is-important', FUT = GB + '185-time-words-for-the-future';
+  const WOL = GB + '18', WER = GB + '18', PREP = GB + '18', IMP = GB + '18', FUT = GB + '18';
   const wol = (id, prompt, a, ex) => q({ id, topic: 'wollen', skill: 'grammar', grammar: 'modal-wollen', type: 'gap', objective: 'L17-O1', instructions: 'Fill in wollen.', prompt, answer: a, explanation: ex, learnHref: WOL });
   const wer = (id, prompt, a, ex) => q({ id, topic: 'werden', skill: 'grammar', grammar: 'werden', type: 'gap', objective: 'L17-O2', instructions: 'Fill in werden.', prompt, answer: a, explanation: ex, learnHref: WER });
 

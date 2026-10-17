@@ -57,7 +57,7 @@
       return `<li><button class="wk ${st.open === w.n ? 'open' : ''}" data-week="${w.n}" aria-expanded="${st.open === w.n}" aria-controls="wdetail">
         <span class="wk-top"><b>Week ${w.n}</b><span class="chip ${cls}">${label}</span></span>
         <span>Modul ${w.modul} · Lektion ${l[0].n}–${l[2].n}</span>
-        <em>Steps ${steps[0]}–${steps[steps.length - 1]}${w.n === 8 ? ' + bonus' : ''}</em>
+        <em>Steps ${steps[0]}–${steps[steps.length - 1]}${w.n === 8 && w.bonus.length ? ' + bonus' : ''}</em>
         <span class="mini" aria-hidden="true"><i style="width:${Math.round(s.done / s.units * 100)}%"></i></span>
       </button></li>`;
     }).join('');
@@ -124,10 +124,10 @@
             : `<button class="btn" data-show="${k}">Show answer</button>`}
         </li>`;
       }).join('')}</ol>
-      <p class="hint">Got one wrong? Re-read the matching steps in the <a href="${MOD_HREF[w.modul]}">Grammar Book</a>, say the correct sentence three times, then mark it again.</p>`;
+      <p class="hint">Got one wrong? Re-read the matching steps in the <a href="${MOD_HREF[w.modul]}">Grammar Lab</a>, say the correct sentence three times, then mark it again.</p>`;
   }
 
-  const MOD_HREF = Object.fromEntries((window.PLAN_WEEKS || []).map(w => [w.modul, (w.lessons[0].steps[0] || {}).href || 'grammar-book.html'])); // first grammar step of the module
+  const MOD_HREF = Object.fromEntries((window.PLAN_WEEKS || []).map(w => [w.modul, (w.lessons[0].steps[0] || {}).href || 'grammar-lab.html'])); // first grammar step of the module
 
   function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
   function newQuiz(w) {

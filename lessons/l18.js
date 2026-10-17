@@ -4,10 +4,10 @@
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 // Health content is everyday language practice only, not medical advice.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 18, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const PAIN = GB + '191-describing-pain', IMPV = GB + '192-the-sie-imperative-verb--sie', SOL = GB + '193-sollen-should-be-supposed-to', DOC = GB + '194-at-the-doctors';
+  const PAIN = GB + '19', IMPV = GB + '19', SOL = GB + '19', DOC = GB + '19';
   const imp = (id, prompt, a, ex, acc) => q({ id, topic: 'imperative', skill: 'grammar', grammar: 'sie-imperative', type: 'translate', objective: 'L18-O2', instructions: 'Make a Sie-imperative.', prompt, answer: a, accept: acc, explanation: ex, learnHref: IMPV });
   const sol = (id, prompt, a, ex) => q({ id, topic: 'sollen', skill: 'grammar', grammar: 'modal-sollen', type: 'gap', objective: 'L18-O3', instructions: 'Fill in sollen.', prompt, answer: a, explanation: ex, learnHref: SOL });
 

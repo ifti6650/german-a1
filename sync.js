@@ -8,7 +8,7 @@
   const SB_URL = 'https://gvftmsctaxyllmtiztil.supabase.co';
   const SB_KEY = 'sb_publishable_oEN1QiCiC8pTHLoCxWW2HA_2LvHaNgE'; // public key, safe in the browser (RLS protects the data)
   const LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.5/dist/umd/supabase.min.js';
-  const SYNC_KEYS = ['wz:v2', 'known', 'a1plan:v1', 'a1:lessons', 'a1:prefs', 'a1:writing', 'a1:guide'];   // localStorage keys mirrored to app_state
+  const SYNC_KEYS = ['wz:v2', 'known', 'a1plan:v1', 'a1:lessons', 'a1:prefs', 'a1:writing', 'a1:guide', 'a1:grammar'];   // localStorage keys mirrored to app_state
   const QKEY = 'a1:queue', TSKEY = 'a1:ts';
 
   const ls = {

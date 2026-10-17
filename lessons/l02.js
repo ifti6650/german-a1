@@ -3,7 +3,7 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 2, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
 
@@ -17,54 +17,54 @@
   ];
 
   const learn = [
-    { id: 'present', title: 'The present tense: all persons', objective: 'L2-O3', href: GB + '31-the-full-present-tense',
+    { id: 'present', title: 'The present tense: all persons', objective: 'L2-O3', href: GB + '3',
       text: 'Lektion 1 had ich, du, er/sie and Sie. Now the plural: wir (we), ihr (you, several people you say du to) and sie (they). Watch out: sie (they) and Sie (polite you) have the same verb form.',
       table: [['ich wohne', 'I live'], ['du wohnst', 'you live'], ['er / sie / es wohnt', 'he / she / it lives'], ['wir wohnen', 'we live'], ['ihr wohnt', 'you (all) live'], ['sie / Sie wohnen', 'they live / you live (polite)']],
       examples: [['Was macht ihr beruflich?', 'What do you (all) do for a living?'], ['Wir wohnen in Köln.', 'We live in Cologne.']] },
-    { id: 'arbeiten', title: 'Verbs like arbeiten: an extra -e-', objective: 'L2-O3', href: GB + '32-verbs-with-a-stem-ending-in--t-or--d',
+    { id: 'arbeiten', title: 'Verbs like arbeiten: an extra -e-', objective: 'L2-O3', href: GB + '3',
       text: 'If the stem ends in -t or -d (arbeit-, find-), add -e- before -st and -t, so you can pronounce it.',
       table: [['du arbeitest', 'you work'], ['er / sie arbeitet', 'he / she works'], ['ihr arbeitet', 'you (all) work']],
       mistakes: [['Er arbeit bei Siemens.', 'Er arbeitet bei Siemens.', 'Stem arbeit- + e + t.']] },
-    { id: 'haben-sein', title: 'haben and sein — complete', objective: 'L2-O4', href: GB + '33-haben-and-sein--complete',
+    { id: 'haben-sein', title: 'haben and sein — complete', objective: 'L2-O4', href: GB + '3',
       table: [['ich habe · ich bin', 'I have · I am'], ['du hast · du bist', 'you have · you are'], ['er/sie hat · er/sie ist', 'he/she has · is'], ['wir haben · wir sind', 'we have · we are'], ['ihr habt · ihr seid', 'you (all) have · are'], ['sie/Sie haben · sie/Sie sind', 'they / you (polite) have · are']],
       mistakes: [['du habst', 'du hast', 'haben is irregular with du and er/sie: hast, hat.'], ['ihr sind', 'ihr seid', 'ihr seid (not sind).']] },
-    { id: 'jobs', title: 'Talking about your job', objective: 'L2-O1', href: GB + '34-talking-about-your-job',
+    { id: 'jobs', title: 'Talking about your job', objective: 'L2-O1', href: GB + '3',
       text: 'With jobs, German uses no article: Ich bin Lehrerin. Most female job names add -in (Lehrer → Lehrerin, Arzt → Ärztin, Koch → Köchin). To say where you work: Ich arbeite als … (as) bei + company / im Krankenhaus / an der Schule.',
       examples: [['Was sind Sie von Beruf? – Ich bin Ingenieur.', 'What is your job? – I am an engineer.'], ['Ich arbeite als Köchin im Krankenhaus.', 'I work as a cook in the hospital.'], ['Ich bin Student. / Ich bin arbeitslos.', 'I am a student. / I am unemployed.']],
       mistakes: [['Ich bin eine Lehrerin.', 'Ich bin Lehrerin.', 'No article before a job.']] },
-    { id: 'nicht', title: 'Saying no with nicht', objective: 'L2-O5', href: GB + '35-negation-with-nicht',
+    { id: 'nicht', title: 'Saying no with nicht', objective: 'L2-O5', href: GB + '3',
       text: 'nicht usually comes after the verb, before the word it negates — or at the very end if it negates the whole sentence.',
       examples: [['Ich bin nicht verheiratet.', 'I am not married.'], ['Wir wohnen nicht in Berlin.', 'We do not live in Berlin.'], ['Er arbeitet nicht.', 'He does not work.']],
       mistakes: [['Ich nicht bin verheiratet.', 'Ich bin nicht verheiratet.', 'The verb stays in position 2; nicht comes after it.']] },
-    { id: 'numbers', title: 'Numbers 0–100', objective: 'L2-O6', href: GB + '36-numbers-0100',
+    { id: 'numbers', title: 'Numbers 0–100', objective: 'L2-O6', href: GB + '3',
       text: '0–12 must be learned: null, eins, zwei, drei, vier, fünf, sechs, sieben, acht, neun, zehn, elf, zwölf. 13–19: number + zehn (dreizehn). Tens end in -zig, except dreißig. From 21, say the ones first: einundzwanzig = “one-and-twenty”.',
       table: [['16 · 17', 'sechzehn · siebzehn (short forms!)'], ['20 · 30', 'zwanzig · dreißig (with ß)'], ['60 · 70', 'sechzig · siebzig'], ['21 · 45', 'einundzwanzig · fünfundvierzig'], ['100', 'hundert / einhundert']],
       mistakes: [['zwanzigeins', 'einundzwanzig', 'Ones first, then und, then the tens.'], ['dreizig', 'dreißig', '30 is the exception with ß.'], ['siebenzehn', 'siebzehn', '17 and 70 drop -en: siebzehn, siebzig.']] },
-    { id: 'personal', title: 'Family status and age', objective: 'L2-O2', href: GB + '37-family-status',
+    { id: 'personal', title: 'Family status and age', objective: 'L2-O2', href: GB + '3',
       table: [['Ich bin verheiratet.', 'I am married.'], ['Ich bin ledig.', 'I am single.'], ['Ich bin geschieden.', 'I am divorced.'], ['Ich habe zwei Kinder.', 'I have two children.'], ['Wie alt sind Sie? – Ich bin 35 (Jahre alt).', 'How old are you? – I am 35 (years old).']] }
   ];
 
   const practice = [
-    q({ id: 'L02-P-01', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'wir + wohnen →', answer: 'wohnen', explanation: 'wir: stem + -en → wir wohnen.', learnHref: GB + '31-the-full-present-tense' }),
+    q({ id: 'L02-P-01', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'wir + wohnen →', answer: 'wohnen', explanation: 'wir: stem + -en → wir wohnen.', learnHref: GB + '3' }),
     q({ id: 'L02-P-02', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'ihr + kommen →', answer: 'kommt', explanation: 'ihr: stem + -t → ihr kommt.' }),
-    q({ id: 'L02-P-03', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'du + arbeiten →', answer: 'arbeitest', explanation: 'Stem ends in -t: du arbeit-e-st.', learnHref: GB + '32-verbs-with-a-stem-ending-in--t-or--d' }),
+    q({ id: 'L02-P-03', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'du + arbeiten →', answer: 'arbeitest', explanation: 'Stem ends in -t: du arbeit-e-st.', learnHref: GB + '3' }),
     q({ id: 'L02-P-04', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense-t-stem', type: 'conjugation', objective: 'L2-O3', instructions: 'Write the verb form.', prompt: 'er + arbeiten →', answer: 'arbeitet', explanation: 'er arbeit-e-t.' }),
     q({ id: 'L02-P-05', topic: 'verb-endings', skill: 'grammar', grammar: 'present-tense', type: 'gap', objective: 'L2-O3', instructions: 'Write the correct form of wohnen.', prompt: 'Wir ___ in Köln. Und wo ___ ihr?', answer: [['wohnen'], ['wohnt']], explanation: 'wir wohnen, ihr wohnt.' }),
-    q({ id: 'L02-P-06', topic: 'haben', skill: 'grammar', grammar: 'haben', type: 'gap', objective: 'L2-O4', instructions: 'Write the correct form of haben.', prompt: 'Ich ___ zwei Kinder. ___ du auch Kinder?', answer: [['habe'], ['Hast']], explanation: 'ich habe, du hast.', learnHref: GB + '33-haben-and-sein--complete' }),
+    q({ id: 'L02-P-06', topic: 'haben', skill: 'grammar', grammar: 'haben', type: 'gap', objective: 'L2-O4', instructions: 'Write the correct form of haben.', prompt: 'Ich ___ zwei Kinder. ___ du auch Kinder?', answer: [['habe'], ['Hast']], explanation: 'ich habe, du hast.', learnHref: GB + '3' }),
     q({ id: 'L02-P-07', topic: 'haben', skill: 'grammar', grammar: 'haben', type: 'gap', objective: 'L2-O4', instructions: 'Write the correct form of haben.', prompt: 'Sie (she) ___ ein Kind. Wir ___ drei Kinder.', answer: [['hat'], ['haben']], explanation: 'sie hat, wir haben.' }),
     q({ id: 'L02-P-08', topic: 'sein', skill: 'grammar', grammar: 'sein', type: 'mc', objective: 'L2-O4', instructions: 'Choose the correct form.', prompt: 'Ihr … Studenten, oder?', options: ['seid', 'sind', 'ist', 'bist'], answer: 'seid', explanation: 'ihr seid.' }),
     q({ id: 'L02-P-09', topic: 'haben', skill: 'grammar', grammar: 'haben', type: 'mc', objective: 'L2-O4', instructions: 'Choose the correct form.', prompt: '… ihr Kinder?', options: ['Habt', 'Haben', 'Hat', 'Hast'], answer: 'Habt', explanation: 'ihr habt → Habt ihr …?' }),
-    q({ id: 'L02-P-10', topic: 'jobs', skill: 'grammar', grammar: 'no-article-job', type: 'mc', objective: 'L2-O1', instructions: 'Choose the correct sentence.', prompt: 'I am a teacher (woman).', options: ['Ich bin Lehrerin.', 'Ich bin eine Lehrerin.', 'Ich bin die Lehrerin.', 'Ich Lehrerin bin.'], answer: 'Ich bin Lehrerin.', explanation: 'No article before a job.', learnHref: GB + '34-talking-about-your-job' }),
+    q({ id: 'L02-P-10', topic: 'jobs', skill: 'grammar', grammar: 'no-article-job', type: 'mc', objective: 'L2-O1', instructions: 'Choose the correct sentence.', prompt: 'I am a teacher (woman).', options: ['Ich bin Lehrerin.', 'Ich bin eine Lehrerin.', 'Ich bin die Lehrerin.', 'Ich Lehrerin bin.'], answer: 'Ich bin Lehrerin.', explanation: 'No article before a job.', learnHref: GB + '3' }),
     q({ id: 'L02-P-11', topic: 'jobs', skill: 'vocabulary', type: 'mc', objective: 'L2-O1', instructions: 'Choose the right word.', prompt: 'Anna is a doctor. Anna ist …', options: ['Ärztin', 'Arzt', 'Ärzte', 'Ärztinnen'], answer: 'Ärztin', explanation: 'der Arzt → die Ärztin (one woman).' }),
     q({ id: 'L02-P-12', topic: 'jobs', skill: 'vocabulary', type: 'match', objective: 'L2-O1', instructions: 'Match the job with its meaning.', prompt: '', pairs: [['der Koch', 'cook'], ['die Lehrerin', 'teacher (woman)'], ['der Verkäufer', 'salesman'], ['die Ingenieurin', 'engineer (woman)'], ['der Krankenpfleger', 'nurse (man)']], explanation: 'Female forms usually end in -in.' }),
     q({ id: 'L02-P-13', topic: 'jobs', skill: 'grammar', grammar: 'als-bei', type: 'gap', objective: 'L2-O1', instructions: 'Fill in als or bei.', prompt: 'Ich arbeite ___ Programmierer ___ Siemens.', answer: [['als'], ['bei']], explanation: 'als + job, bei + company.' }),
     q({ id: 'L02-P-14', topic: 'jobs', skill: 'vocabulary', type: 'mc', objective: 'L2-O1', instructions: 'Choose the right word.', prompt: 'Sie ist Krankenpflegerin. Sie arbeitet … Krankenhaus.', options: ['im', 'als', 'bei', 'aus'], answer: 'im', explanation: 'im Krankenhaus = in the hospital (learn it as a phrase).' }),
-    q({ id: 'L02-P-15', topic: 'nicht', skill: 'grammar', grammar: 'negation-nicht', type: 'order', objective: 'L2-O5', instructions: 'Put the words in order.', prompt: 'I am not married.', tokens: ['bin', 'nicht', 'Ich', 'verheiratet'], answer: 'Ich bin nicht verheiratet', explanation: 'Verb in position 2, nicht after it.', learnHref: GB + '35-negation-with-nicht' }),
+    q({ id: 'L02-P-15', topic: 'nicht', skill: 'grammar', grammar: 'negation-nicht', type: 'order', objective: 'L2-O5', instructions: 'Put the words in order.', prompt: 'I am not married.', tokens: ['bin', 'nicht', 'Ich', 'verheiratet'], answer: 'Ich bin nicht verheiratet', explanation: 'Verb in position 2, nicht after it.', learnHref: GB + '3' }),
     q({ id: 'L02-P-16', topic: 'nicht', skill: 'grammar', grammar: 'negation-nicht', type: 'order', objective: 'L2-O5', instructions: 'Put the words in order.', prompt: 'He does not work.', tokens: ['arbeitet', 'nicht', 'Er'], answer: 'Er arbeitet nicht', explanation: 'nicht at the end negates the whole sentence.' }),
     q({ id: 'L02-P-17', topic: 'word-order', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L2-O1', instructions: 'Put the words in order.', prompt: 'What do you do for a living? (polite)', tokens: ['Sie', 'Was', 'beruflich', 'machen'], answer: 'Was machen Sie beruflich', explanation: 'Question word – verb – person – rest.' }),
     q({ id: 'L02-P-18', topic: 'word-order', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L2-O3', instructions: 'Put the words in order.', prompt: 'Where do you (all) live?', tokens: ['ihr', 'Wo', 'wohnt'], answer: 'Wo wohnt ihr', explanation: 'Wo – wohnt – ihr?' }),
     q({ id: 'L02-P-19', topic: 'nicht', skill: 'grammar', grammar: 'negation-nicht', type: 'mc', objective: 'L2-O5', instructions: 'Choose the correct sentence.', prompt: 'We do not live in Berlin.', options: ['Wir wohnen nicht in Berlin.', 'Wir nicht wohnen in Berlin.', 'Nicht wir wohnen in Berlin.', 'Wir wohnen in nicht Berlin.'], answer: 'Wir wohnen nicht in Berlin.', explanation: 'nicht comes after the verb, before in Berlin.' }),
-    q({ id: 'L02-P-20', topic: 'numbers', skill: 'vocabulary', type: 'mc', objective: 'L2-O6', instructions: 'Choose the number.', prompt: 'Which word is 21?', options: ['einundzwanzig', 'zwanzigeins', 'zweiundeins', 'einszwanzig'], answer: 'einundzwanzig', explanation: 'Ones first: ein-und-zwanzig.', learnHref: GB + '36-numbers-0100' }),
+    q({ id: 'L02-P-20', topic: 'numbers', skill: 'vocabulary', type: 'mc', objective: 'L2-O6', instructions: 'Choose the number.', prompt: 'Which word is 21?', options: ['einundzwanzig', 'zwanzigeins', 'zweiundeins', 'einszwanzig'], answer: 'einundzwanzig', explanation: 'Ones first: ein-und-zwanzig.', learnHref: GB + '3' }),
     q({ id: 'L02-P-21', topic: 'numbers', skill: 'writing', type: 'translate', objective: 'L2-O6', instructions: 'Write the number in words.', prompt: '30', answer: 'dreißig', explanation: '30 = dreißig (with ß, no -zig).' }),
     q({ id: 'L02-P-22', topic: 'numbers', skill: 'writing', type: 'translate', objective: 'L2-O6', instructions: 'Write the number in words.', prompt: '17', answer: 'siebzehn', explanation: 'siebzehn (not siebenzehn).' }),
     q({ id: 'L02-P-23', topic: 'numbers', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L2-O6', instructions: 'Write the number in words.', prompt: '64', answer: 'vierundsechzig', explanation: 'vier-und-sechzig.' }),
@@ -72,7 +72,7 @@
     q({ id: 'L02-P-25', topic: 'numbers', skill: 'listening', type: 'listen', objective: 'L2-O6', instructions: 'Listen to the phone number.', prompt: 'Which number do you hear?', audio: 'Die Nummer ist: null, eins, sieben, sechs – drei, acht – vier, zwei – neun, fünf.', options: ['0176 38 42 95', '0167 38 24 95', '0176 83 42 59', '0176 38 42 59'], answer: '0176 38 42 95', explanation: 'null eins sieben sechs – drei acht – vier zwei – neun fünf.' }),
     q({ id: 'L02-P-26', topic: 'personal', skill: 'listening', type: 'listen', objective: 'L2-O2', instructions: 'Listen and answer.', prompt: 'How old is Paul?', audio: 'Ich bin Paul. Ich bin dreiundvierzig Jahre alt.', options: ['43', '34', '33', '44'], answer: '43', explanation: 'dreiundvierzig = 3 + 40 = 43.' }),
     q({ id: 'L02-P-27', topic: 'personal', skill: 'listening', type: 'dictation', difficulty: 2, objective: 'L2-O2', instructions: 'Listen and write the sentences.', prompt: '', audio: 'Wir wohnen in Hamburg. Wir haben zwei Kinder.', answer: 'Wir wohnen in Hamburg. Wir haben zwei Kinder.', accept: ['Wir wohnen in Hamburg, wir haben zwei Kinder.'], explanation: 'Wir wohnen in Hamburg. Wir haben zwei Kinder.' }),
-    q({ id: 'L02-P-28', topic: 'personal', skill: 'writing', type: 'translate', objective: 'L2-O2', instructions: 'Write it in German.', prompt: 'I am single.', answer: 'Ich bin ledig.', explanation: 'ledig = single (not married).', learnHref: GB + '37-family-status' }),
+    q({ id: 'L02-P-28', topic: 'personal', skill: 'writing', type: 'translate', objective: 'L2-O2', instructions: 'Write it in German.', prompt: 'I am single.', answer: 'Ich bin ledig.', explanation: 'ledig = single (not married).', learnHref: GB + '3' }),
     q({ id: 'L02-P-29', topic: 'jobs', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L2-O1', instructions: 'Write it in German.', prompt: 'She works as a cook.', answer: 'Sie arbeitet als Köchin.', explanation: 'arbeiten als + job, female form Köchin.' }),
     q({ id: 'L02-P-30', topic: 'jobs', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L2-O1', instructions: 'Choose the article.', prompt: 'Krankenhaus', hint: 'hospital', options: ['der', 'die', 'das'], answer: 'das', explanation: 'das Krankenhaus.' }),
     q({ id: 'L02-P-31', topic: 'jobs', skill: 'vocabulary', grammar: 'noun-gender', type: 'article', objective: 'L2-O1', instructions: 'Choose the article.', prompt: 'Firma', hint: 'company', options: ['der', 'die', 'das'], answer: 'die', explanation: 'die Firma.' })

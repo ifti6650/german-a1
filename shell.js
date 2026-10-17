@@ -23,12 +23,12 @@
   const svg = (k, cls) => `<svg class="${cls || ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICON[k]}"/></svg>`;
   const LOGO = `<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--ui-accent)"/><path d="M10 8.5h5.2a7.5 7.5 0 0 1 0 15H10z" fill="none" stroke="var(--ui-on-accent)" stroke-width="2.6" stroke-linejoin="round"/><rect x="10" y="26.2" width="4" height="2" rx="1" fill="#1f1f1f"/><rect x="14" y="26.2" width="4" height="2" fill="#dd2c2c"/><rect x="18" y="26.2" width="4" height="2" rx="1" fill="#f5c400"/></svg>`;
   const NAV = [
-    ['Learn', [['dashboard.html', 'Dashboard', 'home'], ['course.html', 'My Course', 'course'], ['wortschatz.html', 'Wortschatz', 'cards'], ['practice.html', 'Practice', 'target']]],
+    ['Learn', [['dashboard.html', 'Dashboard', 'home'], ['course.html', 'My Course', 'course'], ['grammar-lab.html', 'Grammar Lab', 'grammar'], ['wortschatz.html', 'Wortschatz', 'cards'], ['practice.html', 'Practice', 'target']]],
     ['Check', [['tests.html', 'Tests', 'tests'], ['mistakes.html', 'Mistakes', 'repeat'], ['progress.html', 'Progress', 'chart']]],
-    ['Resources', [['grammar-book.html', 'Grammar Book', 'grammar'], ['study-guide.html', 'Study Guide', 'guide'], ['speaking.html', 'Sprechen', 'mic'], ['Momente_A1_Grammar_Book.pdf', 'Grammar Book PDF', 'pdf', 1]]]
+    ['Resources', [['study-guide.html', 'Study Guide', 'guide'], ['speaking.html', 'Sprechen', 'mic'], ['German_A1_Intensive_Grammar_Book.pdf', 'Grammar PDF (print)', 'pdf', 1]]]
   ];
   const TABS = [['dashboard.html', 'Home', 'home'], ['course.html', 'Course', 'course'], ['wortschatz.html', 'Wörter', 'cards'], ['practice.html', 'Practice', 'target']];
-  const ALIAS = { 'lesson.html': 'course.html', 'test.html': 'tests.html', 'onboarding.html': 'dashboard.html', '': 'dashboard.html', 'index.html': 'dashboard.html' };
+  const ALIAS = { 'grammar-book.html': 'grammar-lab.html', 'lesson.html': 'course.html', 'test.html': 'tests.html', 'onboarding.html': 'dashboard.html', '': 'dashboard.html', 'index.html': 'dashboard.html' };
   const page = location.pathname.split('/').pop() || 'dashboard.html';
   const cur = ALIAS[page] || page;
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -47,7 +47,7 @@
   function courseBox() {
     const c = course(); if (!c) return '';
     const d = courseDone(c);
-    return `<a class="sh-coursebox" href="course.html" title="Open your course"><span class="k">Your course</span><b>Momente ${c}</b><span class="sh-meter" role="progressbar" aria-label="Lessons completed in Momente ${c}" aria-valuemin="0" aria-valuemax="12" aria-valuenow="${d}"><i style="width:${Math.round(d / 12 * 100)}%"></i></span><span class="k" style="display:block;margin-top:6px">${d} of 12 lessons completed</span></a>`;
+    return `<a class="sh-coursebox" href="course.html" title="Open your course"><span class="k">Your course</span><b>German ${c}</b><span class="sh-meter" role="progressbar" aria-label="Lessons completed in German ${c}" aria-valuemin="0" aria-valuemax="12" aria-valuenow="${d}"><i style="width:${Math.round(d / 12 * 100)}%"></i></span><span class="k" style="display:block;margin-top:6px">${d} of 12 lessons completed</span></a>`;
   }
 
   // ---------- build ----------
@@ -61,7 +61,9 @@
     if (page === 'onboarding.html') return '<b>Welcome</b>';
     if (page === 'account.html') return '<b>Account &amp; sign-in</b>';
     const [g, t] = groupOf(cur); if (!t) return '';
-    const ql = +new URLSearchParams(location.search).get('l'); const sub = (page === 'lesson.html' || page === 'study-guide.html') ? (ql >= 1 && ql <= 24 ? 'Lektion ' + Math.round(ql) : '') : page === 'test.html' ? 'Test' : '';
+    const sp = new URLSearchParams(location.search), ql = +sp.get('l'), qs = +sp.get('s'), qc = +sp.get('c');
+    const sub = (page === 'lesson.html' || page === 'study-guide.html') ? (ql >= 1 && ql <= 24 ? 'Lektion ' + Math.round(ql) : '') : page === 'test.html' ? 'Test'
+      : page === 'grammar-lab.html' ? (qs >= 1 && qs <= 25 ? 'Step ' + Math.round(qs) : qc >= 1 && qc <= 5 ? 'Checkpoint ' + Math.round(qc) : '') : '';
     return `<span>${g}</span><span class="sep">/</span>${sub ? `<a href="${cur}" style="color:inherit;text-decoration:none">${t}</a><span class="sep">/</span><b>${esc(sub)}</b>` : `<b>${t}</b>`}`;
   }
 
@@ -140,11 +142,17 @@
     avatarBtn.querySelector('.av').textContent = u ? n.ini : '·';
     avatarBtn.querySelector('.nm').textContent = u ? n.first : 'Account';
     avatarBtn.setAttribute('aria-label', u ? `Account menu for ${n.full}` : 'Account menu');
+    if (!u && window.A1_SHELL && A1_SHELL.guest) { // public page, not signed in
+      menu.innerHTML = `<div class="who"><b>Guest</b><span>Your practice is saved only in this browser.</span></div>
+        <a role="menuitem" href="index.html?signin=1&amp;next=${encodeURIComponent(page + location.search)}">${svg('user')}Sign in or create an account</a>
+        <a role="menuitem" href="index.html">${svg('home')}About Deutsch A1</a>`;
+      avatarBtn.querySelector('.nm').textContent = 'Sign in'; return;
+    }
     menu.innerHTML = `<div class="who">${u ? `<b>${esc(n.full)}</b><span>${esc(n.email)}</span>` : '<b>Offline</b><span>Your progress is saved in this browser.</span>'}</div>
       <a role="menuitem" href="dashboard.html">${svg('home')}Dashboard</a>
       <a role="menuitem" href="progress.html">${svg('chart')}My progress</a>
       <a role="menuitem" href="account.html">${svg('user')}Account &amp; sign-in</a>
-      <a role="menuitem" href="onboarding.html?change=1">${svg('swap')}${c ? `Course: Momente ${c} · change` : 'Choose your course'}</a>
+      <a role="menuitem" href="onboarding.html?change=1">${svg('swap')}${c ? `Course: German ${c} · change` : 'Choose your course'}</a>
       <hr>${u ? `<button role="menuitem" class="danger" id="sh-signout">${svg('out')}Sign out</button>` : ''}`;
     const so = menu.querySelector('#sh-signout'); if (so) so.addEventListener('click', signOut);
   }
@@ -192,11 +200,16 @@
       const c = document.getElementById('sh-content'); if (c && !c.querySelector('.sh-offline')) c.insertAdjacentHTML('afterbegin', '<div class="ui-state sh-offline" role="status"><span class="ic">!</span><div><b>You are offline</b>Your answers are saved in this browser and upload when you are back online.</div></div>');
       return { user: null, offline: true };
     }
+    if (!A1.user && document.body.dataset.public) { // public page (Grammar Lab): guests may learn; nothing is stored in an account
+      S.guest = true; renderMenu(null);
+      A1.onChange(u => { if (u && !S.user) location.reload() });
+      return { user: null, guest: true, offline: false };
+    }
     if (!A1.user) { (window.A1_GUARD ? A1_GUARD.toLanding() : location.replace('index.html?signin=1')); return new Promise(() => {}) }
     S.user = A1.user; cleanUrl(); renderMenu(A1.user);
     if (!ensureCourse()) return new Promise(() => {});
     S.refreshCourseBox(); renderMenu(A1.user);
-    A1.onChange(u => { if (A1.client && !u && !S.signingOut) location.replace('index.html?signedout=1') });
+    A1.onChange(u => { if (A1.client && !u && !S.signingOut) location.replace(document.body.dataset.public ? location.pathname + location.search : 'index.html?signedout=1') });
     return { user: A1.user, offline: false };
   })();
 })();

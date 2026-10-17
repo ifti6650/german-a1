@@ -1,0 +1,4648 @@
+{
+  "title": "German A1 | Interactive Grammar Lab",
+  "version": "2026.10 - revised original edition",
+  "levels": [
+    "A1.1",
+    "A1.2"
+  ],
+  "based_on": "Independent CEFR A1 grammar curriculum. Maintains the step sequence of the user-provided grammar study material.",
+  "lessons": [
+    {
+      "id": 1,
+      "level": "A1.1",
+      "title": "People, names and first verbs",
+      "goal": "Introduce yourself and recognize informal/polite forms.",
+      "formula": "ich + verb + information",
+      "explanations": [
+        "Use ich, du and Sie with the correct verb form. A German present-tense verb changes with the subject.",
+        "With ich use -e for many verbs; du often uses -st; polite Sie uses -en. The verb sein is irregular."
+      ],
+      "examples": [
+        {
+          "de": "Ich lerne heute Deutsch.",
+          "en": "I'm learning German today."
+        },
+        {
+          "de": "Du kommst aus Portugal.",
+          "en": "You come from Portugal."
+        },
+        {
+          "de": "Sind Sie Frau Richter?",
+          "en": "Are you Ms Richter?"
+        }
+      ],
+      "trap": {
+        "wrong": "Ich bin lerne Deutsch.",
+        "correct": "Ich lerne Deutsch.",
+        "why": "Do not combine bin with an ordinary present-tense verb."
+      },
+      "challenge": "Say four true sentences: your name, country, town and language. Then change two sentences to du/Sie questions.",
+      "deep_notes": [
+        "Meaning comes first: ask who is speaking before choosing the ending.",
+        "ich heiße, du heißt, Sie heißen: forms belong to different people.",
+        "Use the fixed polite pair Guten Tag! / Auf Wiedersehen! only in appropriate contexts.",
+        "The form Sie is written with a capital S when it means polite you."
+      ],
+      "fill_questions": [
+        {
+          "id": "G01-F1",
+          "type": "fill",
+          "prompt": "Ich ___ Deutsch. (lernen)",
+          "answer": "lerne",
+          "explanation": "ich takes -e.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-F2",
+          "type": "fill",
+          "prompt": "Wie ___ Sie? (heißen)",
+          "answer": "heißen",
+          "explanation": "Polite Sie uses heißen.",
+          "lesson_id": 1
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G01-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ Leila.",
+          "answer": "bin",
+          "options": [
+            "bin",
+            "bist",
+            "ist"
+          ],
+          "explanation": "ich uses bin.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-02",
+          "type": "multiple_choice",
+          "prompt": "Du ___ aus Polen.",
+          "answer": "kommst",
+          "options": [
+            "kommst",
+            "kommen",
+            "komme"
+          ],
+          "explanation": "du typically takes -st.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-03",
+          "type": "multiple_choice",
+          "prompt": "Frau Keller, ___ Sie Deutsch?",
+          "answer": "lernen",
+          "options": [
+            "lernen",
+            "lernst",
+            "lernt"
+          ],
+          "explanation": "Polite Sie uses the infinitive-shaped plural form.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-04",
+          "type": "multiple_choice",
+          "prompt": "Wie ___ du?",
+          "answer": "heißt",
+          "options": [
+            "heißt",
+            "heißen",
+            "heiße"
+          ],
+          "explanation": "With du, heißen becomes heißt.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-05",
+          "type": "multiple_choice",
+          "prompt": "Das ___ Herr Lang.",
+          "answer": "ist",
+          "options": [
+            "ist",
+            "bin",
+            "sind"
+          ],
+          "explanation": "Das takes the third-person singular ist.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-06",
+          "type": "multiple_choice",
+          "prompt": "___ heißen Sie?",
+          "answer": "Wie",
+          "options": [
+            "Wie",
+            "Wo",
+            "Wer"
+          ],
+          "explanation": "The idiomatic question for someone's name starts with Wie.",
+          "lesson_id": 1
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich bin lerne Deutsch.",
+          "model": "Ich lerne Deutsch.",
+          "why": "Do not combine bin with an ordinary present-tense verb."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "ich + verb + information",
+          "model": "Ich lerne heute Deutsch.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Du kommst aus Portugal.",
+          "model": "Example starting point: Sind Sie Frau Richter?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "level": "A1.1",
+      "title": "W-questions and verb position",
+      "goal": "Ask where, who, what and how, and build correct statements.",
+      "formula": "W-word + verb + person + rest?",
+      "explanations": [
+        "For a W-question, put the question word first and the conjugated verb immediately after it.",
+        "In statements the conjugated verb takes position two; position one may be a whole phrase, not just one word."
+      ],
+      "examples": [
+        {
+          "de": "Wo lernst du Deutsch?",
+          "en": "Where are you learning German?"
+        },
+        {
+          "de": "Wie schreibt man deinen Namen?",
+          "en": "How does one write your name?"
+        },
+        {
+          "de": "In Augsburg wohnt mein Freund.",
+          "en": "My friend lives in Augsburg."
+        }
+      ],
+      "trap": {
+        "wrong": "Wo du wohnst?",
+        "correct": "Wo wohnst du?",
+        "why": "In a direct W-question, the finite verb follows the question word."
+      },
+      "challenge": "Ask a partner their name, home town and native language. Say one answer starting with a place.",
+      "deep_notes": [
+        "Question words carry meaning: wer for people, wo for a location, woher for origin, wann for time.",
+        "Compare Wo wohnst du? (location) with Woher kommst du? (origin).",
+        "Even long first elements count as ONE slot before a conjugated verb.",
+        "The form of the verb still matches its subject after inversion."
+      ],
+      "fill_questions": [
+        {
+          "id": "G02-F1",
+          "type": "fill",
+          "prompt": "___ kommst du? (origin)",
+          "answer": "Woher",
+          "explanation": "Woher asks about origin.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-F2",
+          "type": "fill",
+          "prompt": "In München ___ sie. (wohnen)",
+          "answer": "wohnt",
+          "explanation": "After the initial place, the verb comes second.",
+          "lesson_id": 2
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G02-01",
+          "type": "multiple_choice",
+          "prompt": "___ wohnst du?",
+          "answer": "Wo",
+          "options": [
+            "Wo",
+            "Wie",
+            "Wer"
+          ],
+          "explanation": "Wo asks for location.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-02",
+          "type": "multiple_choice",
+          "prompt": "Woher ___ deine Eltern?",
+          "answer": "kommen",
+          "options": [
+            "kommen",
+            "kommt",
+            "kommst"
+          ],
+          "explanation": "Plural parents require kommen.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-03",
+          "type": "multiple_choice",
+          "prompt": "Wann ___ der Kurs?",
+          "answer": "beginnt",
+          "options": [
+            "beginnt",
+            "beginnen",
+            "beginnst"
+          ],
+          "explanation": "Kurs is singular.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-04",
+          "type": "multiple_choice",
+          "prompt": "In Berlin ___ meine Cousine.",
+          "answer": "wohnt",
+          "options": [
+            "wohnt",
+            "wohnen",
+            "wohnst"
+          ],
+          "explanation": "The verb comes second after the place.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-05",
+          "type": "multiple_choice",
+          "prompt": "___ ist das? Das ist Timo.",
+          "answer": "Wer",
+          "options": [
+            "Wer",
+            "Wo",
+            "Wann"
+          ],
+          "explanation": "Wer asks who.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-06",
+          "type": "multiple_choice",
+          "prompt": "Wie ___ man das?",
+          "answer": "schreibt",
+          "options": [
+            "schreibt",
+            "schreiben",
+            "schreibst"
+          ],
+          "explanation": "man takes third-person singular.",
+          "lesson_id": 2
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Wo du wohnst?",
+          "model": "Wo wohnst du?",
+          "why": "In a direct W-question, the finite verb follows the question word."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "W-word + verb + person + rest?",
+          "model": "Wo lernst du Deutsch?",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wie schreibt man deinen Namen?",
+          "model": "Example starting point: In Augsburg wohnt mein Freund.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "level": "A1.1",
+      "title": "Present tense, haben and nicht",
+      "goal": "Use all six persons and negate statements accurately.",
+      "formula": "subject + finite verb + nicht + relevant information",
+      "explanations": [
+        "Common endings: -e, -st, -t, -en, -t, -en. After stems ending -t or -d, du and er forms often need an extra -e-.",
+        "Use haben for possession and nicht for negating verbs, adjectives or phrases. Position of nicht depends on what is negated."
+      ],
+      "examples": [
+        {
+          "de": "Wir arbeiten am Freitag.",
+          "en": "We work on Friday."
+        },
+        {
+          "de": "Ihr habt heute Unterricht.",
+          "en": "You all have class today."
+        },
+        {
+          "de": "Sie wohnt nicht in Bonn.",
+          "en": "She does not live in Bonn."
+        }
+      ],
+      "trap": {
+        "wrong": "Ihr arbeitst am Samstag.",
+        "correct": "Ihr arbeitet am Samstag.",
+        "why": "arbeiten requires arbeitet with ihr."
+      },
+      "challenge": "Describe your class with wir and ihr; add two negative statements about today.",
+      "deep_notes": [
+        "Verb endings follow person, not the number of people physically present in a scene.",
+        "Learn sein and haben separately: bin/bist/ist and habe/hast/hat.",
+        "Negating an adjective differs from negating an unspecified noun: nicht teuer but kein Geld.",
+        "Introduce a number by reading it, then saying it within a full sentence."
+      ],
+      "fill_questions": [
+        {
+          "id": "G03-F1",
+          "type": "fill",
+          "prompt": "Ihr ___ am Montag. (arbeiten)",
+          "answer": "arbeitet",
+          "explanation": "The ihr form is arbeitet.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-F2",
+          "type": "fill",
+          "prompt": "Wir ___ müde. (sein)",
+          "answer": "sind",
+          "explanation": "wir sind is irregular.",
+          "lesson_id": 3
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G03-01",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute früh.",
+          "answer": "arbeiten",
+          "options": [
+            "arbeiten",
+            "arbeitet",
+            "arbeitest"
+          ],
+          "explanation": "wir takes the plural ending.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-02",
+          "type": "multiple_choice",
+          "prompt": "Ihr ___ zwei Kinder.",
+          "answer": "habt",
+          "options": [
+            "habt",
+            "haben",
+            "hat"
+          ],
+          "explanation": "ihr has habt.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-03",
+          "type": "multiple_choice",
+          "prompt": "Der Film ___ nicht interessant.",
+          "answer": "ist",
+          "options": [
+            "ist",
+            "sind",
+            "bin"
+          ],
+          "explanation": "Singular Film uses ist.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-04",
+          "type": "multiple_choice",
+          "prompt": "Du ___ heute keine Zeit.",
+          "answer": "hast",
+          "options": [
+            "hast",
+            "haben",
+            "hat"
+          ],
+          "explanation": "du hast is irregular.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-05",
+          "type": "multiple_choice",
+          "prompt": "Ihr ___ schon hier.",
+          "answer": "seid",
+          "options": [
+            "seid",
+            "sind",
+            "ist"
+          ],
+          "explanation": "The ihr form of sein is seid.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-06",
+          "type": "multiple_choice",
+          "prompt": "Du ___ in der Schule.",
+          "answer": "arbeitest",
+          "options": [
+            "arbeitest",
+            "arbeits",
+            "arbeitet"
+          ],
+          "explanation": "arbeiten inserts e before -st.",
+          "lesson_id": 3
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ihr arbeitst am Samstag.",
+          "model": "Ihr arbeitet am Samstag.",
+          "why": "arbeiten requires arbeitet with ihr."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + finite verb + nicht + relevant information",
+          "model": "Wir arbeiten am Freitag.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Ihr habt heute Unterricht.",
+          "model": "Example starting point: Sie wohnt nicht in Bonn.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "level": "A1.1",
+      "title": "Yes/no questions and possession",
+      "goal": "Ask yes/no questions and answer negative questions with doch.",
+      "formula": "finite verb + subject + rest?",
+      "explanations": [
+        "Move the conjugated verb to the first position in a yes/no question. Do not use English-style do.",
+        "Use doch to contradict a negative question. Use mein/meine and dein/deine with grammatical gender and number."
+      ],
+      "examples": [
+        {
+          "de": "Hast du einen Bruder?",
+          "en": "Do you have a brother?"
+        },
+        {
+          "de": "Wohnst du nicht hier? Doch, ich wohne hier.",
+          "en": "Don't you live here? Yes, I do."
+        },
+        {
+          "de": "Das ist meine Schwester.",
+          "en": "This is my sister."
+        }
+      ],
+      "trap": {
+        "wrong": "Du hast Geschwister?",
+        "correct": "Hast du Geschwister?",
+        "why": "For a neutral yes/no question, begin with the verb."
+      },
+      "challenge": "Make three yes/no questions, including one negative question that you answer with doch.",
+      "deep_notes": [
+        "A simple statement becomes a neutral question when the finite verb moves first.",
+        "Ja confirms a positive question; nein rejects it; doch contradicts a negative proposition.",
+        "Possessive article endings follow grammatical gender, not who owns the object.",
+        "If unsure how to answer, repeat the verb in a complete sentence."
+      ],
+      "fill_questions": [
+        {
+          "id": "G04-F1",
+          "type": "fill",
+          "prompt": "___ du heute frei? (haben)",
+          "answer": "Hast",
+          "explanation": "Question: finite verb first.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-F2",
+          "type": "fill",
+          "prompt": "Das ist ___ Tante. (my)",
+          "answer": "meine",
+          "explanation": "Tante is feminine nominative.",
+          "lesson_id": 4
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G04-01",
+          "type": "multiple_choice",
+          "prompt": "___ du aus Österreich?",
+          "answer": "Kommst",
+          "options": [
+            "Kommst",
+            "Kommen",
+            "Kommt"
+          ],
+          "explanation": "Begin yes/no questions with the finite verb.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-02",
+          "type": "multiple_choice",
+          "prompt": "Du wohnst nicht hier? ___, ich wohne hier!",
+          "answer": "Doch",
+          "options": [
+            "Doch",
+            "Nein",
+            "Nie"
+          ],
+          "explanation": "Doch contradicts a negative question.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-03",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Mutter.",
+          "answer": "meine",
+          "options": [
+            "meine",
+            "mein",
+            "meinen"
+          ],
+          "explanation": "Mutter is feminine nominative.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-04",
+          "type": "multiple_choice",
+          "prompt": "___ ihr Geschwister?",
+          "answer": "Habt",
+          "options": [
+            "Habt",
+            "Haben",
+            "Hat"
+          ],
+          "explanation": "ihr uses habt.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-05",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Vater.",
+          "answer": "mein",
+          "options": [
+            "mein",
+            "meine",
+            "meinen"
+          ],
+          "explanation": "Vater is masculine nominative.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-06",
+          "type": "multiple_choice",
+          "prompt": "___ sie verheiratet?",
+          "answer": "Ist",
+          "options": [
+            "Ist",
+            "Hat",
+            "Sind"
+          ],
+          "explanation": "Ask about a state with Ist sie ...?",
+          "lesson_id": 4
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Du hast Geschwister?",
+          "model": "Hast du Geschwister?",
+          "why": "For a neutral yes/no question, begin with the verb."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "finite verb + subject + rest?",
+          "model": "Hast du einen Bruder?",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wohnst du nicht hier? Doch, ich wohne hier.",
+          "model": "Example starting point: Das ist meine Schwester.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "level": "A1.1",
+      "title": "Noun gender and pronouns",
+      "goal": "Use der, das, die and the matching subject pronouns.",
+      "formula": "article + noun -> er / es / sie",
+      "explanations": [
+        "Every German noun has grammatical gender. Learn the noun with its article, not alone.",
+        "Replace a named object by er (der), es (das) or sie (die); all plural nouns use sie."
+      ],
+      "examples": [
+        {
+          "de": "Der Rucksack ist schwer. Er ist voll.",
+          "en": "The backpack is heavy. It is full."
+        },
+        {
+          "de": "Das Fenster ist offen. Es ist groß.",
+          "en": "The window is open. It is large."
+        },
+        {
+          "de": "Die Brille ist neu. Sie ist schön.",
+          "en": "The glasses are new. They are nice."
+        }
+      ],
+      "trap": {
+        "wrong": "Das Auto ist alt. Er ist kaputt.",
+        "correct": "Das Auto ist alt. Es ist kaputt.",
+        "why": "Auto is neuter: das -> es."
+      },
+      "challenge": "Look around you. Name six objects with articles; replace each with the right pronoun.",
+      "deep_notes": [
+        "Article and pronoun are a pair: der/er; das/es; die/sie.",
+        "Plural nouns all use die as definite article, regardless of singular gender.",
+        "The noun's gender is a grammar feature: do not infer it from an object's natural sex.",
+        "Adjectives after sein usually have no gender ending: Der Stuhl ist klein."
+      ],
+      "fill_questions": [
+        {
+          "id": "G05-F1",
+          "type": "fill",
+          "prompt": "Der Fernseher ist groß. ___ ist modern.",
+          "answer": "Er",
+          "explanation": "der -> er.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-F2",
+          "type": "fill",
+          "prompt": "Das Zimmer ist klein. ___ ist hell.",
+          "answer": "Es",
+          "explanation": "das -> es.",
+          "lesson_id": 5
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G05-01",
+          "type": "multiple_choice",
+          "prompt": "___ Pullover ist warm.",
+          "answer": "Der",
+          "options": [
+            "Der",
+            "Das",
+            "Die"
+          ],
+          "explanation": "Pullover is masculine.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-02",
+          "type": "multiple_choice",
+          "prompt": "___ Kleid ist rot.",
+          "answer": "Das",
+          "options": [
+            "Das",
+            "Der",
+            "Die"
+          ],
+          "explanation": "Kleid is neuter.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-03",
+          "type": "multiple_choice",
+          "prompt": "___ Tasche ist groß.",
+          "answer": "Die",
+          "options": [
+            "Die",
+            "Der",
+            "Das"
+          ],
+          "explanation": "Tasche is feminine.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-04",
+          "type": "multiple_choice",
+          "prompt": "Das Fahrrad ist neu. ___ ist schnell.",
+          "answer": "Es",
+          "options": [
+            "Es",
+            "Er",
+            "Sie"
+          ],
+          "explanation": "das -> es.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-05",
+          "type": "multiple_choice",
+          "prompt": "Der Baum ist alt. ___ ist hoch.",
+          "answer": "Er",
+          "options": [
+            "Er",
+            "Es",
+            "Sie"
+          ],
+          "explanation": "der -> er.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-06",
+          "type": "multiple_choice",
+          "prompt": "Die Uhr ist kaputt. ___ geht nicht.",
+          "answer": "Sie",
+          "options": [
+            "Sie",
+            "Es",
+            "Er"
+          ],
+          "explanation": "die -> sie.",
+          "lesson_id": 5
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Das Auto ist alt. Er ist kaputt.",
+          "model": "Das Auto ist alt. Es ist kaputt.",
+          "why": "Auto is neuter: das -> es."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "article + noun -> er / es / sie",
+          "model": "Der Rucksack ist schwer. Er ist voll.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Das Fenster ist offen. Es ist groß.",
+          "model": "Example starting point: Die Brille ist neu. Sie ist schön.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "level": "A1.1",
+      "title": "ein, eine, kein and nicht",
+      "goal": "Distinguish an indefinite noun from a negated noun or adjective.",
+      "formula": "Das ist + ein/eine/kein/keine + noun",
+      "explanations": [
+        "Use ein for masculine and neuter nominative nouns; eine for feminine nouns. Kein follows similar endings and can negate plural nouns.",
+        "Use nicht for adjective, verb and specific-phrase negation: nicht teuer, nicht hier, nicht der Schlüssel."
+      ],
+      "examples": [
+        {
+          "de": "Das ist ein Kalender.",
+          "en": "That is a calendar."
+        },
+        {
+          "de": "Wir haben keine Milch.",
+          "en": "We have no milk."
+        },
+        {
+          "de": "Der Laptop ist nicht teuer.",
+          "en": "The laptop is not expensive."
+        }
+      ],
+      "trap": {
+        "wrong": "Das ist nicht Computer.",
+        "correct": "Das ist kein Computer.",
+        "why": "Negating an indefinite count noun normally requires kein."
+      },
+      "challenge": "Describe five household items, including two things you do not have.",
+      "deep_notes": [
+        "First mention an object with ein/eine; refer to the specific known object with der/die/das.",
+        "Kein replaces ein or negates a noun without an article, including a plural noun.",
+        "Nicht denies properties, verbs, locations and specific noun phrases.",
+        "In the accusative case some ein/kein forms change; see Step 7."
+      ],
+      "fill_questions": [
+        {
+          "id": "G06-F1",
+          "type": "fill",
+          "prompt": "Das ist ___ Uhr. (a)",
+          "answer": "eine",
+          "explanation": "Feminine nominative takes eine.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-F2",
+          "type": "fill",
+          "prompt": "Ich habe ___ Hunger. (no)",
+          "answer": "keinen",
+          "explanation": "Hunger is masculine accusative.",
+          "lesson_id": 6
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G06-01",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Lampe.",
+          "answer": "eine",
+          "options": [
+            "eine",
+            "ein",
+            "einen"
+          ],
+          "explanation": "Feminine nominative takes eine.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-02",
+          "type": "multiple_choice",
+          "prompt": "Wir haben ___ Zucker.",
+          "answer": "keinen",
+          "options": [
+            "keinen",
+            "kein",
+            "keine"
+          ],
+          "explanation": "Zucker is masculine accusative.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-03",
+          "type": "multiple_choice",
+          "prompt": "Die Musik ist ___ laut.",
+          "answer": "nicht",
+          "options": [
+            "nicht",
+            "kein",
+            "keine"
+          ],
+          "explanation": "Negate an adjective with nicht.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-04",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Schlüssel.",
+          "answer": "ein",
+          "options": [
+            "ein",
+            "eine",
+            "einen"
+          ],
+          "explanation": "Masculine nominative takes ein.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-05",
+          "type": "multiple_choice",
+          "prompt": "Ich habe ___ Kinder.",
+          "answer": "keine",
+          "options": [
+            "keine",
+            "kein",
+            "nicht"
+          ],
+          "explanation": "Plural absence takes keine.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-06",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ mein Mantel.",
+          "answer": "nicht",
+          "options": [
+            "nicht",
+            "kein",
+            "keine"
+          ],
+          "explanation": "A specific possessive phrase is negated with nicht.",
+          "lesson_id": 6
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Das ist nicht Computer.",
+          "model": "Das ist kein Computer.",
+          "why": "Negating an indefinite count noun normally requires kein."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "Das ist + ein/eine/kein/keine + noun",
+          "model": "Das ist ein Kalender.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wir haben keine Milch.",
+          "model": "Example starting point: Der Laptop ist nicht teuer.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "level": "A1.1",
+      "title": "Plurals and accusative",
+      "goal": "Use plural nouns and change masculine objects into den/einen.",
+      "formula": "subject + verb + einen/den + masculine object",
+      "explanations": [
+        "Learn plural forms with each noun; endings can be -e, -en, -er, -s or zero.",
+        "In the accusative, masculine articles change: der->den, ein->einen, kein->keinen. Feminine and neuter articles generally stay the same."
+      ],
+      "examples": [
+        {
+          "de": "Ich brauche einen Regenschirm.",
+          "en": "I need an umbrella."
+        },
+        {
+          "de": "Wir kaufen die Bücher.",
+          "en": "We are buying the books."
+        },
+        {
+          "de": "Kennst du den Lehrer?",
+          "en": "Do you know the teacher?"
+        }
+      ],
+      "trap": {
+        "wrong": "Ich sehe ein Mann.",
+        "correct": "Ich sehe einen Mann.",
+        "why": "A masculine accusative object needs einen."
+      },
+      "challenge": "Write a shopping list with six nouns and say three full sentences about what you need.",
+      "deep_notes": [
+        "Ask who performs the action (nominative) and what receives it (accusative).",
+        "Only masculine singular definite/indefinite articles visibly change in this simple case comparison.",
+        "Many feminine nouns make plural with -(e)n, but don't rely on guesses for every noun.",
+        "Keep a vocabulary record: article + singular + plural + a model sentence."
+      ],
+      "fill_questions": [
+        {
+          "id": "G07-F1",
+          "type": "fill",
+          "prompt": "Wir nehmen ___ Bus. (the)",
+          "answer": "den",
+          "explanation": "Masculine accusative article den.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-F2",
+          "type": "fill",
+          "prompt": "Ein Buch, zwei ___.",
+          "answer": "Bücher",
+          "explanation": "Plural is Bücher.",
+          "lesson_id": 7
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G07-01",
+          "type": "multiple_choice",
+          "prompt": "Ich suche ___ Bahnhof.",
+          "answer": "den",
+          "options": [
+            "den",
+            "der",
+            "dem"
+          ],
+          "explanation": "Masculine accusative: den.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-02",
+          "type": "multiple_choice",
+          "prompt": "Wir brauchen ___ Tisch.",
+          "answer": "einen",
+          "options": [
+            "einen",
+            "ein",
+            "einem"
+          ],
+          "explanation": "Masculine accusative: einen.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-03",
+          "type": "multiple_choice",
+          "prompt": "Ich kaufe ___ Tasche.",
+          "answer": "eine",
+          "options": [
+            "eine",
+            "einen",
+            "ein"
+          ],
+          "explanation": "Tasche is feminine.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-04",
+          "type": "multiple_choice",
+          "prompt": "das Kind -> die ___",
+          "answer": "Kinder",
+          "options": [
+            "Kinder",
+            "Kinds",
+            "Kinden"
+          ],
+          "explanation": "Kind has plural Kinder.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-05",
+          "type": "multiple_choice",
+          "prompt": "die Zeitung -> die ___",
+          "answer": "Zeitungen",
+          "options": [
+            "Zeitungen",
+            "Zeitunges",
+            "Zeitunger"
+          ],
+          "explanation": "Feminine -ung nouns usually pluralize with -en.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-06",
+          "type": "multiple_choice",
+          "prompt": "Er nimmt ___ Apfel.",
+          "answer": "einen",
+          "options": [
+            "einen",
+            "ein",
+            "einem"
+          ],
+          "explanation": "Apfel is masculine accusative.",
+          "lesson_id": 7
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich sehe ein Mann.",
+          "model": "Ich sehe einen Mann.",
+          "why": "A masculine accusative object needs einen."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + verb + einen/den + masculine object",
+          "model": "Ich brauche einen Regenschirm.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wir kaufen die Bücher.",
+          "model": "Example starting point: Kennst du den Lehrer?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "level": "A1.1",
+      "title": "können and sentence bracket",
+      "goal": "Say what you can do and keep the second verb at the end.",
+      "formula": "subject + können + details + infinitive",
+      "explanations": [
+        "Modal verbs such as können occupy the conjugated verb position; the full verb appears as infinitive at the end.",
+        "Some strong verbs change vowels with du and er/sie/es (fahren->fährst, lesen->liest)."
+      ],
+      "examples": [
+        {
+          "de": "Ich kann am Abend kochen.",
+          "en": "I can cook in the evening."
+        },
+        {
+          "de": "Kannst du gut schwimmen?",
+          "en": "Can you swim well?"
+        },
+        {
+          "de": "Mein Bruder fährt jeden Tag Rad.",
+          "en": "My brother cycles every day."
+        }
+      ],
+      "trap": {
+        "wrong": "Sie kann spricht Deutsch.",
+        "correct": "Sie kann Deutsch sprechen.",
+        "why": "After a modal, use the infinitive at the end."
+      },
+      "challenge": "Say three things you can do, two things you cannot do and one question to a classmate.",
+      "deep_notes": [
+        "A conjugated modal and a final infinitive form a sentence bracket.",
+        "If you start with time, the modal still stays second: Heute kann ich kommen.",
+        "Strong vowel change is limited to some verbs and mostly du and er/sie/es.",
+        "Compare können (ability) with dürfen (permission), learned later."
+      ],
+      "fill_questions": [
+        {
+          "id": "G08-F1",
+          "type": "fill",
+          "prompt": "Ich ___ gut zeichnen. (can)",
+          "answer": "kann",
+          "explanation": "ich kann.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-F2",
+          "type": "fill",
+          "prompt": "Sie kann nicht ___. (kommen)",
+          "answer": "kommen",
+          "explanation": "The second verb remains infinitive.",
+          "lesson_id": 8
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G08-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ heute nicht kommen.",
+          "answer": "kann",
+          "options": [
+            "kann",
+            "könne",
+            "kannst"
+          ],
+          "explanation": "ich kann is irregular.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-02",
+          "type": "multiple_choice",
+          "prompt": "Kannst du heute ___?",
+          "answer": "lernen",
+          "options": [
+            "lernen",
+            "lernst",
+            "gelernt"
+          ],
+          "explanation": "The main verb remains infinitive.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-03",
+          "type": "multiple_choice",
+          "prompt": "Sie ___ sehr gut singen.",
+          "answer": "kann",
+          "options": [
+            "kann",
+            "können",
+            "kannst"
+          ],
+          "explanation": "Singular sie (she) kann.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-04",
+          "type": "multiple_choice",
+          "prompt": "Du ___ gern Bücher.",
+          "answer": "liest",
+          "options": [
+            "liest",
+            "lest",
+            "lesen"
+          ],
+          "explanation": "lesen changes e->ie with du.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-05",
+          "type": "multiple_choice",
+          "prompt": "Mein Vater ___ oft nach Ulm.",
+          "answer": "fährt",
+          "options": [
+            "fährt",
+            "fahrt",
+            "fahre"
+          ],
+          "explanation": "fahren changes a->ä in er.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-06",
+          "type": "multiple_choice",
+          "prompt": "Ich kann meine Freundin ___.",
+          "answer": "besuchen",
+          "options": [
+            "besuchen",
+            "besuche",
+            "besucht"
+          ],
+          "explanation": "After kann, use infinitive at sentence end.",
+          "lesson_id": 8
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Sie kann spricht Deutsch.",
+          "model": "Sie kann Deutsch sprechen.",
+          "why": "After a modal, use the infinitive at the end."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + können + details + infinitive",
+          "model": "Ich kann am Abend kochen.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Kannst du gut schwimmen?",
+          "model": "Example starting point: Mein Bruder fährt jeden Tag Rad.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "level": "A1.1",
+      "title": "Time phrases and word order",
+      "goal": "Begin sentences with time and say when events happen.",
+      "formula": "time phrase + finite verb + subject + rest",
+      "explanations": [
+        "When a time expression begins a statement, the conjugated verb still comes second: Morgen komme ich.",
+        "Use am for days and parts of days; um for clock times. halb acht = 7:30."
+      ],
+      "examples": [
+        {
+          "de": "Am Dienstag habe ich Unterricht.",
+          "en": "I have class on Tuesday."
+        },
+        {
+          "de": "Um halb acht beginnt mein Kurs.",
+          "en": "My class starts at half past seven."
+        },
+        {
+          "de": "Heute Abend komme ich später.",
+          "en": "I'll arrive later this evening."
+        }
+      ],
+      "trap": {
+        "wrong": "Morgen ich arbeite.",
+        "correct": "Morgen arbeite ich.",
+        "why": "Time is first; the conjugated verb must remain second."
+      },
+      "challenge": "Explain your schedule for three days and give precise times.",
+      "deep_notes": [
+        "German's halb refers to the coming hour: halb vier is 3:30.",
+        "Use um with a specific clock time, not with a weekday.",
+        "A time phrase at the start pushes the subject behind the finite verb.",
+        "For dates and months use different expressions; don't treat all time words alike."
+      ],
+      "fill_questions": [
+        {
+          "id": "G09-F1",
+          "type": "fill",
+          "prompt": "___ Samstag lerne ich. (on)",
+          "answer": "Am",
+          "explanation": "Days use am.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-F2",
+          "type": "fill",
+          "prompt": "Der Film beginnt ___ 19 Uhr.",
+          "answer": "um",
+          "explanation": "Clock time uses um.",
+          "lesson_id": 9
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G09-01",
+          "type": "multiple_choice",
+          "prompt": "___ Montag habe ich frei.",
+          "answer": "Am",
+          "options": [
+            "Am",
+            "Um",
+            "Im"
+          ],
+          "explanation": "Days take am.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-02",
+          "type": "multiple_choice",
+          "prompt": "___ 15 Uhr beginnt der Kurs.",
+          "answer": "Um",
+          "options": [
+            "Um",
+            "Am",
+            "Ab"
+          ],
+          "explanation": "Clock time takes um.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-03",
+          "type": "multiple_choice",
+          "prompt": "Es ist halb neun = ___.",
+          "answer": "08:30",
+          "options": [
+            "08:30",
+            "09:30",
+            "08:15"
+          ],
+          "explanation": "halb neun means half toward nine.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-04",
+          "type": "multiple_choice",
+          "prompt": "Heute ___ wir im Büro.",
+          "answer": "arbeiten",
+          "options": [
+            "arbeiten",
+            "wir arbeiten",
+            "arbeitet"
+          ],
+          "explanation": "Verb is second after Heute.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-05",
+          "type": "multiple_choice",
+          "prompt": "Morgen ___ ich um sieben auf.",
+          "answer": "stehe",
+          "options": [
+            "stehe",
+            "ich stehe",
+            "steht"
+          ],
+          "explanation": "The verb takes the second position.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-06",
+          "type": "multiple_choice",
+          "prompt": "Am Abend ___ sie Klavier.",
+          "answer": "spielt",
+          "options": [
+            "spielt",
+            "spielen",
+            "spielst"
+          ],
+          "explanation": "Singular sie takes -t.",
+          "lesson_id": 9
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Morgen ich arbeite.",
+          "model": "Morgen arbeite ich.",
+          "why": "Time is first; the conjugated verb must remain second."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "time phrase + finite verb + subject + rest",
+          "model": "Am Dienstag habe ich Unterricht.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Um halb acht beginnt mein Kurs.",
+          "model": "Example starting point: Heute Abend komme ich später.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "level": "A1.1",
+      "title": "mögen, möchte and ordering",
+      "goal": "Express likes, polite wishes and food choices.",
+      "formula": "ich möchte + accusative object + bitte",
+      "explanations": [
+        "mögen describes preference; möchte is a polite wish or request. Essen and nehmen have irregular du/er forms.",
+        "The food or drink is commonly a direct object, so masculine nouns often need einen or den."
+      ],
+      "examples": [
+        {
+          "de": "Ich mag scharfe Suppe.",
+          "en": "I like spicy soup."
+        },
+        {
+          "de": "Ich möchte einen Apfelsaft, bitte.",
+          "en": "I'd like an apple juice, please."
+        },
+        {
+          "de": "Was nimmst du? Ich nehme einen Salat.",
+          "en": "What will you have? I'll take a salad."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich möchte ein Kaffee.",
+        "correct": "Ich möchte einen Kaffee.",
+        "why": "Kaffee is masculine and an accusative object."
+      },
+      "challenge": "Order three things politely, then explain one thing you do not like.",
+      "deep_notes": [
+        "Use mögen for lasting tastes; möchte is useful for a polite request now.",
+        "Memorize the natural chunk Ich hätte gern later; for now Ich möchte is enough.",
+        "Masculine direct objects often require einen, even for drinks.",
+        "Compound nouns inherit gender from the final noun: der Saft -> der Orangensaft."
+      ],
+      "fill_questions": [
+        {
+          "id": "G10-F1",
+          "type": "fill",
+          "prompt": "Ich ___ einen Tee, bitte. (would like)",
+          "answer": "möchte",
+          "explanation": "A polite request uses möchte.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-F2",
+          "type": "fill",
+          "prompt": "Er ___ gern Brot. (eat)",
+          "answer": "isst",
+          "explanation": "essen changes in er.",
+          "lesson_id": 10
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G10-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ Käse, aber keine Butter.",
+          "answer": "mag",
+          "options": [
+            "mag",
+            "möchte",
+            "möchtest"
+          ],
+          "explanation": "mag describes general preference.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-02",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ bitte ein Wasser.",
+          "answer": "möchte",
+          "options": [
+            "möchte",
+            "magst",
+            "mögen"
+          ],
+          "explanation": "möchte expresses a polite request.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ gern Reis.",
+          "answer": "isst",
+          "options": [
+            "isst",
+            "esst",
+            "esse"
+          ],
+          "explanation": "essen changes e->i with du.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-04",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ zwei Suppen.",
+          "answer": "nehmen",
+          "options": [
+            "nehmen",
+            "nimmt",
+            "nehmt"
+          ],
+          "explanation": "wir takes nehmen.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-05",
+          "type": "multiple_choice",
+          "prompt": "Ich bestelle ___ Tee.",
+          "answer": "einen",
+          "options": [
+            "einen",
+            "ein",
+            "einem"
+          ],
+          "explanation": "Tee is masculine accusative.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-06",
+          "type": "multiple_choice",
+          "prompt": "___ Sie etwas trinken?",
+          "answer": "Möchten",
+          "options": [
+            "Möchten",
+            "Möchtest",
+            "Magst"
+          ],
+          "explanation": "Polite Sie uses möchten.",
+          "lesson_id": 10
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich möchte ein Kaffee.",
+          "model": "Ich möchte einen Kaffee.",
+          "why": "Kaffee is masculine and an accusative object."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "ich möchte + accusative object + bitte",
+          "model": "Ich mag scharfe Suppe.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Ich möchte einen Apfelsaft, bitte.",
+          "model": "Example starting point: Was nimmst du? Ich nehme einen Salat.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "level": "A1.1",
+      "title": "Separable verbs",
+      "goal": "Build sentences with separable verb prefixes and recognize infinitives.",
+      "formula": "subject + conjugated verb + ... + prefix",
+      "explanations": [
+        "With separable verbs, the conjugated stem appears in position two and the prefix moves to the end of a main clause.",
+        "With a modal verb the entire infinitive stays together at the end: Ich muss früh aufstehen."
+      ],
+      "examples": [
+        {
+          "de": "Um sieben Uhr stehe ich auf.",
+          "en": "I get up at seven."
+        },
+        {
+          "de": "Der Bus fährt um acht Uhr ab.",
+          "en": "The bus departs at eight."
+        },
+        {
+          "de": "Ich kann dich später anrufen.",
+          "en": "I can call you later."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich aufstehe um sechs Uhr.",
+        "correct": "Ich stehe um sechs Uhr auf.",
+        "why": "The prefix of aufstehen separates in this main clause."
+      },
+      "challenge": "Describe your morning with four separable verbs and one modal sentence.",
+      "deep_notes": [
+        "The detachable prefix may move to the very end after objects and time phrases.",
+        "Modal + separable infinitive stays together: Ich kann jetzt aufstehen.",
+        "In a direct yes/no question the finite stem comes first and the prefix last.",
+        "Keep accents on the prefix when speaking (AUFstehen); it helps recognition."
+      ],
+      "fill_questions": [
+        {
+          "id": "G11-F1",
+          "type": "fill",
+          "prompt": "Ich rufe dich heute Abend ___. (call)",
+          "answer": "an",
+          "explanation": "The prefix an goes to the end.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-F2",
+          "type": "fill",
+          "prompt": "Morgen ___ der Zug an. (arrive)",
+          "answer": "kommt",
+          "explanation": "The conjugated stem of ankommen is kommt.",
+          "lesson_id": 11
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G11-01",
+          "type": "multiple_choice",
+          "prompt": "Morgen ___ ich früh ___.",
+          "answer": "stehe ... auf",
+          "options": [
+            "stehe ... auf",
+            "aufstehe ... (nothing)",
+            "stehen ... auf"
+          ],
+          "explanation": "aufstehen separates in a simple main clause.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-02",
+          "type": "multiple_choice",
+          "prompt": "Der Zug ___ um 9 Uhr ___.",
+          "answer": "fährt ... ab",
+          "options": [
+            "fährt ... ab",
+            "abfährt ... (nothing)",
+            "fahrt ... ab"
+          ],
+          "explanation": "abfahren separates in a main clause.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-03",
+          "type": "multiple_choice",
+          "prompt": "Ich kann dich morgen ___.",
+          "answer": "anrufen",
+          "options": [
+            "anrufen",
+            "rufe an",
+            "angerufen"
+          ],
+          "explanation": "After kann use intact infinitive.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-04",
+          "type": "multiple_choice",
+          "prompt": "Wann ___ der Bus ___?",
+          "answer": "kommt ... an",
+          "options": [
+            "kommt ... an",
+            "ankommt ... (nothing)",
+            "kommen ... an"
+          ],
+          "explanation": "ankommen separates in direct questions.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-05",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ am Wochenende ___.",
+          "answer": "kaufen ... ein",
+          "options": [
+            "kaufen ... ein",
+            "einkaufen ... (nothing)",
+            "kauft ... ein"
+          ],
+          "explanation": "Wir kaufen ... ein.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-06",
+          "type": "multiple_choice",
+          "prompt": "Du ___ die Tür ___.",
+          "answer": "machst ... zu",
+          "options": [
+            "machst ... zu",
+            "zumachst ... (nothing)",
+            "machen ... zu"
+          ],
+          "explanation": "The prefix zu separates in present-tense main clauses.",
+          "lesson_id": 11
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich aufstehe um sechs Uhr.",
+          "model": "Ich stehe um sechs Uhr auf.",
+          "why": "The prefix of aufstehen separates in this main clause."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + conjugated verb + ... + prefix",
+          "model": "Um sieben Uhr stehe ich auf.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Der Bus fährt um acht Uhr ab.",
+          "model": "Example starting point: Ich kann dich später anrufen.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "level": "A1.1",
+      "title": "Perfekt with haben",
+      "goal": "Talk about completed actions with haben and a participle.",
+      "formula": "subject + haben + time/object + Partizip II",
+      "explanations": [
+        "For many past events, use the present tense of haben plus the past participle at sentence end.",
+        "Regular participles often use ge-...-t; many irregular verbs use -en. Verbs ending -ieren form participles without ge-."
+      ],
+      "examples": [
+        {
+          "de": "Ich habe gestern gekocht.",
+          "en": "I cooked yesterday."
+        },
+        {
+          "de": "Wir haben einen Film gesehen.",
+          "en": "We watched a film."
+        },
+        {
+          "de": "Hast du heute telefoniert?",
+          "en": "Did you make a phone call today?"
+        }
+      ],
+      "trap": {
+        "wrong": "Ich habe gestern einkaufen.",
+        "correct": "Ich habe gestern eingekauft.",
+        "why": "A completed past action requires the participle."
+      },
+      "challenge": "Tell a partner what you did yesterday using at least five different participles.",
+      "deep_notes": [
+        "Perfekt has two parts: auxiliary verb and past participle, separated in a main clause.",
+        "Some common irregular participles have vowel changes; learn them as vocabulary.",
+        "Separable verbs insert ge- after the prefix: aufgeräumt, angerufen.",
+        "-ieren verbs never add ge-: organisiert, repariert."
+      ],
+      "fill_questions": [
+        {
+          "id": "G12-F1",
+          "type": "fill",
+          "prompt": "Wir haben gestern ___. (cook)",
+          "answer": "gekocht",
+          "explanation": "kochen -> gekocht.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-F2",
+          "type": "fill",
+          "prompt": "Sie hat Musik ___. (hear)",
+          "answer": "gehört",
+          "explanation": "hören -> gehört.",
+          "lesson_id": 12
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G12-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ gestern Brot gekauft.",
+          "answer": "habe",
+          "options": [
+            "habe",
+            "bin",
+            "hat"
+          ],
+          "explanation": "kaufen uses Perfekt with haben.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-02",
+          "type": "multiple_choice",
+          "prompt": "Wir haben Musik ___.",
+          "answer": "gehört",
+          "options": [
+            "gehört",
+            "hören",
+            "gehören"
+          ],
+          "explanation": "The participle of hören is gehört.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ deine Schwester angerufen.",
+          "answer": "hast",
+          "options": [
+            "hast",
+            "bist",
+            "hat"
+          ],
+          "explanation": "Anrufen uses haben with du hast.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-04",
+          "type": "multiple_choice",
+          "prompt": "Er hat heute ___.",
+          "answer": "telefoniert",
+          "options": [
+            "telefoniert",
+            "getelefoniert",
+            "telefonieren"
+          ],
+          "explanation": "Verbs in -ieren form participles without ge-.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-05",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ einen Ausflug gemacht.",
+          "answer": "haben",
+          "options": [
+            "haben",
+            "sind",
+            "hat"
+          ],
+          "explanation": "machen normally takes haben.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-06",
+          "type": "multiple_choice",
+          "prompt": "Was hast du gestern ___?",
+          "answer": "gelesen",
+          "options": [
+            "gelesen",
+            "lesen",
+            "geliest"
+          ],
+          "explanation": "lesen has irregular participle gelesen.",
+          "lesson_id": 12
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich habe gestern einkaufen.",
+          "model": "Ich habe gestern eingekauft.",
+          "why": "A completed past action requires the participle."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + haben + time/object + Partizip II",
+          "model": "Ich habe gestern gekocht.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wir haben einen Film gesehen.",
+          "model": "Example starting point: Hast du heute telefoniert?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "level": "A1.1",
+      "title": "Perfekt with sein and past states",
+      "goal": "Choose sein for many movement/change verbs and use war/hatte.",
+      "formula": "subject + bin/ist/sind + ... + Partizip II",
+      "explanations": [
+        "Many intransitive movement and change-of-state verbs form Perfekt with sein; bleiben also uses sein.",
+        "For sein and haben themselves, everyday German often uses war and hatte for the past."
+      ],
+      "examples": [
+        {
+          "de": "Ich bin spät angekommen.",
+          "en": "I arrived late."
+        },
+        {
+          "de": "Wir sind am Sonntag gewandert.",
+          "en": "We hiked on Sunday."
+        },
+        {
+          "de": "Letzte Woche hatte ich Urlaub.",
+          "en": "I had vacation last week."
+        }
+      ],
+      "trap": {
+        "wrong": "Wir haben nach Hause gegangen.",
+        "correct": "Wir sind nach Hause gegangen.",
+        "why": "gehen forms Perfekt with sein."
+      },
+      "challenge": "Tell a short story: where you went, what you did and how the day was.",
+      "deep_notes": [
+        "Compare an action (ich bin gefahren) with a past state (ich war müde).",
+        "Not every verb about movement takes sein in every context; learn common A1 patterns first.",
+        "The participle still goes last when sein is the auxiliary.",
+        "Since the event may involve several verbs, choose auxiliary for each separately."
+      ],
+      "fill_questions": [
+        {
+          "id": "G13-F1",
+          "type": "fill",
+          "prompt": "Ich ___ früh aufgestanden.",
+          "answer": "bin",
+          "explanation": "aufstehen uses sein.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-F2",
+          "type": "fill",
+          "prompt": "Letztes Jahr ___ wir in Berlin. (were)",
+          "answer": "waren",
+          "explanation": "The past of sein for wir is waren.",
+          "lesson_id": 13
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G13-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ nach Hause gegangen.",
+          "answer": "bin",
+          "options": [
+            "bin",
+            "habe",
+            "hat"
+          ],
+          "explanation": "gehen forms Perfekt with sein.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-02",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ spät angekommen.",
+          "answer": "sind",
+          "options": [
+            "sind",
+            "haben",
+            "seid"
+          ],
+          "explanation": "ankommen takes sein.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-03",
+          "type": "multiple_choice",
+          "prompt": "Gestern ___ ich sehr müde.",
+          "answer": "war",
+          "options": [
+            "war",
+            "hatte",
+            "bin"
+          ],
+          "explanation": "The past of sein is war.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-04",
+          "type": "multiple_choice",
+          "prompt": "Letztes Jahr ___ ich wenig Zeit.",
+          "answer": "hatte",
+          "options": [
+            "hatte",
+            "war",
+            "habe"
+          ],
+          "explanation": "The past of haben is hatte.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-05",
+          "type": "multiple_choice",
+          "prompt": "Sie ___ in Hamburg geblieben.",
+          "answer": "ist",
+          "options": [
+            "ist",
+            "hat",
+            "haben"
+          ],
+          "explanation": "bleiben takes sein.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-06",
+          "type": "multiple_choice",
+          "prompt": "Wann ___ du aufgestanden?",
+          "answer": "bist",
+          "options": [
+            "bist",
+            "hast",
+            "ist"
+          ],
+          "explanation": "aufstehen takes sein.",
+          "lesson_id": 13
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Wir haben nach Hause gegangen.",
+          "model": "Wir sind nach Hause gegangen.",
+          "why": "gehen forms Perfekt with sein."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + bin/ist/sind + ... + Partizip II",
+          "model": "Ich bin spät angekommen.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wir sind am Sonntag gewandert.",
+          "model": "Example starting point: Letzte Woche hatte ich Urlaub.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "level": "A1.2",
+      "title": "es gibt and dative pronouns",
+      "goal": "Describe what exists and say what people like.",
+      "formula": "es gibt + accusative; es gefällt + dative person",
+      "explanations": [
+        "es gibt takes an accusative object even if the noun is plural.",
+        "Dative pronouns such as mir, dir, ihm, ihr express whom something pleases or to whom something is given."
+      ],
+      "examples": [
+        {
+          "de": "In der Stadt gibt es einen Park.",
+          "en": "There is a park in town."
+        },
+        {
+          "de": "Das Museum gefällt mir.",
+          "en": "I like the museum."
+        },
+        {
+          "de": "Wie gefällt dir der Platz?",
+          "en": "How do you like the square?"
+        }
+      ],
+      "trap": {
+        "wrong": "Mir gefällt die Cafés.",
+        "correct": "Mir gefallen die Cafés.",
+        "why": "A plural subject requires gefallen."
+      },
+      "challenge": "Describe two places in your town, saying what exists and what you like.",
+      "deep_notes": [
+        "es gibt can be used with singular or plural objects, but the verb remains gibt.",
+        "Ask Was gibt es hier? then answer with an accusative noun phrase.",
+        "gefallen has a different structure from mögen: Das Haus gefällt mir.",
+        "With plural nouns the finite verb gefallen is plural, not gefällt."
+      ],
+      "fill_questions": [
+        {
+          "id": "G14-F1",
+          "type": "fill",
+          "prompt": "Der Platz gefällt ___. (me)",
+          "answer": "mir",
+          "explanation": "gefallen takes dative.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-F2",
+          "type": "fill",
+          "prompt": "Hier ___ es drei Hotels.",
+          "answer": "gibt",
+          "explanation": "es gibt is fixed.",
+          "lesson_id": 14
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G14-01",
+          "type": "multiple_choice",
+          "prompt": "Hier gibt es ___ Markt.",
+          "answer": "einen",
+          "options": [
+            "einen",
+            "ein",
+            "einem"
+          ],
+          "explanation": "es gibt takes accusative.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-02",
+          "type": "multiple_choice",
+          "prompt": "Das neue Café gefällt ___.",
+          "answer": "mir",
+          "options": [
+            "mir",
+            "mich",
+            "ich"
+          ],
+          "explanation": "gefallen takes a dative person.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-03",
+          "type": "multiple_choice",
+          "prompt": "___ gefällt die Schule?",
+          "answer": "Dir",
+          "options": [
+            "Dir",
+            "Dich",
+            "Du"
+          ],
+          "explanation": "The dative pronoun is dir.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-04",
+          "type": "multiple_choice",
+          "prompt": "Die Bilder ___ mir gut.",
+          "answer": "gefallen",
+          "options": [
+            "gefallen",
+            "gefällt",
+            "gefallt"
+          ],
+          "explanation": "Plural subject -> gefallen.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-05",
+          "type": "multiple_choice",
+          "prompt": "Es ___ viele Geschäfte.",
+          "answer": "gibt",
+          "options": [
+            "gibt",
+            "geben",
+            "ist"
+          ],
+          "explanation": "es gibt is a fixed singular expression.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-06",
+          "type": "multiple_choice",
+          "prompt": "Der Lehrer hilft ___.",
+          "answer": "uns",
+          "options": [
+            "uns",
+            "wir",
+            "unser"
+          ],
+          "explanation": "helfen takes dative; uns is dative plural.",
+          "lesson_id": 14
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Mir gefällt die Cafés.",
+          "model": "Mir gefallen die Cafés.",
+          "why": "A plural subject requires gefallen."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "es gibt + accusative; es gefällt + dative person",
+          "model": "In der Stadt gibt es einen Park.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Das Museum gefällt mir.",
+          "model": "Example starting point: Wie gefällt dir der Platz?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "level": "A1.2",
+      "title": "Dative articles and location",
+      "goal": "Use mit, zu, bei and wo? with dative articles.",
+      "formula": "mit + dem/der/den; in + dative location",
+      "explanations": [
+        "Dative articles are dem (masculine/neuter), der (feminine), den (plural). Plural nouns often add -n if possible.",
+        "After mit, bei, zu, aus and von, use dative. For static location with in, also use dative."
+      ],
+      "examples": [
+        {
+          "de": "Ich fahre mit dem Zug.",
+          "en": "I travel by train."
+        },
+        {
+          "de": "Sie wohnt bei ihrer Tante.",
+          "en": "She lives with her aunt."
+        },
+        {
+          "de": "Wir sind in der Bibliothek.",
+          "en": "We are in the library."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich fahre mit die Bahn.",
+        "correct": "Ich fahre mit der Bahn.",
+        "why": "mit always requires dative."
+      },
+      "challenge": "Give directions to three places using mit, zu and in.",
+      "deep_notes": [
+        "Learn dative as the usual partner of mit, zu, bei, aus, von, nach and seit.",
+        "Remember masculine/neuter dem, feminine der, plural den (often with noun -n).",
+        "Wo? can use in + dative for a fixed location.",
+        "Do not automatically use dative after every in: direction needs accusative (Step 24)."
+      ],
+      "fill_questions": [
+        {
+          "id": "G15-F1",
+          "type": "fill",
+          "prompt": "Ich komme mit ___ Bus. (the)",
+          "answer": "dem",
+          "explanation": "mit + masculine dative.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-F2",
+          "type": "fill",
+          "prompt": "Er hilft ___ Frau. (the)",
+          "answer": "der",
+          "explanation": "helfen takes dative.",
+          "lesson_id": 15
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G15-01",
+          "type": "multiple_choice",
+          "prompt": "Ich fahre mit ___ Taxi.",
+          "answer": "dem",
+          "options": [
+            "dem",
+            "das",
+            "den"
+          ],
+          "explanation": "mit takes dative, Taxi is neuter.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-02",
+          "type": "multiple_choice",
+          "prompt": "Er wohnt bei ___ Oma.",
+          "answer": "der",
+          "options": [
+            "der",
+            "die",
+            "den"
+          ],
+          "explanation": "bei + feminine dative: der.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-03",
+          "type": "multiple_choice",
+          "prompt": "Sie kommt aus ___ Schweiz.",
+          "answer": "der",
+          "options": [
+            "der",
+            "die",
+            "dem"
+          ],
+          "explanation": "aus takes dative, die Schweiz -> der Schweiz.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-04",
+          "type": "multiple_choice",
+          "prompt": "Wir helfen ___ Kindern.",
+          "answer": "den",
+          "options": [
+            "den",
+            "die",
+            "der"
+          ],
+          "explanation": "Plural dative uses den.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-05",
+          "type": "multiple_choice",
+          "prompt": "Ich bin in ___ Küche.",
+          "answer": "der",
+          "options": [
+            "der",
+            "die",
+            "den"
+          ],
+          "explanation": "Static position in a feminine place -> der.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-06",
+          "type": "multiple_choice",
+          "prompt": "Sie geht zu ___ Arzt.",
+          "answer": "dem",
+          "options": [
+            "dem",
+            "den",
+            "der"
+          ],
+          "explanation": "zu takes dative, masculine dem.",
+          "lesson_id": 15
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich fahre mit die Bahn.",
+          "model": "Ich fahre mit der Bahn.",
+          "why": "mit always requires dative."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "mit + dem/der/den; in + dative location",
+          "model": "Ich fahre mit dem Zug.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Sie wohnt bei ihrer Tante.",
+          "model": "Example starting point: Wir sind in der Bibliothek.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "level": "A1.2",
+      "title": "Possessives in different cases",
+      "goal": "Choose possessive endings for gender and grammatical case.",
+      "formula": "mein/dein/sein/ihr/unser + matching ending + noun",
+      "explanations": [
+        "Possessive words take endings similar to ein. Their form depends on gender, number and case.",
+        "Nominative masculine: mein Bruder; accusative masculine: meinen Bruder; dative masculine: meinem Bruder."
+      ],
+      "examples": [
+        {
+          "de": "Das ist unser Garten.",
+          "en": "This is our garden."
+        },
+        {
+          "de": "Ich besuche meinen Onkel.",
+          "en": "I'm visiting my uncle."
+        },
+        {
+          "de": "Sie hilft ihrer Mutter.",
+          "en": "She helps her mother."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich kenne mein Bruder.",
+        "correct": "Ich kenne meinen Bruder.",
+        "why": "kennen takes an accusative object."
+      },
+      "challenge": "Describe family, friends and belongings in five original sentences using different possessives.",
+      "deep_notes": [
+        "Possessives combine owner (mein, dein, sein, ihr, unser) with endings from gender and case.",
+        "Masculine accusative is easy to notice: mein Bruder -> meinen Bruder.",
+        "Dative masculine/neuter normally ends -em: meinem Vater, meinem Kind.",
+        "Plural and feminine forms look similar in some positions; always ask case and number."
+      ],
+      "fill_questions": [
+        {
+          "id": "G16-F1",
+          "type": "fill",
+          "prompt": "Ich sehe ___ Vater. (my)",
+          "answer": "meinen",
+          "explanation": "Accusative masculine possessive.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-F2",
+          "type": "fill",
+          "prompt": "Wir helfen ___ Freund. (our)",
+          "answer": "unserem",
+          "explanation": "Dative masculine possessive.",
+          "lesson_id": 16
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G16-01",
+          "type": "multiple_choice",
+          "prompt": "Ich besuche ___ Bruder.",
+          "answer": "meinen",
+          "options": [
+            "meinen",
+            "mein",
+            "meinem"
+          ],
+          "explanation": "Masculine accusative uses meinen.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-02",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Wohnung.",
+          "answer": "unsere",
+          "options": [
+            "unsere",
+            "unser",
+            "unseren"
+          ],
+          "explanation": "Feminine nominative takes unsere.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-03",
+          "type": "multiple_choice",
+          "prompt": "Sie spricht mit ___ Vater.",
+          "answer": "ihrem",
+          "options": [
+            "ihrem",
+            "ihren",
+            "ihr"
+          ],
+          "explanation": "mit + masculine dative needs ihrem.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-04",
+          "type": "multiple_choice",
+          "prompt": "Wo ist ___ Auto?",
+          "answer": "dein",
+          "options": [
+            "dein",
+            "deine",
+            "deinen"
+          ],
+          "explanation": "Neuter nominative uses dein.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-05",
+          "type": "multiple_choice",
+          "prompt": "Er kennt ___ Schwester.",
+          "answer": "seine",
+          "options": [
+            "seine",
+            "sein",
+            "seinen"
+          ],
+          "explanation": "Feminine accusative uses seine.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-06",
+          "type": "multiple_choice",
+          "prompt": "Ich gebe ___ Kind ein Buch.",
+          "answer": "meinem",
+          "options": [
+            "meinem",
+            "mein",
+            "meinen"
+          ],
+          "explanation": "dative neuter is meinem.",
+          "lesson_id": 16
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich kenne mein Bruder.",
+          "model": "Ich kenne meinen Bruder.",
+          "why": "kennen takes an accusative object."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "mein/dein/sein/ihr/unser + matching ending + noun",
+          "model": "Das ist unser Garten.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Ich besuche meinen Onkel.",
+          "model": "Example starting point: Sie hilft ihrer Mutter.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "level": "A1.2",
+      "title": "Time prepositions and polite requests",
+      "goal": "Talk about time spans and ask politely with könnten.",
+      "formula": "in/vor/nach + time; Könnten Sie ... + infinitive?",
+      "explanations": [
+        "Use in zwei Stunden for a future time, vor zwei Tagen for time ago, and nach der Arbeit for after work.",
+        "For polite requests, könnten + Sie/du ... + infinitive at end. Learn the whole phrase; it is less direct than an imperative."
+      ],
+      "examples": [
+        {
+          "de": "Ich komme in zehn Minuten.",
+          "en": "I'll come in ten minutes."
+        },
+        {
+          "de": "Vor einer Woche war ich krank.",
+          "en": "I was ill a week ago."
+        },
+        {
+          "de": "Könnten Sie mir bitte helfen?",
+          "en": "Could you help me, please?"
+        }
+      ],
+      "trap": {
+        "wrong": "Könnten Sie mir bitte helfen machen?",
+        "correct": "Könnten Sie mir bitte helfen?",
+        "why": "Only the infinitive helfen is required at the end."
+      },
+      "challenge": "Ask for help twice: one informal request and one polite request to an official.",
+      "deep_notes": [
+        "in can point forward in time: in einer Stunde = one hour from now.",
+        "vor + dative time measures backward: vor zwei Tagen.",
+        "nach + dative marks a sequence: nach dem Mittagessen.",
+        "Könnten Sie ...? is a useful polite phrase; the second verb belongs at the end."
+      ],
+      "fill_questions": [
+        {
+          "id": "G17-F1",
+          "type": "fill",
+          "prompt": "Ich komme ___ einer Stunde. (in)",
+          "answer": "in",
+          "explanation": "in einer Stunde = one hour from now.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-F2",
+          "type": "fill",
+          "prompt": "___ Sie mir bitte helfen? (could)",
+          "answer": "Könnten",
+          "explanation": "Formal polite könnten.",
+          "lesson_id": 17
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G17-01",
+          "type": "multiple_choice",
+          "prompt": "Ich komme ___ fünf Minuten.",
+          "answer": "in",
+          "options": [
+            "in",
+            "vor",
+            "nach"
+          ],
+          "explanation": "in five minutes refers to future.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-02",
+          "type": "multiple_choice",
+          "prompt": "___ drei Tagen war Sonntag.",
+          "answer": "Vor",
+          "options": [
+            "Vor",
+            "In",
+            "Nach"
+          ],
+          "explanation": "Vor + time indicates time ago.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-03",
+          "type": "multiple_choice",
+          "prompt": "___ dem Unterricht gehen wir nach Hause.",
+          "answer": "Nach",
+          "options": [
+            "Nach",
+            "In",
+            "Vor"
+          ],
+          "explanation": "nach + dative indicates after.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-04",
+          "type": "multiple_choice",
+          "prompt": "___ Sie bitte langsamer sprechen?",
+          "answer": "Könnten",
+          "options": [
+            "Könnten",
+            "Könnt",
+            "Könnenst"
+          ],
+          "explanation": "Polite conditional request: Könnten Sie ...?",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-05",
+          "type": "multiple_choice",
+          "prompt": "Ich fahre ___ einer Stunde los.",
+          "answer": "in",
+          "options": [
+            "in",
+            "vor",
+            "bei"
+          ],
+          "explanation": "Future duration: in einer Stunde.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-06",
+          "type": "multiple_choice",
+          "prompt": "___ du mir kurz helfen?",
+          "answer": "Könntest",
+          "options": [
+            "Könntest",
+            "Könnten",
+            "Könnte"
+          ],
+          "explanation": "Informal polite question: Könntest du ...?",
+          "lesson_id": 17
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Könnten Sie mir bitte helfen machen?",
+          "model": "Könnten Sie mir bitte helfen?",
+          "why": "Only the infinitive helfen is required at the end."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "in/vor/nach + time; Könnten Sie ... + infinitive?",
+          "model": "Ich komme in zehn Minuten.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Vor einer Woche war ich krank.",
+          "model": "Example starting point: Könnten Sie mir bitte helfen?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "level": "A1.2",
+      "title": "wollen, werden, mit and ohne",
+      "goal": "Express plans, change and accompaniment.",
+      "formula": "subject + will + details + infinitive",
+      "explanations": [
+        "wollen expresses intention. werden can describe becoming something or changing state.",
+        "mit takes dative; ohne normally takes accusative. Contrast mit dem Bus and ohne einen Regenschirm."
+      ],
+      "examples": [
+        {
+          "de": "Wir wollen im Sommer verreisen.",
+          "en": "We want to travel in summer."
+        },
+        {
+          "de": "Es wird am Abend dunkel.",
+          "en": "It gets dark in the evening."
+        },
+        {
+          "de": "Ich gehe ohne meinen Rucksack.",
+          "en": "I'm going without my backpack."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich will morgen gehe arbeiten.",
+        "correct": "Ich will morgen arbeiten gehen.",
+        "why": "The modal structure keeps its infinitives at the end."
+      },
+      "challenge": "State three plans, one change in the weather and one journey with/without something.",
+      "deep_notes": [
+        "wollen is about intention, not the only way to speak about future plans.",
+        "werden as a main verb means become; don't use it for every future plan at A1.",
+        "mit takes dative (mit meinem Freund); ohne takes accusative (ohne meinen Freund).",
+        "Modal forms are irregular: ich will, du willst, er will."
+      ],
+      "fill_questions": [
+        {
+          "id": "G18-F1",
+          "type": "fill",
+          "prompt": "Ich ___ heute nicht ausgehen. (want)",
+          "answer": "will",
+          "explanation": "ich will.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-F2",
+          "type": "fill",
+          "prompt": "Sie fährt ___ dem Auto.",
+          "answer": "mit",
+          "explanation": "mit + dative.",
+          "lesson_id": 18
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G18-01",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute früh gehen.",
+          "answer": "wollen",
+          "options": [
+            "wollen",
+            "will",
+            "wollt"
+          ],
+          "explanation": "wir uses wollen.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-02",
+          "type": "multiple_choice",
+          "prompt": "Er ___ später Arzt.",
+          "answer": "wird",
+          "options": [
+            "wird",
+            "werde",
+            "werden"
+          ],
+          "explanation": "er wird = he becomes.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-03",
+          "type": "multiple_choice",
+          "prompt": "Ich gehe ___ meinen Hund.",
+          "answer": "ohne",
+          "options": [
+            "ohne",
+            "mit",
+            "bei"
+          ],
+          "explanation": "Without an object: ohne + accusative.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-04",
+          "type": "multiple_choice",
+          "prompt": "Sie fährt ___ dem Fahrrad.",
+          "answer": "mit",
+          "options": [
+            "mit",
+            "ohne",
+            "zu"
+          ],
+          "explanation": "With a vehicle: mit + dative.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-05",
+          "type": "multiple_choice",
+          "prompt": "Du ___ etwas Neues lernen.",
+          "answer": "willst",
+          "options": [
+            "willst",
+            "wollst",
+            "will"
+          ],
+          "explanation": "du willst is irregular.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-06",
+          "type": "multiple_choice",
+          "prompt": "Es ___ immer wärmer.",
+          "answer": "wird",
+          "options": [
+            "wird",
+            "will",
+            "werden"
+          ],
+          "explanation": "werden describes change.",
+          "lesson_id": 18
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich will morgen gehe arbeiten.",
+          "model": "Ich will morgen arbeiten gehen.",
+          "why": "The modal structure keeps its infinitives at the end."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "subject + will + details + infinitive",
+          "model": "Wir wollen im Sommer verreisen.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Es wird am Abend dunkel.",
+          "model": "Example starting point: Ich gehe ohne meinen Rucksack.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "level": "A1.2",
+      "title": "Polite commands and sollen",
+      "goal": "Give formal instructions and relay advice or obligations.",
+      "formula": "verb (infinitive) + Sie + ... + bitte",
+      "explanations": [
+        "The polite imperative uses the infinitive plus Sie: Kommen Sie bitte herein!",
+        "sollen expresses advice/instructions from another person; the main verb remains in the infinitive at the end."
+      ],
+      "examples": [
+        {
+          "de": "Warten Sie bitte einen Moment!",
+          "en": "Please wait a moment."
+        },
+        {
+          "de": "Sprechen Sie bitte langsamer.",
+          "en": "Please speak more slowly."
+        },
+        {
+          "de": "Ich soll morgen zum Arzt gehen.",
+          "en": "I'm supposed to go to the doctor tomorrow."
+        }
+      ],
+      "trap": {
+        "wrong": "Wartet Sie bitte hier!",
+        "correct": "Warten Sie bitte hier!",
+        "why": "The polite command uses the infinitive Warten followed by Sie."
+      },
+      "challenge": "Write three courteous signs for a classroom, office or waiting room.",
+      "deep_notes": [
+        "Polite imperative: infinitive first, then Sie. Adding bitte makes it friendlier.",
+        "Do not confuse a polite command with a declarative sentence ending in Sie.",
+        "sollen often reports advice or instructions from a doctor or another person.",
+        "With sollen, the infinitive still stays at the end."
+      ],
+      "fill_questions": [
+        {
+          "id": "G19-F1",
+          "type": "fill",
+          "prompt": "___ Sie bitte die Tür! (open)",
+          "answer": "Öffnen",
+          "explanation": "Formal imperative: infinitive + Sie.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-F2",
+          "type": "fill",
+          "prompt": "Du ___ mehr schlafen. (should)",
+          "answer": "sollst",
+          "explanation": "du sollst.",
+          "lesson_id": 19
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G19-01",
+          "type": "multiple_choice",
+          "prompt": "___ Sie bitte herein!",
+          "answer": "Kommen",
+          "options": [
+            "Kommen",
+            "Kommt",
+            "Komm"
+          ],
+          "explanation": "Polite imperative uses infinitive + Sie.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-02",
+          "type": "multiple_choice",
+          "prompt": "___ Sie bitte Platz!",
+          "answer": "Nehmen",
+          "options": [
+            "Nehmen",
+            "Nimm",
+            "Nehmt"
+          ],
+          "explanation": "Polite imperative: Nehmen Sie ...",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ heute viel trinken.",
+          "answer": "sollst",
+          "options": [
+            "sollst",
+            "sollen",
+            "soll"
+          ],
+          "explanation": "du sollst means you should.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-04",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ die Ärztin anrufen.",
+          "answer": "sollen",
+          "options": [
+            "sollen",
+            "sollst",
+            "soll"
+          ],
+          "explanation": "wir sollen + infinitive.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-05",
+          "type": "multiple_choice",
+          "prompt": "___ Sie bitte hier!",
+          "answer": "Warten",
+          "options": [
+            "Warten",
+            "Wartest",
+            "Wartet"
+          ],
+          "explanation": "Polite imperative: Warten Sie.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-06",
+          "type": "multiple_choice",
+          "prompt": "Sie ___ morgen pünktlich sein.",
+          "answer": "sollen",
+          "options": [
+            "sollen",
+            "soll",
+            "sollst"
+          ],
+          "explanation": "Polite Sie takes sollen.",
+          "lesson_id": 19
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Wartet Sie bitte hier!",
+          "model": "Warten Sie bitte hier!",
+          "why": "The polite command uses the infinitive Warten followed by Sie."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "verb (infinitive) + Sie + ... + bitte",
+          "model": "Warten Sie bitte einen Moment!",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Sprechen Sie bitte langsamer.",
+          "model": "Example starting point: Ich soll morgen zum Arzt gehen.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "level": "A1.2",
+      "title": "Informal commands and object pronouns",
+      "goal": "Give du/ihr instructions and replace objects with pronouns.",
+      "formula": "du imperative: Komm!; ihr imperative: Kommt!",
+      "explanations": [
+        "The informal du imperative often uses the verb stem, while ihr uses the familiar ihr verb form without ihr.",
+        "Accusative personal pronouns include mich, dich, ihn, sie, es, uns, euch and sie/Sie."
+      ],
+      "examples": [
+        {
+          "de": "Lies bitte die Nachricht!",
+          "en": "Please read the message!"
+        },
+        {
+          "de": "Nehmt eure Bücher mit!",
+          "en": "Take your books with you!"
+        },
+        {
+          "de": "Ich sehe den Hund. Ich sehe ihn.",
+          "en": "I see the dog. I see it."
+        }
+      ],
+      "trap": {
+        "wrong": "Du komm bitte!",
+        "correct": "Komm bitte!",
+        "why": "The du subject is normally omitted in the imperative."
+      },
+      "challenge": "Make two requests to a friend and two to a group, then replace three objects with pronouns.",
+      "deep_notes": [
+        "Imperatives in du and ihr use different verb forms; the subject is omitted.",
+        "Objects are replaced by pronouns that match the object's grammatical gender and case.",
+        "mich/dich/ihn answer Wen?; mir/dir/ihm answer Wem? (dative).",
+        "Some verbs have irregular du commands, e.g. Lies! or Nimm!"
+      ],
+      "fill_questions": [
+        {
+          "id": "G20-F1",
+          "type": "fill",
+          "prompt": "___ bitte her! (come, du)",
+          "answer": "Komm",
+          "explanation": "Du imperative Komm!",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-F2",
+          "type": "fill",
+          "prompt": "Wir sehen den Mann. Wir sehen ___.",
+          "answer": "ihn",
+          "explanation": "Masculine accusative pronoun.",
+          "lesson_id": 20
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G20-01",
+          "type": "multiple_choice",
+          "prompt": "___ bitte die Tür! (du)",
+          "answer": "Schließ",
+          "options": [
+            "Schließ",
+            "Schließt",
+            "Schließen"
+          ],
+          "explanation": "du imperative often uses the stem.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-02",
+          "type": "multiple_choice",
+          "prompt": "___ bitte leise! (ihr)",
+          "answer": "Sprecht",
+          "options": [
+            "Sprecht",
+            "Sprich",
+            "Sprechen"
+          ],
+          "explanation": "ihr imperative matches ihr form.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-03",
+          "type": "multiple_choice",
+          "prompt": "Ich höre den Mann. Ich höre ___.",
+          "answer": "ihn",
+          "options": [
+            "ihn",
+            "er",
+            "ihm"
+          ],
+          "explanation": "Masculine accusative pronoun: ihn.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-04",
+          "type": "multiple_choice",
+          "prompt": "Kannst du ___ sehen? (me)",
+          "answer": "mich",
+          "options": [
+            "mich",
+            "mir",
+            "ich"
+          ],
+          "explanation": "sehen takes accusative: mich.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-05",
+          "type": "multiple_choice",
+          "prompt": "___ eure Bücher mit! (ihr)",
+          "answer": "Nehmt",
+          "options": [
+            "Nehmt",
+            "Nimm",
+            "Nehmen"
+          ],
+          "explanation": "ihr imperative: Nehmt.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-06",
+          "type": "multiple_choice",
+          "prompt": "___ langsam! (du)",
+          "answer": "Fahr",
+          "options": [
+            "Fahr",
+            "Fährst",
+            "Fahrt"
+          ],
+          "explanation": "Common du imperative: Fahr.",
+          "lesson_id": 20
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Du komm bitte!",
+          "model": "Komm bitte!",
+          "why": "The du subject is normally omitted in the imperative."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "du imperative: Komm!; ihr imperative: Kommt!",
+          "model": "Lies bitte die Nachricht!",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Nehmt eure Bücher mit!",
+          "model": "Example starting point: Ich sehe den Hund. Ich sehe ihn.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "level": "A1.2",
+      "title": "Past participles without ge-",
+      "goal": "Recognize common inseparable-prefix participles and the prefix un-.",
+      "formula": "haben/sein + ... + participle without ge-",
+      "explanations": [
+        "Verbs beginning be-, ver- or er- form participles without ge-, e.g. bezahlt, verstanden, erzählt.",
+        "Adjectives with un- often express the opposite: möglich/unmöglich, pünktlich/unpünktlich."
+      ],
+      "examples": [
+        {
+          "de": "Ich habe die Rechnung bezahlt.",
+          "en": "I paid the bill."
+        },
+        {
+          "de": "Wir haben die Aufgabe verstanden.",
+          "en": "We understood the task."
+        },
+        {
+          "de": "Der Termin ist unmöglich.",
+          "en": "The appointment is impossible."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich habe die Geschichte geerzählt.",
+        "correct": "Ich habe die Geschichte erzählt.",
+        "why": "An er- verb does not take extra ge- in the participle."
+      },
+      "challenge": "Explain a past problem in four sentences using two inseparable-prefix verbs.",
+      "deep_notes": [
+        "Prefixes be-, ver- and er- are typically inseparable: their participles omit ge-.",
+        "A typical regular past participle ends -t even without ge-: bezahlt.",
+        "Un- can make an adjective's opposite, but not all adjectives allow it.",
+        "Watch for e.g. bekommen as a verb; its past form is bekommen, not gebekommen."
+      ],
+      "fill_questions": [
+        {
+          "id": "G21-F1",
+          "type": "fill",
+          "prompt": "Er hat das Paket ___. (receive)",
+          "answer": "bekommen",
+          "explanation": "bekommen -> bekommen.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-F2",
+          "type": "fill",
+          "prompt": "Sie hat den Schlüssel ___. (lose)",
+          "answer": "verloren",
+          "explanation": "verlieren -> verloren, without ge-.",
+          "lesson_id": 21
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G21-01",
+          "type": "multiple_choice",
+          "prompt": "Ich habe die E-Mail ___.",
+          "answer": "beantwortet",
+          "options": [
+            "beantwortet",
+            "gebeantwortet",
+            "antworten"
+          ],
+          "explanation": "be- verbs usually take no extra ge-.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-02",
+          "type": "multiple_choice",
+          "prompt": "Sie hat die Geschichte ___.",
+          "answer": "erzählt",
+          "options": [
+            "erzählt",
+            "geerzählt",
+            "erzählen"
+          ],
+          "explanation": "er- verbs form participles without ge-.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-03",
+          "type": "multiple_choice",
+          "prompt": "Wir haben den Zug ___.",
+          "answer": "verpasst",
+          "options": [
+            "verpasst",
+            "geverpasst",
+            "verpassen"
+          ],
+          "explanation": "ver- verbs do not use ge-.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-04",
+          "type": "multiple_choice",
+          "prompt": "Heute ist es ___. (not possible)",
+          "answer": "unmöglich",
+          "options": [
+            "unmöglich",
+            "nichtmöglich",
+            "unmöglichen"
+          ],
+          "explanation": "un- can form the opposite adjective.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-05",
+          "type": "multiple_choice",
+          "prompt": "Er ist leider ___. (not punctual)",
+          "answer": "unpünktlich",
+          "options": [
+            "unpünktlich",
+            "pünktlich",
+            "unpunkten"
+          ],
+          "explanation": "un- forms the negative adjective.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-06",
+          "type": "multiple_choice",
+          "prompt": "Hast du alles ___?",
+          "answer": "verstanden",
+          "options": [
+            "verstanden",
+            "geverstanden",
+            "verstehen"
+          ],
+          "explanation": "verstehen -> verstanden.",
+          "lesson_id": 21
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich habe die Geschichte geerzählt.",
+          "model": "Ich habe die Geschichte erzählt.",
+          "why": "An er- verb does not take extra ge- in the participle."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "haben/sein + ... + participle without ge-",
+          "model": "Ich habe die Rechnung bezahlt.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Wir haben die Aufgabe verstanden.",
+          "model": "Example starting point: Der Termin ist unmöglich.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "level": "A1.2",
+      "title": "müssen, dürfen, man and modal contrast",
+      "goal": "Distinguish necessity, permission and prohibition.",
+      "formula": "man darf/muss/kann + ... + infinitive",
+      "explanations": [
+        "müssen means must or have to. dürfen means may or be allowed. nicht dürfen means prohibited; nicht müssen means not necessary.",
+        "man is an impersonal subject (one/people in general), and takes third-person singular verbs."
+      ],
+      "examples": [
+        {
+          "de": "Hier darf man nicht parken.",
+          "en": "Parking is not allowed here."
+        },
+        {
+          "de": "Du musst heute nicht kommen.",
+          "en": "You don't have to come today."
+        },
+        {
+          "de": "Wir müssen pünktlich sein.",
+          "en": "We must be punctual."
+        }
+      ],
+      "trap": {
+        "wrong": "Du musst hier nicht rauchen (forbidden).",
+        "correct": "Du darfst hier nicht rauchen.",
+        "why": "Prohibition requires nicht dürfen, not nicht müssen."
+      },
+      "challenge": "Describe three rules and three permissions at work, school or in your building.",
+      "deep_notes": [
+        "müssen + nicht expresses no obligation: you may, but you don't have to.",
+        "dürfen + nicht means forbidden; this is stronger than a lack of obligation.",
+        "man is grammatically third-person singular: man darf, man muss.",
+        "Use wollen for intention, können for ability, dürfen for permission, sollen for advice."
+      ],
+      "fill_questions": [
+        {
+          "id": "G22-F1",
+          "type": "fill",
+          "prompt": "Du ___ hier nicht parken. (forbidden)",
+          "answer": "darfst",
+          "explanation": "nicht dürfen indicates prohibition.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-F2",
+          "type": "fill",
+          "prompt": "Wir ___ heute nicht arbeiten. (not required)",
+          "answer": "müssen",
+          "explanation": "nicht müssen indicates no obligation.",
+          "lesson_id": 22
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G22-01",
+          "type": "multiple_choice",
+          "prompt": "Hier ___ man nicht rauchen.",
+          "answer": "darf",
+          "options": [
+            "darf",
+            "muss",
+            "will"
+          ],
+          "explanation": "nicht dürfen expresses prohibition.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-02",
+          "type": "multiple_choice",
+          "prompt": "Du ___ nicht mitkommen. (not necessary)",
+          "answer": "musst",
+          "options": [
+            "musst",
+            "darfst",
+            "kannst"
+          ],
+          "explanation": "nicht müssen means not necessary.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-03",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute lernen. (necessary)",
+          "answer": "müssen",
+          "options": [
+            "müssen",
+            "dürfen",
+            "mögen"
+          ],
+          "explanation": "müssen expresses necessity.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-04",
+          "type": "multiple_choice",
+          "prompt": "___ ich hier parken? (permission)",
+          "answer": "Darf",
+          "options": [
+            "Darf",
+            "Muss",
+            "Kannst"
+          ],
+          "explanation": "Darf ich ...? asks permission.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-05",
+          "type": "multiple_choice",
+          "prompt": "Man ___ hier leise sein.",
+          "answer": "muss",
+          "options": [
+            "muss",
+            "müssen",
+            "musst"
+          ],
+          "explanation": "man uses third-person singular.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-06",
+          "type": "multiple_choice",
+          "prompt": "Ihr ___ jetzt gehen. (permitted)",
+          "answer": "dürft",
+          "options": [
+            "dürft",
+            "darf",
+            "dürfen"
+          ],
+          "explanation": "ihr dürft is permission.",
+          "lesson_id": 22
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Du musst hier nicht rauchen (forbidden).",
+          "model": "Du darfst hier nicht rauchen.",
+          "why": "Prohibition requires nicht dürfen, not nicht müssen."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "man darf/muss/kann + ... + infinitive",
+          "model": "Hier darf man nicht parken.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Du musst heute nicht kommen.",
+          "model": "Example starting point: Wir müssen pünktlich sein.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "level": "A1.2",
+      "title": "Comparisons and demonstratives",
+      "goal": "Compare things with als/wie and choose welche/diese forms.",
+      "formula": "adjective-er + als; so + adjective + wie",
+      "explanations": [
+        "Comparative adjectives often add -er; equal comparisons use so ... wie, unequal comparisons use comparative + als.",
+        "welch- asks which; dies- means this/these. Their endings depend on the noun and its case."
+      ],
+      "examples": [
+        {
+          "de": "Mein Zimmer ist heller als deins.",
+          "en": "My room is brighter than yours."
+        },
+        {
+          "de": "Dieses Kleid ist genauso teuer wie das andere.",
+          "en": "This dress is just as expensive as the other."
+        },
+        {
+          "de": "Welche Tasche möchtest du?",
+          "en": "Which bag would you like?"
+        }
+      ],
+      "trap": {
+        "wrong": "Dieser Buch ist neu.",
+        "correct": "Dieses Buch ist neu.",
+        "why": "Buch is neuter; use dieses in nominative."
+      },
+      "challenge": "Compare two apartments or products with four different adjectives.",
+      "deep_notes": [
+        "The comparison adjective follows its own patterns: groß -> größer; gut -> besser.",
+        "Use als with a difference and wie with equal degree: so groß wie.",
+        "Superlatives with am often end -sten: am schnellsten.",
+        "welch- asks for a choice and dies- points out a particular item; endings matter."
+      ],
+      "fill_questions": [
+        {
+          "id": "G23-F1",
+          "type": "fill",
+          "prompt": "Dieses Haus ist ___ als das alte. (large)",
+          "answer": "größer",
+          "explanation": "Comparative of groß.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-F2",
+          "type": "fill",
+          "prompt": "Welch___ Mantel möchtest du? (accusative masculine)",
+          "answer": "en",
+          "explanation": "welchen Mantel.",
+          "lesson_id": 23
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G23-01",
+          "type": "multiple_choice",
+          "prompt": "Mein Rucksack ist ___ als deiner.",
+          "answer": "schwerer",
+          "options": [
+            "schwerer",
+            "schwer",
+            "am schwersten"
+          ],
+          "explanation": "With als use comparative -er.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-02",
+          "type": "multiple_choice",
+          "prompt": "Das Auto ist so groß ___ der Bus.",
+          "answer": "wie",
+          "options": [
+            "wie",
+            "als",
+            "von"
+          ],
+          "explanation": "so ... wie expresses equality.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-03",
+          "type": "multiple_choice",
+          "prompt": "___ Buch gehört dir?",
+          "answer": "Welches",
+          "options": [
+            "Welches",
+            "Welcher",
+            "Welche"
+          ],
+          "explanation": "Buch is neuter nominative.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-04",
+          "type": "multiple_choice",
+          "prompt": "Ich nehme ___ Pullover.",
+          "answer": "diesen",
+          "options": [
+            "diesen",
+            "dieser",
+            "dieses"
+          ],
+          "explanation": "Masculine accusative: diesen.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-05",
+          "type": "multiple_choice",
+          "prompt": "Dieses Fahrrad ist ___ als das alte.",
+          "answer": "besser",
+          "options": [
+            "besser",
+            "guter",
+            "am besten"
+          ],
+          "explanation": "gut -> besser.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-06",
+          "type": "multiple_choice",
+          "prompt": "Welche Schuhe sind ___? (cheapest)",
+          "answer": "am billigsten",
+          "options": [
+            "am billigsten",
+            "billiger",
+            "billig"
+          ],
+          "explanation": "Superlative with am: am billigsten.",
+          "lesson_id": 23
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Dieser Buch ist neu.",
+          "model": "Dieses Buch ist neu.",
+          "why": "Buch is neuter; use dieses in nominative."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "adjective-er + als; so + adjective + wie",
+          "model": "Mein Zimmer ist heller als deins.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Dieses Kleid ist genauso teuer wie das andere.",
+          "model": "Example starting point: Welche Tasche möchtest du?",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "level": "A1.2",
+      "title": "Connectors and two-way prepositions",
+      "goal": "Link ideas and distinguish location from direction.",
+      "formula": "und/aber/oder/denn + normal main clause",
+      "explanations": [
+        "und, aber, oder and denn join main clauses without moving the finite verb to the end.",
+        "Two-way prepositions such as in/auf/an use dative for location (wo?) and accusative for destination (wohin?)."
+      ],
+      "examples": [
+        {
+          "de": "Ich bleibe zu Hause, denn ich bin müde.",
+          "en": "I'm staying home because I'm tired."
+        },
+        {
+          "de": "Das Buch liegt auf dem Tisch.",
+          "en": "The book is lying on the table."
+        },
+        {
+          "de": "Ich lege das Buch auf den Tisch.",
+          "en": "I put the book on the table."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich gehe in der Küche hinein.",
+        "correct": "Ich gehe in die Küche.",
+        "why": "For motion into a location, use accusative."
+      },
+      "challenge": "Explain where three things are and where you move them; connect two thoughts with denn.",
+      "deep_notes": [
+        "Connectors und, aber, oder, denn join full main clauses without changing verb-second order.",
+        "For place prepositions ask Wo? (location) or Wohin? (movement to a place).",
+        "auf dem Tisch describes position; auf den Tisch describes placement.",
+        "Some verbs pair with physical states: liegen/legen and stehen/stellen."
+      ],
+      "fill_questions": [
+        {
+          "id": "G24-F1",
+          "type": "fill",
+          "prompt": "Das Bild hängt an ___ Wand. (the, location)",
+          "answer": "der",
+          "explanation": "Wo? feminine dative.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-F2",
+          "type": "fill",
+          "prompt": "Ich hänge das Bild an ___ Wand. (the, destination)",
+          "answer": "die",
+          "explanation": "Wohin? feminine accusative.",
+          "lesson_id": 24
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G24-01",
+          "type": "multiple_choice",
+          "prompt": "Ich bin zu Hause, ___ ich bin krank.",
+          "answer": "denn",
+          "options": [
+            "denn",
+            "oder",
+            "und"
+          ],
+          "explanation": "denn gives a reason and keeps main clause order.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-02",
+          "type": "multiple_choice",
+          "prompt": "Das Handy liegt auf ___ Tisch.",
+          "answer": "dem",
+          "options": [
+            "dem",
+            "den",
+            "der"
+          ],
+          "explanation": "Wo? -> dative masculine.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-03",
+          "type": "multiple_choice",
+          "prompt": "Ich lege das Handy auf ___ Tisch.",
+          "answer": "den",
+          "options": [
+            "den",
+            "dem",
+            "der"
+          ],
+          "explanation": "Wohin? -> accusative masculine.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-04",
+          "type": "multiple_choice",
+          "prompt": "Wir gehen ___ Kino.",
+          "answer": "ins",
+          "options": [
+            "ins",
+            "im",
+            "ans"
+          ],
+          "explanation": "Destination into Kino: ins.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-05",
+          "type": "multiple_choice",
+          "prompt": "Wir sitzen ___ Kino.",
+          "answer": "im",
+          "options": [
+            "im",
+            "ins",
+            "in die"
+          ],
+          "explanation": "Location in Kino: im.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-06",
+          "type": "multiple_choice",
+          "prompt": "Ist der Tee heiß ___ kalt?",
+          "answer": "oder",
+          "options": [
+            "oder",
+            "denn",
+            "aber"
+          ],
+          "explanation": "oder offers a choice.",
+          "lesson_id": 24
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich gehe in der Küche hinein.",
+          "model": "Ich gehe in die Küche.",
+          "why": "For motion into a location, use accusative."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "und/aber/oder/denn + normal main clause",
+          "model": "Ich bleibe zu Hause, denn ich bin müde.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Das Buch liegt auf dem Tisch.",
+          "model": "Example starting point: Ich lege das Buch auf den Tisch.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "level": "A1.2",
+      "title": "Dates, ordinal numbers and würde",
+      "goal": "Say dates and express wishes politely.",
+      "formula": "am + ordinal ending; würde + gern + infinitive",
+      "explanations": [
+        "Ordinal numbers name an order or a calendar date: der erste Mai; am ersten Mai.",
+        "würde + infinitive expresses polite or hypothetical wishes: Ich würde gern ... . It is an extension useful at the end of A1."
+      ],
+      "examples": [
+        {
+          "de": "Heute ist der vierte April.",
+          "en": "Today is the fourth of April."
+        },
+        {
+          "de": "Mein Termin ist am siebten Juni.",
+          "en": "My appointment is on June seventh."
+        },
+        {
+          "de": "Ich würde gern mehr reisen.",
+          "en": "I would like to travel more."
+        }
+      ],
+      "trap": {
+        "wrong": "Ich habe am drei Mai Geburtstag.",
+        "correct": "Ich habe am dritten Mai Geburtstag.",
+        "why": "After am, use the dative ordinal ending -en."
+      },
+      "challenge": "Tell three important dates and write a wish list with würde gern.",
+      "deep_notes": [
+        "Ordinal numbers indicate rank or dates, not basic quantities.",
+        "With an unintroduced calendar date use der erste Mai; after am use am ersten Mai.",
+        "würde + infinitive is a polite or hypothetical wish rather than ordinary future.",
+        "The user should recognize months, numbers and their spoken forms as one package."
+      ],
+      "fill_questions": [
+        {
+          "id": "G25-F1",
+          "type": "fill",
+          "prompt": "Mein Geburtstag ist am ___ Juni. (fourth)",
+          "answer": "vierten",
+          "explanation": "am + dative ordinal.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-F2",
+          "type": "fill",
+          "prompt": "Ich ___ gern Deutsch flüssig sprechen. (would)",
+          "answer": "würde",
+          "explanation": "würde + infinitive.",
+          "lesson_id": 25
+        }
+      ],
+      "quiz": [
+        {
+          "id": "G25-01",
+          "type": "multiple_choice",
+          "prompt": "Heute ist der ___ Juli. (1st)",
+          "answer": "erste",
+          "options": [
+            "erste",
+            "ersten",
+            "eins"
+          ],
+          "explanation": "Nominative date: der erste.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-02",
+          "type": "multiple_choice",
+          "prompt": "Mein Termin ist am ___ Juli. (1st)",
+          "answer": "ersten",
+          "options": [
+            "ersten",
+            "erste",
+            "eins"
+          ],
+          "explanation": "am + ordinal takes -en.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-03",
+          "type": "multiple_choice",
+          "prompt": "Wir feiern am ___ Mai. (3rd)",
+          "answer": "dritten",
+          "options": [
+            "dritten",
+            "dritte",
+            "drei"
+          ],
+          "explanation": "am dritten Mai.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-04",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ gern in Österreich wohnen.",
+          "answer": "würde",
+          "options": [
+            "würde",
+            "wurde",
+            "werden"
+          ],
+          "explanation": "würde + infinitive expresses a wish.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-05",
+          "type": "multiple_choice",
+          "prompt": "___ du gern mehr reisen?",
+          "answer": "Würdest",
+          "options": [
+            "Würdest",
+            "Würden",
+            "Würde"
+          ],
+          "explanation": "du takes würdest.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-06",
+          "type": "multiple_choice",
+          "prompt": "Morgen ist der ___ Februar. (2nd)",
+          "answer": "zweite",
+          "options": [
+            "zweite",
+            "zweiten",
+            "zwei"
+          ],
+          "explanation": "der zweite Februar is nominative.",
+          "lesson_id": 25
+        }
+      ],
+      "review_tasks": [
+        {
+          "type": "correction",
+          "prompt": "Spot and repair the grammar mistake:",
+          "question": "Ich habe am drei Mai Geburtstag.",
+          "model": "Ich habe am dritten Mai Geburtstag.",
+          "why": "After am, use the dative ordinal ending -en."
+        },
+        {
+          "type": "sentence_production",
+          "prompt": "Explain this pattern aloud. Then write a new sentence using it:",
+          "question": "am + ordinal ending; würde + gern + infinitive",
+          "model": "Heute ist der vierte April.",
+          "why": "Compare your verb position, case endings and meaning to the model."
+        },
+        {
+          "type": "variation",
+          "prompt": "Change the person, place or time while keeping the grammar correct:",
+          "question": "Mein Termin ist am siebten Juni.",
+          "model": "Example starting point: Ich würde gern mehr reisen.",
+          "why": "Many answers are valid; check the grammar, not word-for-word similarity."
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": 1,
+      "after_step": 5,
+      "name": "Checkpoint 1 — Steps 1–5",
+      "questions": [
+        {
+          "id": "G01-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ Leila.",
+          "answer": "bin",
+          "options": [
+            "bin",
+            "bist",
+            "ist"
+          ],
+          "explanation": "ich uses bin.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G01-03",
+          "type": "multiple_choice",
+          "prompt": "Frau Keller, ___ Sie Deutsch?",
+          "answer": "lernen",
+          "options": [
+            "lernen",
+            "lernst",
+            "lernt"
+          ],
+          "explanation": "Polite Sie uses the infinitive-shaped plural form.",
+          "lesson_id": 1
+        },
+        {
+          "id": "G02-01",
+          "type": "multiple_choice",
+          "prompt": "___ wohnst du?",
+          "answer": "Wo",
+          "options": [
+            "Wo",
+            "Wie",
+            "Wer"
+          ],
+          "explanation": "Wo asks for location.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G02-03",
+          "type": "multiple_choice",
+          "prompt": "Wann ___ der Kurs?",
+          "answer": "beginnt",
+          "options": [
+            "beginnt",
+            "beginnen",
+            "beginnst"
+          ],
+          "explanation": "Kurs is singular.",
+          "lesson_id": 2
+        },
+        {
+          "id": "G03-01",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute früh.",
+          "answer": "arbeiten",
+          "options": [
+            "arbeiten",
+            "arbeitet",
+            "arbeitest"
+          ],
+          "explanation": "wir takes the plural ending.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G03-03",
+          "type": "multiple_choice",
+          "prompt": "Der Film ___ nicht interessant.",
+          "answer": "ist",
+          "options": [
+            "ist",
+            "sind",
+            "bin"
+          ],
+          "explanation": "Singular Film uses ist.",
+          "lesson_id": 3
+        },
+        {
+          "id": "G04-01",
+          "type": "multiple_choice",
+          "prompt": "___ du aus Österreich?",
+          "answer": "Kommst",
+          "options": [
+            "Kommst",
+            "Kommen",
+            "Kommt"
+          ],
+          "explanation": "Begin yes/no questions with the finite verb.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G04-03",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Mutter.",
+          "answer": "meine",
+          "options": [
+            "meine",
+            "mein",
+            "meinen"
+          ],
+          "explanation": "Mutter is feminine nominative.",
+          "lesson_id": 4
+        },
+        {
+          "id": "G05-01",
+          "type": "multiple_choice",
+          "prompt": "___ Pullover ist warm.",
+          "answer": "Der",
+          "options": [
+            "Der",
+            "Das",
+            "Die"
+          ],
+          "explanation": "Pullover is masculine.",
+          "lesson_id": 5
+        },
+        {
+          "id": "G05-03",
+          "type": "multiple_choice",
+          "prompt": "___ Tasche ist groß.",
+          "answer": "Die",
+          "options": [
+            "Die",
+            "Der",
+            "Das"
+          ],
+          "explanation": "Tasche is feminine.",
+          "lesson_id": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "after_step": 10,
+      "name": "Checkpoint 2 — Steps 6–10",
+      "questions": [
+        {
+          "id": "G06-01",
+          "type": "multiple_choice",
+          "prompt": "Das ist ___ Lampe.",
+          "answer": "eine",
+          "options": [
+            "eine",
+            "ein",
+            "einen"
+          ],
+          "explanation": "Feminine nominative takes eine.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G06-03",
+          "type": "multiple_choice",
+          "prompt": "Die Musik ist ___ laut.",
+          "answer": "nicht",
+          "options": [
+            "nicht",
+            "kein",
+            "keine"
+          ],
+          "explanation": "Negate an adjective with nicht.",
+          "lesson_id": 6
+        },
+        {
+          "id": "G07-01",
+          "type": "multiple_choice",
+          "prompt": "Ich suche ___ Bahnhof.",
+          "answer": "den",
+          "options": [
+            "den",
+            "der",
+            "dem"
+          ],
+          "explanation": "Masculine accusative: den.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G07-03",
+          "type": "multiple_choice",
+          "prompt": "Ich kaufe ___ Tasche.",
+          "answer": "eine",
+          "options": [
+            "eine",
+            "einen",
+            "ein"
+          ],
+          "explanation": "Tasche is feminine.",
+          "lesson_id": 7
+        },
+        {
+          "id": "G08-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ heute nicht kommen.",
+          "answer": "kann",
+          "options": [
+            "kann",
+            "könne",
+            "kannst"
+          ],
+          "explanation": "ich kann is irregular.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G08-03",
+          "type": "multiple_choice",
+          "prompt": "Sie ___ sehr gut singen.",
+          "answer": "kann",
+          "options": [
+            "kann",
+            "können",
+            "kannst"
+          ],
+          "explanation": "Singular sie (she) kann.",
+          "lesson_id": 8
+        },
+        {
+          "id": "G09-01",
+          "type": "multiple_choice",
+          "prompt": "___ Montag habe ich frei.",
+          "answer": "Am",
+          "options": [
+            "Am",
+            "Um",
+            "Im"
+          ],
+          "explanation": "Days take am.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G09-03",
+          "type": "multiple_choice",
+          "prompt": "Es ist halb neun = ___.",
+          "answer": "08:30",
+          "options": [
+            "08:30",
+            "09:30",
+            "08:15"
+          ],
+          "explanation": "halb neun means half toward nine.",
+          "lesson_id": 9
+        },
+        {
+          "id": "G10-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ Käse, aber keine Butter.",
+          "answer": "mag",
+          "options": [
+            "mag",
+            "möchte",
+            "möchtest"
+          ],
+          "explanation": "mag describes general preference.",
+          "lesson_id": 10
+        },
+        {
+          "id": "G10-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ gern Reis.",
+          "answer": "isst",
+          "options": [
+            "isst",
+            "esst",
+            "esse"
+          ],
+          "explanation": "essen changes e->i with du.",
+          "lesson_id": 10
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "after_step": 15,
+      "name": "Checkpoint 3 — Steps 11–15",
+      "questions": [
+        {
+          "id": "G11-01",
+          "type": "multiple_choice",
+          "prompt": "Morgen ___ ich früh ___.",
+          "answer": "stehe ... auf",
+          "options": [
+            "stehe ... auf",
+            "aufstehe ... (nothing)",
+            "stehen ... auf"
+          ],
+          "explanation": "aufstehen separates in a simple main clause.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G11-03",
+          "type": "multiple_choice",
+          "prompt": "Ich kann dich morgen ___.",
+          "answer": "anrufen",
+          "options": [
+            "anrufen",
+            "rufe an",
+            "angerufen"
+          ],
+          "explanation": "After kann use intact infinitive.",
+          "lesson_id": 11
+        },
+        {
+          "id": "G12-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ gestern Brot gekauft.",
+          "answer": "habe",
+          "options": [
+            "habe",
+            "bin",
+            "hat"
+          ],
+          "explanation": "kaufen uses Perfekt with haben.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G12-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ deine Schwester angerufen.",
+          "answer": "hast",
+          "options": [
+            "hast",
+            "bist",
+            "hat"
+          ],
+          "explanation": "Anrufen uses haben with du hast.",
+          "lesson_id": 12
+        },
+        {
+          "id": "G13-01",
+          "type": "multiple_choice",
+          "prompt": "Ich ___ nach Hause gegangen.",
+          "answer": "bin",
+          "options": [
+            "bin",
+            "habe",
+            "hat"
+          ],
+          "explanation": "gehen forms Perfekt with sein.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G13-03",
+          "type": "multiple_choice",
+          "prompt": "Gestern ___ ich sehr müde.",
+          "answer": "war",
+          "options": [
+            "war",
+            "hatte",
+            "bin"
+          ],
+          "explanation": "The past of sein is war.",
+          "lesson_id": 13
+        },
+        {
+          "id": "G14-01",
+          "type": "multiple_choice",
+          "prompt": "Hier gibt es ___ Markt.",
+          "answer": "einen",
+          "options": [
+            "einen",
+            "ein",
+            "einem"
+          ],
+          "explanation": "es gibt takes accusative.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G14-03",
+          "type": "multiple_choice",
+          "prompt": "___ gefällt die Schule?",
+          "answer": "Dir",
+          "options": [
+            "Dir",
+            "Dich",
+            "Du"
+          ],
+          "explanation": "The dative pronoun is dir.",
+          "lesson_id": 14
+        },
+        {
+          "id": "G15-01",
+          "type": "multiple_choice",
+          "prompt": "Ich fahre mit ___ Taxi.",
+          "answer": "dem",
+          "options": [
+            "dem",
+            "das",
+            "den"
+          ],
+          "explanation": "mit takes dative, Taxi is neuter.",
+          "lesson_id": 15
+        },
+        {
+          "id": "G15-03",
+          "type": "multiple_choice",
+          "prompt": "Sie kommt aus ___ Schweiz.",
+          "answer": "der",
+          "options": [
+            "der",
+            "die",
+            "dem"
+          ],
+          "explanation": "aus takes dative, die Schweiz -> der Schweiz.",
+          "lesson_id": 15
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "after_step": 20,
+      "name": "Checkpoint 4 — Steps 16–20",
+      "questions": [
+        {
+          "id": "G16-01",
+          "type": "multiple_choice",
+          "prompt": "Ich besuche ___ Bruder.",
+          "answer": "meinen",
+          "options": [
+            "meinen",
+            "mein",
+            "meinem"
+          ],
+          "explanation": "Masculine accusative uses meinen.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G16-03",
+          "type": "multiple_choice",
+          "prompt": "Sie spricht mit ___ Vater.",
+          "answer": "ihrem",
+          "options": [
+            "ihrem",
+            "ihren",
+            "ihr"
+          ],
+          "explanation": "mit + masculine dative needs ihrem.",
+          "lesson_id": 16
+        },
+        {
+          "id": "G17-01",
+          "type": "multiple_choice",
+          "prompt": "Ich komme ___ fünf Minuten.",
+          "answer": "in",
+          "options": [
+            "in",
+            "vor",
+            "nach"
+          ],
+          "explanation": "in five minutes refers to future.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G17-03",
+          "type": "multiple_choice",
+          "prompt": "___ dem Unterricht gehen wir nach Hause.",
+          "answer": "Nach",
+          "options": [
+            "Nach",
+            "In",
+            "Vor"
+          ],
+          "explanation": "nach + dative indicates after.",
+          "lesson_id": 17
+        },
+        {
+          "id": "G18-01",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute früh gehen.",
+          "answer": "wollen",
+          "options": [
+            "wollen",
+            "will",
+            "wollt"
+          ],
+          "explanation": "wir uses wollen.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G18-03",
+          "type": "multiple_choice",
+          "prompt": "Ich gehe ___ meinen Hund.",
+          "answer": "ohne",
+          "options": [
+            "ohne",
+            "mit",
+            "bei"
+          ],
+          "explanation": "Without an object: ohne + accusative.",
+          "lesson_id": 18
+        },
+        {
+          "id": "G19-01",
+          "type": "multiple_choice",
+          "prompt": "___ Sie bitte herein!",
+          "answer": "Kommen",
+          "options": [
+            "Kommen",
+            "Kommt",
+            "Komm"
+          ],
+          "explanation": "Polite imperative uses infinitive + Sie.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G19-03",
+          "type": "multiple_choice",
+          "prompt": "Du ___ heute viel trinken.",
+          "answer": "sollst",
+          "options": [
+            "sollst",
+            "sollen",
+            "soll"
+          ],
+          "explanation": "du sollst means you should.",
+          "lesson_id": 19
+        },
+        {
+          "id": "G20-01",
+          "type": "multiple_choice",
+          "prompt": "___ bitte die Tür! (du)",
+          "answer": "Schließ",
+          "options": [
+            "Schließ",
+            "Schließt",
+            "Schließen"
+          ],
+          "explanation": "du imperative often uses the stem.",
+          "lesson_id": 20
+        },
+        {
+          "id": "G20-03",
+          "type": "multiple_choice",
+          "prompt": "Ich höre den Mann. Ich höre ___.",
+          "answer": "ihn",
+          "options": [
+            "ihn",
+            "er",
+            "ihm"
+          ],
+          "explanation": "Masculine accusative pronoun: ihn.",
+          "lesson_id": 20
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "after_step": 25,
+      "name": "Checkpoint 5 — Steps 21–25",
+      "questions": [
+        {
+          "id": "G21-01",
+          "type": "multiple_choice",
+          "prompt": "Ich habe die E-Mail ___.",
+          "answer": "beantwortet",
+          "options": [
+            "beantwortet",
+            "gebeantwortet",
+            "antworten"
+          ],
+          "explanation": "be- verbs usually take no extra ge-.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G21-03",
+          "type": "multiple_choice",
+          "prompt": "Wir haben den Zug ___.",
+          "answer": "verpasst",
+          "options": [
+            "verpasst",
+            "geverpasst",
+            "verpassen"
+          ],
+          "explanation": "ver- verbs do not use ge-.",
+          "lesson_id": 21
+        },
+        {
+          "id": "G22-01",
+          "type": "multiple_choice",
+          "prompt": "Hier ___ man nicht rauchen.",
+          "answer": "darf",
+          "options": [
+            "darf",
+            "muss",
+            "will"
+          ],
+          "explanation": "nicht dürfen expresses prohibition.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G22-03",
+          "type": "multiple_choice",
+          "prompt": "Wir ___ heute lernen. (necessary)",
+          "answer": "müssen",
+          "options": [
+            "müssen",
+            "dürfen",
+            "mögen"
+          ],
+          "explanation": "müssen expresses necessity.",
+          "lesson_id": 22
+        },
+        {
+          "id": "G23-01",
+          "type": "multiple_choice",
+          "prompt": "Mein Rucksack ist ___ als deiner.",
+          "answer": "schwerer",
+          "options": [
+            "schwerer",
+            "schwer",
+            "am schwersten"
+          ],
+          "explanation": "With als use comparative -er.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G23-03",
+          "type": "multiple_choice",
+          "prompt": "___ Buch gehört dir?",
+          "answer": "Welches",
+          "options": [
+            "Welches",
+            "Welcher",
+            "Welche"
+          ],
+          "explanation": "Buch is neuter nominative.",
+          "lesson_id": 23
+        },
+        {
+          "id": "G24-01",
+          "type": "multiple_choice",
+          "prompt": "Ich bin zu Hause, ___ ich bin krank.",
+          "answer": "denn",
+          "options": [
+            "denn",
+            "oder",
+            "und"
+          ],
+          "explanation": "denn gives a reason and keeps main clause order.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G24-03",
+          "type": "multiple_choice",
+          "prompt": "Ich lege das Handy auf ___ Tisch.",
+          "answer": "den",
+          "options": [
+            "den",
+            "dem",
+            "der"
+          ],
+          "explanation": "Wohin? -> accusative masculine.",
+          "lesson_id": 24
+        },
+        {
+          "id": "G25-01",
+          "type": "multiple_choice",
+          "prompt": "Heute ist der ___ Juli. (1st)",
+          "answer": "erste",
+          "options": [
+            "erste",
+            "ersten",
+            "eins"
+          ],
+          "explanation": "Nominative date: der erste.",
+          "lesson_id": 25
+        },
+        {
+          "id": "G25-03",
+          "type": "multiple_choice",
+          "prompt": "Wir feiern am ___ Mai. (3rd)",
+          "answer": "dritten",
+          "options": [
+            "dritten",
+            "dritte",
+            "drei"
+          ],
+          "explanation": "am dritten Mai.",
+          "lesson_id": 25
+        }
+      ]
+    }
+  ]
+}

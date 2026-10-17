@@ -1,0 +1,22 @@
+{
+  "_about": "Editorial corrections applied on top of grammar/source.json (the supplied dataset, kept unchanged) by tools/grammar-build.js. Each entry says what was wrong. Question ids are never changed, so saved answers stay valid.",
+  "questions": {
+    "G02-F2": { "accept": ["wohnen"], "explanation": "After the place the verb comes second. sie = she → wohnt; sie = they → wohnen. Both are correct.", "_why": "Ambiguous: 'sie' can mean she or they, so 'wohnen' is also correct." },
+    "G04-06": { "prompt": "___ Anna verheiratet?", "explanation": "Anna is one person (sie, singular): Ist Anna verheiratet?", "_why": "'___ sie verheiratet?' also allows 'Sind' (sie = they), which was marked wrong." },
+    "G08-03": { "prompt": "Meine Schwester ___ sehr gut singen.", "explanation": "Meine Schwester = sie (singular) → kann.", "_why": "'Sie ___ sehr gut singen.' also allows 'können' (polite Sie / they), which was marked wrong." },
+    "G09-06": { "prompt": "Am Abend ___ Lea Klavier.", "explanation": "Lea = sie (singular) takes -t: spielt. The verb is second after Am Abend.", "_why": "'sie' could be plural (they spielen), which was marked wrong." },
+    "G10-01": { "options": ["mag", "magst", "mögen"], "explanation": "ich mag (no ending) – mögen describes a general preference.", "_why": "'möchte' was a wrong option but 'Ich möchte Käse, aber keine Butter.' is also correct German." },
+    "G14-03": { "prompt": "Wie gefällt ___ die Schule?", "answer": "dir", "options": ["dir", "dich", "du"], "explanation": "gefallen takes the dative person: Wie gefällt dir …?", "_why": "'Dir gefällt die Schule?' is not a natural question; the standard question is 'Wie gefällt dir die Schule?'." },
+    "G18-03": { "explanation": "meinen is accusative, and ohne always takes the accusative: ohne meinen Hund. With mit it would be mit meinem Hund (dative).", "_why": "Explanation clarified: only ohne fits the accusative form meinen." },
+    "G19-06": { "prompt": "Herr Weber, Sie ___ morgen pünktlich sein.", "explanation": "Polite Sie takes sollen.", "_why": "'Sie ___ …' at the start of a sentence also allows 'soll' (sie = she), which was marked wrong." },
+    "G20-F1": { "accept": ["Komme"], "_why": "'Komme bitte her!' is correct (more formal); 'Komm' stays the main answer." },
+    "G20-01": { "explanation": "The du imperative uses the stem: Schließ (or Schließe) bitte die Tür!" },
+    "G23-F2": { "accept": ["welchen"], "_why": "Learners who type the whole word 'welchen' are right too." }
+  },
+  "lessons": {
+    "10": { "review_tasks.1.model": "Ich möchte einen Apfelsaft, bitte.", "_why": "The model sentence did not use the pattern 'ich möchte + accusative object + bitte'." },
+    "18": { "explanations.1": "mit takes the dative; ohne always takes the accusative. Contrast mit dem Bus and ohne einen Regenschirm.", "_why": "'ohne normally takes accusative' → ohne always takes the accusative." },
+    "21": { "deep_notes.3": "Watch bekommen: its participle is bekommen, not gebekommen.", "_why": "'its past form' was imprecise: it is the participle." },
+    "25": { "deep_notes.1": "Without am say der erste Mai; after am say am ersten Mai.", "deep_notes.3": "Learn months, numbers and their spoken forms together as one package.", "_why": "Unclear wording ('unintroduced calendar date', 'The user should …')." }
+  }
+}

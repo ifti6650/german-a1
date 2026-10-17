@@ -3,11 +3,11 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 13, LVL = 'A1.2';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
-  const pron = (id, prompt, a, ex, opts) => q({ id, topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'mc', objective: 'L13-O2', instructions: 'Choose the dative pronoun.', prompt, options: opts || ['mir', 'mich', 'ich', 'mein'], answer: a, explanation: ex, learnHref: GB + '142-the-dative-pronouns' });
-  const gibt = (id, prompt, a, ex) => q({ id, topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'gap', objective: 'L13-O1', instructions: 'Fill in the gaps.', prompt, answer: a, explanation: ex, learnHref: GB + '141-es-gibt--accusative-there-is--there-are' });
+  const pron = (id, prompt, a, ex, opts) => q({ id, topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'mc', objective: 'L13-O2', instructions: 'Choose the dative pronoun.', prompt, options: opts || ['mir', 'mich', 'ich', 'mein'], answer: a, explanation: ex, learnHref: GB + '14' });
+  const gibt = (id, prompt, a, ex) => q({ id, topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'gap', objective: 'L13-O1', instructions: 'Fill in the gaps.', prompt, answer: a, explanation: ex, learnHref: GB + '14' });
 
   const objectives = [
     { id: 'L13-O1', text: 'Say what there is in a town with es gibt + accusative (einen / ein / eine / keinen …).', kind: 'grammar' },
@@ -18,28 +18,28 @@
   ];
 
   const learn = [
-    { id: 'es-gibt', title: 'es gibt + accusative', objective: 'L13-O1', href: GB + '141-es-gibt--accusative-there-is--there-are',
+    { id: 'es-gibt', title: 'es gibt + accusative', objective: 'L13-O1', href: GB + '14',
       text: 'es gibt = there is / there are. It never changes, even for plural. The thing that exists is in the accusative. If you start with a place, es comes after gibt.',
       table: [['In Köln gibt es einen Dom.', 'der → einen'], ['Hier gibt es ein Kino.', 'das → ein'], ['Gibt es hier eine Apotheke?', 'die → eine'], ['In meiner Straße gibt es viele Cafés.', 'plural: no article'], ['Hier gibt es keinen Bahnhof.', 'kein → keinen (der)']],
       mistakes: [['Hier gibt es ein Supermarkt.', 'Hier gibt es einen Supermarkt.', 'es gibt + accusative: der Supermarkt → einen.'], ['Hier gibt einen Park.', 'Hier gibt es einen Park.', 'Never drop es.']] },
-    { id: 'pronouns', title: 'The dative pronouns', objective: 'L13-O2', href: GB + '142-the-dative-pronouns',
+    { id: 'pronouns', title: 'The dative pronouns', objective: 'L13-O2', href: GB + '14',
       table: [['ich → mir', 'du → dir'], ['er → ihm', 'sie → ihr'], ['es → ihm', 'wir → uns'], ['ihr → euch', 'sie (they) → ihnen'], ['Sie → Ihnen', 'Wie geht es Ihnen? – Mir geht es gut.']] },
-    { id: 'verbs', title: 'Verbs with the dative', objective: 'L13-O3', href: GB + '143-verbs-with-the-dative',
+    { id: 'verbs', title: 'Verbs with the dative', objective: 'L13-O3', href: GB + '14',
       text: 'These verbs take a dative object: gefallen (to like / please), gehören (to belong to), helfen (to help), danken (to thank), schmecken (to taste good). Watch the vowel change: es gefällt, du hilfst, er hilft.',
       table: [['Kannst du mir helfen?', 'Can you help me?'], ['Das Rad gehört ihr.', 'The bike is hers.'], ['Ich danke Ihnen!', 'Thank you!'], ['Schmeckt dir die Suppe?', 'Do you like the soup?']],
       mistakes: [['Kannst du mich helfen?', 'Kannst du mir helfen?', 'helfen takes the dative: mir.']] },
-    { id: 'gefallen', title: 'gefallen: the thing is the subject', objective: 'L13-O4', href: GB + '144-gefallen-watch-the-subject',
+    { id: 'gefallen', title: 'gefallen: the thing is the subject', objective: 'L13-O4', href: GB + '14',
       text: 'With gefallen the thing you like is the subject, so the verb agrees with the thing: one thing → gefällt, several things → gefallen. The person is in the dative.',
       table: [['Die Altstadt gefällt mir.', 'one thing → gefällt'], ['Die Brücken gefallen mir.', 'plural → gefallen'], ['Gefällt dir das Viertel?', 'question: verb first']],
       mistakes: [['Ich gefalle Hamburg.', 'Hamburg gefällt mir.', '„Ich gefalle Hamburg“ means Hamburg likes me!']] },
-    { id: 'city', title: 'Places in town and describing a city', objective: 'L13-O5', href: GB + '145-describing-a-city',
+    { id: 'city', title: 'Places in town and describing a city', objective: 'L13-O5', href: GB + '14',
       table: [['der Park · der Bahnhof · der Markt', 'park · station · market'], ['das Museum · das Rathaus · das Kino', 'museum · town hall · cinema'], ['die Brücke · die Kirche · die Bibliothek', 'bridge · church · library'], ['laut – ruhig · sauber – schmutzig', 'noisy – quiet · clean – dirty'], ['berühmt · interessant · grün', 'famous · interesting · green']],
       examples: [['In meiner Stadt gibt es einen Fluss und viele Brücken. Das gefällt mir sehr gut.', 'In my town there is a river and many bridges. I like that a lot.']] }
   ];
 
   const practice = [
     gibt('L13-P-01', 'In Berlin ___ ___ viele Museen.', [['gibt'], ['es']], 'In Berlin gibt es … (verb 2nd, es after it).'),
-    q({ id: 'L13-P-02', topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'mc', objective: 'L13-O1', instructions: 'Choose the article.', prompt: 'Hier gibt es … Park. (der Park)', options: ['einen', 'ein', 'eine', 'einem'], answer: 'einen', explanation: 'es gibt + accusative: der → einen.', learnHref: GB + '141-es-gibt--accusative-there-is--there-are' }),
+    q({ id: 'L13-P-02', topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'mc', objective: 'L13-O1', instructions: 'Choose the article.', prompt: 'Hier gibt es … Park. (der Park)', options: ['einen', 'ein', 'eine', 'einem'], answer: 'einen', explanation: 'es gibt + accusative: der → einen.', learnHref: GB + '14' }),
     q({ id: 'L13-P-03', topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'mc', objective: 'L13-O1', instructions: 'Choose the article.', prompt: 'Gibt es hier … Bibliothek? (die Bibliothek)', options: ['eine', 'einen', 'ein', 'einer'], answer: 'eine', explanation: 'die → eine (accusative = nominative for feminine).' }),
     gibt('L13-P-04', 'Leider gibt es hier ___ Kino. (kein, das Kino)', [['kein']], 'das → kein (accusative neuter does not change).'),
     q({ id: 'L13-P-05', topic: 'es-gibt', skill: 'grammar', grammar: 'es-gibt', type: 'order', objective: 'L13-O1', instructions: 'Put the words in order.', prompt: 'Is there a supermarket here?', tokens: ['Gibt', 'es', 'hier', 'einen', 'Supermarkt'], answer: 'Gibt es hier einen Supermarkt', explanation: 'Yes/no question: verb first.' }),
@@ -47,17 +47,17 @@
     pron('L13-P-07', 'Kannst du … helfen? (wir)', 'uns', 'wir → uns.', ['uns', 'wir', 'unser', 'euch']),
     pron('L13-P-08', 'Das Fahrrad gehört … (er)', 'ihm', 'er → ihm.', ['ihm', 'ihn', 'er', 'ihr']),
     pron('L13-P-09', 'Schmeckt … der Kuchen? (du)', 'dir', 'du → dir.', ['dir', 'dich', 'du', 'dein']),
-    q({ id: 'L13-P-10', topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'match', objective: 'L13-O2', instructions: 'Match nominative and dative.', prompt: '', pairs: [['ich', 'mir'], ['du', 'dir'], ['sie (she)', 'ihr'], ['wir', 'uns'], ['sie (they)', 'ihnen']], explanation: 'Dative pronouns.', learnHref: GB + '142-the-dative-pronouns' }),
+    q({ id: 'L13-P-10', topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'match', objective: 'L13-O2', instructions: 'Match nominative and dative.', prompt: '', pairs: [['ich', 'mir'], ['du', 'dir'], ['sie (she)', 'ihr'], ['wir', 'uns'], ['sie (they)', 'ihnen']], explanation: 'Dative pronouns.', learnHref: GB + '14' }),
     q({ id: 'L13-P-11', topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'gap', objective: 'L13-O2', instructions: 'Fill in the dative pronoun.', prompt: 'Ich danke ___! (Sie)', answer: [['Ihnen']], explanation: 'Sie → Ihnen (capital I).' }),
     q({ id: 'L13-P-12', topic: 'dative-pronouns', skill: 'grammar', grammar: 'dative-pronouns', type: 'gap', objective: 'L13-O2', instructions: 'Fill in the dative pronoun.', prompt: 'Die Tasche gehört ___. (sie, she)', answer: [['ihr']], explanation: 'sie (she) → ihr.' }),
-    q({ id: 'L13-P-13', topic: 'dative-verbs', skill: 'grammar', grammar: 'dative-verbs', type: 'conjugation', objective: 'L13-O3', instructions: 'Conjugate.', prompt: 'er + helfen →', answer: 'hilft', explanation: 'helfen: e → i (du hilfst, er hilft).', learnHref: GB + '143-verbs-with-the-dative' }),
-    q({ id: 'L13-P-14', topic: 'dative-verbs', skill: 'grammar', grammar: 'dative-verbs', type: 'mc', objective: 'L13-O3', instructions: 'Choose the correct sentence.', prompt: 'Which sentence is correct?', options: ['Kannst du mir helfen?', 'Kannst du mich helfen?', 'Kannst du ich helfen?'], answer: 'Kannst du mir helfen?', explanation: 'helfen + dative.', learnHref: GB + '143-verbs-with-the-dative' }),
+    q({ id: 'L13-P-13', topic: 'dative-verbs', skill: 'grammar', grammar: 'dative-verbs', type: 'conjugation', objective: 'L13-O3', instructions: 'Conjugate.', prompt: 'er + helfen →', answer: 'hilft', explanation: 'helfen: e → i (du hilfst, er hilft).', learnHref: GB + '14' }),
+    q({ id: 'L13-P-14', topic: 'dative-verbs', skill: 'grammar', grammar: 'dative-verbs', type: 'mc', objective: 'L13-O3', instructions: 'Choose the correct sentence.', prompt: 'Which sentence is correct?', options: ['Kannst du mir helfen?', 'Kannst du mich helfen?', 'Kannst du ich helfen?'], answer: 'Kannst du mir helfen?', explanation: 'helfen + dative.', learnHref: GB + '14' }),
     q({ id: 'L13-P-15', topic: 'dative-verbs', skill: 'vocabulary', type: 'match', objective: 'L13-O3', instructions: 'Match the verbs.', prompt: '', pairs: [['gefallen', 'to please / like'], ['gehören', 'to belong to'], ['helfen', 'to help'], ['danken', 'to thank'], ['schmecken', 'to taste good']], explanation: 'The dative verbs.' }),
-    q({ id: 'L13-P-16', topic: 'gefallen', skill: 'grammar', grammar: 'gefallen', type: 'mc', objective: 'L13-O4', instructions: 'gefällt or gefallen?', prompt: 'Die Parks … mir sehr gut.', options: ['gefallen', 'gefällt'], answer: 'gefallen', explanation: 'die Parks = plural → gefallen.', learnHref: GB + '144-gefallen-watch-the-subject' }),
+    q({ id: 'L13-P-16', topic: 'gefallen', skill: 'grammar', grammar: 'gefallen', type: 'mc', objective: 'L13-O4', instructions: 'gefällt or gefallen?', prompt: 'Die Parks … mir sehr gut.', options: ['gefallen', 'gefällt'], answer: 'gefallen', explanation: 'die Parks = plural → gefallen.', learnHref: GB + '14' }),
     q({ id: 'L13-P-17', topic: 'gefallen', skill: 'grammar', grammar: 'gefallen', type: 'mc', objective: 'L13-O4', instructions: 'gefällt or gefallen?', prompt: 'Das Viertel … uns.', options: ['gefällt', 'gefallen'], answer: 'gefällt', explanation: 'das Viertel = one thing → gefällt.' }),
     q({ id: 'L13-P-18', topic: 'gefallen', skill: 'grammar', grammar: 'gefallen', type: 'gap', objective: 'L13-O4', instructions: 'Fill in gefallen.', prompt: '___ dir die Schuhe?', answer: [['Gefallen']], explanation: 'die Schuhe (plural) → Gefallen …?' }),
     q({ id: 'L13-P-19', topic: 'gefallen', skill: 'grammar', grammar: 'gefallen', type: 'order', objective: 'L13-O4', instructions: 'Put the words in order.', prompt: 'I like Munich very much.', tokens: ['München', 'gefällt', 'mir', 'sehr', 'gut'], answer: 'München gefällt mir sehr gut', explanation: 'The city is the subject.' }),
-    q({ id: 'L13-P-20', topic: 'city', skill: 'vocabulary', type: 'match', objective: 'L13-O5', instructions: 'Match the places.', prompt: '', pairs: [['der Bahnhof', 'station'], ['das Rathaus', 'town hall'], ['die Brücke', 'bridge'], ['die Kirche', 'church'], ['der Markt', 'market']], explanation: 'Places in town.', learnHref: GB + '145-describing-a-city' }),
+    q({ id: 'L13-P-20', topic: 'city', skill: 'vocabulary', type: 'match', objective: 'L13-O5', instructions: 'Match the places.', prompt: '', pairs: [['der Bahnhof', 'station'], ['das Rathaus', 'town hall'], ['die Brücke', 'bridge'], ['die Kirche', 'church'], ['der Markt', 'market']], explanation: 'Places in town.', learnHref: GB + '14' }),
     q({ id: 'L13-P-21', topic: 'city', skill: 'vocabulary', type: 'mc', objective: 'L13-O5', instructions: 'Choose the opposite.', prompt: 'laut ↔ ?', options: ['ruhig', 'sauber', 'berühmt', 'groß'], answer: 'ruhig', explanation: 'laut (noisy) ↔ ruhig (quiet).' }),
     q({ id: 'L13-P-22', topic: 'city', skill: 'vocabulary', type: 'article', objective: 'L13-O5', instructions: 'Choose the article.', prompt: '… Museum', options: ['der', 'die', 'das'], answer: 'das', explanation: 'das Museum (plural: die Museen).' }),
     q({ id: 'L13-P-23', topic: 'gefallen', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L13-O4', instructions: 'Write it in German (use gefallen).', prompt: 'I like the city.', answer: 'Die Stadt gefällt mir.', accept: ['Mir gefällt die Stadt.'], explanation: 'Die Stadt gefällt mir.' }),

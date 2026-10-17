@@ -3,7 +3,7 @@
 // NOT copied from Kursbuch/Arbeitsbuch; no textbook page/exercise numbers claimed.
 // status 'ai-checked' = written and checked by the AI assistant; needs a human (teacher) review before 'approved'.
 (function (root) {
-  const GB = 'grammar-book.html#';
+  const GB = 'grammar-lab.html?s='; // Grammar Lab step
   const L = 7, LVL = 'A1.1';
   const q = (o) => Object.assign({ level: LVL, lesson: L, difficulty: 1, status: 'ai-checked' }, o);
   const conj = (id, prompt, answer, ex, obj = 'L7-O3', g = 'vowel-change', topic = 'vowel-change') => q({ id, topic, skill: 'grammar', grammar: g, type: 'conjugation', objective: obj, instructions: 'Write the verb form.', prompt, answer, explanation: ex });
@@ -19,46 +19,46 @@
   ];
 
   const learn = [
-    { id: 'koennen', title: 'können (can, to be able to)', objective: 'L7-O1', href: GB + '81-können-can-to-be-able-to',
+    { id: 'koennen', title: 'können (can, to be able to)', objective: 'L7-O1', href: GB + '8',
       text: 'ich and er/sie have the same form and no ending: ich kann, er kann.',
       table: [['ich kann · du kannst', 'I can · you can'], ['er / sie kann', 'he / she can'], ['wir können · ihr könnt', 'we can · you (all) can'], ['sie / Sie können', 'they can / you can (polite)']],
       mistakes: [['er kannt', 'er kann', 'No ending with ich and er/sie/es.']] },
-    { id: 'bracket', title: 'The sentence bracket (Satzklammer)', objective: 'L7-O2', href: GB + '82-the-sentence-bracket-satzklammer',
+    { id: 'bracket', title: 'The sentence bracket (Satzklammer)', objective: 'L7-O2', href: GB + '8',
       text: 'können goes in position 2. The second verb goes to the very end, in the infinitive.',
       table: [['Ich kann sehr gut tanzen.', 'können … tanzen = the bracket'], ['Kannst du Gitarre spielen?', 'yes/no question: können first, infinitive last']],
       mistakes: [['Er kann singen sehr gut.', 'Er kann sehr gut singen.', 'The infinitive goes to the end.']] },
-    { id: 'vowel', title: 'More verbs with a vowel change', objective: 'L7-O3', href: GB + '83-more-verbs-with-a-vowel-change',
+    { id: 'vowel', title: 'More verbs with a vowel change', objective: 'L7-O3', href: GB + '8',
       text: 'Like sprechen and sehen, these change the vowel only with du and er/sie/es.',
       table: [['fahren → du fährst, er fährt', 'a → ä'], ['lesen → du liest, er liest', 'e → ie'], ['treffen → du triffst, er trifft', 'e → i']] },
-    { id: 'gern', title: 'gern: saying what you like doing', objective: 'L7-O4', href: GB + '84-gern-saying-what-you-like-doing',
+    { id: 'gern', title: 'gern: saying what you like doing', objective: 'L7-O4', href: GB + '8',
       text: 'Put gern after the verb. nicht gern = don’t like doing.',
       examples: [['Ich schwimme gern.', 'I like swimming.'], ['Er kocht nicht gern.', 'He doesn’t like cooking.'], ['Was machst du gern in der Freizeit?', 'What do you like doing in your free time?']] },
-    { id: 'frequency', title: 'How often?', objective: 'L7-O5', href: GB + '85-how-often-frequency-words',
+    { id: 'frequency', title: 'How often?', objective: 'L7-O5', href: GB + '8',
       table: [['immer', 'always (100 %)'], ['oft', 'often'], ['manchmal', 'sometimes'], ['selten', 'rarely'], ['nie', 'never (0 %)']],
       examples: [['Tom spielt oft Fußball.', 'Tom often plays football.']] },
-    { id: 'compliments', title: 'Compliments', objective: 'L7-O6', href: GB + '86-compliments',
+    { id: 'compliments', title: 'Compliments', objective: 'L7-O6', href: GB + '8',
       examples: [['Du kannst super tanzen!', 'You can dance really well!'], ['Toll! / Wow!', 'Great! / Wow!'], ['Danke, das ist nett.', 'Thanks, that’s kind.']] }
   ];
 
   const practice = [
     conj('L07-P-01', 'du + können →', 'kannst', 'du kannst.', 'L7-O1', 'modal-verb', 'koennen'),
     conj('L07-P-02', 'er + können →', 'kann', 'er kann (no ending).', 'L7-O1', 'modal-verb', 'koennen'),
-    q({ id: 'L07-P-03', topic: 'koennen', skill: 'grammar', grammar: 'modal-verb', type: 'gap', objective: 'L7-O1', instructions: 'Fill in können.', prompt: 'Wir ___ gut kochen. ___ ihr auch kochen?', answer: [['können'], ['Könnt']], explanation: 'wir können, ihr könnt.', learnHref: GB + '81-können-can-to-be-able-to' }),
-    q({ id: 'L07-P-04', topic: 'bracket', skill: 'grammar', grammar: 'sentence-bracket', type: 'order', objective: 'L7-O2', instructions: 'Put the words in order.', prompt: 'I can dance well.', tokens: ['kann', 'Ich', 'tanzen', 'gut'], answer: 'Ich kann gut tanzen', explanation: 'kann in position 2, tanzen at the end.', learnHref: GB + '82-the-sentence-bracket-satzklammer' }),
+    q({ id: 'L07-P-03', topic: 'koennen', skill: 'grammar', grammar: 'modal-verb', type: 'gap', objective: 'L7-O1', instructions: 'Fill in können.', prompt: 'Wir ___ gut kochen. ___ ihr auch kochen?', answer: [['können'], ['Könnt']], explanation: 'wir können, ihr könnt.', learnHref: GB + '8' }),
+    q({ id: 'L07-P-04', topic: 'bracket', skill: 'grammar', grammar: 'sentence-bracket', type: 'order', objective: 'L7-O2', instructions: 'Put the words in order.', prompt: 'I can dance well.', tokens: ['kann', 'Ich', 'tanzen', 'gut'], answer: 'Ich kann gut tanzen', explanation: 'kann in position 2, tanzen at the end.', learnHref: GB + '8' }),
     q({ id: 'L07-P-05', topic: 'bracket', skill: 'grammar', grammar: 'sentence-bracket', type: 'order', objective: 'L7-O2', instructions: 'Put the words in order.', prompt: 'Can you swim? (polite)', tokens: ['Sie', 'schwimmen', 'Können'], answer: 'Können Sie schwimmen', explanation: 'Können first, schwimmen last.' }),
     q({ id: 'L07-P-06', topic: 'bracket', skill: 'grammar', grammar: 'sentence-bracket', type: 'mc', objective: 'L7-O2', instructions: 'Choose the correct sentence.', prompt: 'He can sing very well.', options: ['Er kann sehr gut singen.', 'Er kann singen sehr gut.', 'Er singen kann sehr gut.', 'Er kann sehr gut singt.'], answer: 'Er kann sehr gut singen.', explanation: 'Infinitive at the end.' }),
     conj('L07-P-07', 'du + fahren →', 'fährst', 'a → ä: du fährst.'),
     conj('L07-P-08', 'er + lesen →', 'liest', 'e → ie: er liest.'),
     conj('L07-P-09', 'sie (she) + treffen →', 'trifft', 'e → i: sie trifft.'),
-    q({ id: 'L07-P-10', topic: 'vowel-change', skill: 'grammar', grammar: 'vowel-change', type: 'gap', objective: 'L7-O3', instructions: 'Fill in lesen.', prompt: 'Was ___ du? – Ich ___ ein Buch.', answer: [['liest'], ['lese']], explanation: 'du liest, ich lese.', learnHref: GB + '83-more-verbs-with-a-vowel-change' }),
+    q({ id: 'L07-P-10', topic: 'vowel-change', skill: 'grammar', grammar: 'vowel-change', type: 'gap', objective: 'L7-O3', instructions: 'Fill in lesen.', prompt: 'Was ___ du? – Ich ___ ein Buch.', answer: [['liest'], ['lese']], explanation: 'du liest, ich lese.', learnHref: GB + '8' }),
     q({ id: 'L07-P-11', topic: 'vowel-change', skill: 'grammar', grammar: 'vowel-change', type: 'gap', objective: 'L7-O3', instructions: 'Fill in fahren.', prompt: 'Er ___ gern Fahrrad.', answer: [['fährt']], explanation: 'er fährt.' }),
-    q({ id: 'L07-P-12', topic: 'gern', skill: 'grammar', grammar: 'gern', type: 'mc', objective: 'L7-O4', instructions: 'Choose the correct sentence.', prompt: 'I like swimming.', options: ['Ich schwimme gern.', 'Ich gern schwimme.', 'Gern ich schwimme.', 'Ich schwimme gern nicht.'], answer: 'Ich schwimme gern.', explanation: 'gern comes after the verb.', learnHref: GB + '84-gern-saying-what-you-like-doing' }),
+    q({ id: 'L07-P-12', topic: 'gern', skill: 'grammar', grammar: 'gern', type: 'mc', objective: 'L7-O4', instructions: 'Choose the correct sentence.', prompt: 'I like swimming.', options: ['Ich schwimme gern.', 'Ich gern schwimme.', 'Gern ich schwimme.', 'Ich schwimme gern nicht.'], answer: 'Ich schwimme gern.', explanation: 'gern comes after the verb.', learnHref: GB + '8' }),
     q({ id: 'L07-P-13', topic: 'gern', skill: 'grammar', grammar: 'gern', type: 'order', objective: 'L7-O4', instructions: 'Put the words in order.', prompt: 'I don’t like cooking.', tokens: ['nicht', 'Ich', 'gern', 'koche'], answer: 'Ich koche nicht gern', explanation: 'nicht gern after the verb.' }),
-    q({ id: 'L07-P-14', topic: 'frequency', skill: 'vocabulary', type: 'match', objective: 'L7-O5', instructions: 'Match.', prompt: '', pairs: [['immer', 'always'], ['oft', 'often'], ['manchmal', 'sometimes'], ['selten', 'rarely'], ['nie', 'never']], explanation: 'From 100 % to 0 %.', learnHref: GB + '85-how-often-frequency-words' }),
+    q({ id: 'L07-P-14', topic: 'frequency', skill: 'vocabulary', type: 'match', objective: 'L7-O5', instructions: 'Match.', prompt: '', pairs: [['immer', 'always'], ['oft', 'often'], ['manchmal', 'sometimes'], ['selten', 'rarely'], ['nie', 'never']], explanation: 'From 100 % to 0 %.', learnHref: GB + '8' }),
     q({ id: 'L07-P-15', topic: 'frequency', skill: 'vocabulary', type: 'mc', objective: 'L7-O5', instructions: 'Choose one.', prompt: 'Which word means more often than manchmal?', options: ['oft', 'selten', 'nie', 'gar nicht'], answer: 'oft', explanation: 'immer > oft > manchmal > selten > nie.' }),
     q({ id: 'L07-P-16', topic: 'frequency', skill: 'grammar', grammar: 'verb-position-2', type: 'order', objective: 'L7-O5', instructions: 'Put the words in order.', prompt: 'Tom often plays football.', tokens: ['spielt', 'oft', 'Fußball', 'Tom'], answer: 'Tom spielt oft Fußball', explanation: 'oft after the verb.' }),
     q({ id: 'L07-P-17', topic: 'hobbies', skill: 'vocabulary', type: 'match', objective: 'L7-O1', instructions: 'Match the hobby.', prompt: '', pairs: [['tanzen', 'to dance'], ['malen', 'to paint'], ['wandern', 'to hike'], ['reiten', 'to ride a horse'], ['joggen', 'to jog']], explanation: 'Hobbies.' }),
-    q({ id: 'L07-P-18', topic: 'compliments', skill: 'communication', type: 'mc', objective: 'L7-O6', instructions: 'Choose the best reaction.', prompt: 'Du kannst super singen!', options: ['Danke, das ist nett.', 'Bitte.', 'Wie bitte?', 'Tschüs!'], answer: 'Danke, das ist nett.', explanation: 'Thank the person for the compliment.', learnHref: GB + '86-compliments' }),
+    q({ id: 'L07-P-18', topic: 'compliments', skill: 'communication', type: 'mc', objective: 'L7-O6', instructions: 'Choose the best reaction.', prompt: 'Du kannst super singen!', options: ['Danke, das ist nett.', 'Bitte.', 'Wie bitte?', 'Tschüs!'], answer: 'Danke, das ist nett.', explanation: 'Thank the person for the compliment.', learnHref: GB + '8' }),
     q({ id: 'L07-P-19', topic: 'koennen', skill: 'writing', type: 'translate', objective: 'L7-O1', instructions: 'Write it in German.', prompt: 'I can swim.', answer: 'Ich kann schwimmen.', explanation: 'Ich kann + infinitive.' }),
     q({ id: 'L07-P-20', topic: 'frequency', skill: 'writing', type: 'translate', objective: 'L7-O5', instructions: 'Write it in German.', prompt: 'She often reads.', answer: 'Sie liest oft.', explanation: 'sie liest (e → ie) + oft.' }),
     q({ id: 'L07-P-21', topic: 'bracket', skill: 'writing', type: 'translate', difficulty: 2, objective: 'L7-O2', instructions: 'Write it in German (informal).', prompt: 'Can you play the guitar?', answer: 'Kannst du Gitarre spielen?', explanation: 'Kannst du … spielen?' }),

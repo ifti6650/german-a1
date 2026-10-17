@@ -31,22 +31,22 @@
   function go(t) { tab = t; history.replaceState(null, '', '#' + t); A1.lessons.visit(n, t); render(); $('t-' + t).focus() }
   window.addEventListener('hashchange', () => { const t = location.hash.slice(1); if (TABS.includes(t) && t !== tab) { tab = t; render() } });
 
-  const grammarLinks = () => L.grammar.map(g => `<li><a href="${g.href}">Grammar Book · Step ${g.step}: ${esc(g.title)}</a></li>`).join('') + `<li><a href="${L.guideHref}">Study Guide · Lektion ${n}</a></li>`;
+  const grammarLinks = () => L.grammar.map(g => `<li><a href="${g.href}">Grammar Lab · Step ${g.step}: ${esc(g.title)}</a></li>`).join('') + `<li><a href="${L.guideHref}">Study Guide · Lektion ${n}</a></li>`;
 
   function learn() {
     const p = PM.lesson(n);
     if (!full) return `<div class="panel"><h2>Learn</h2>
-      <div class="notice">The detailed Learn pages for this lesson are not written yet. Use the Grammar Book chapter and Study Guide below; vocabulary practice and the vocabulary quiz already work.</div>
+      <div class="notice">The detailed Learn pages for this lesson are not written yet. Use the Grammar Lab step and Study Guide below; vocabulary practice and the vocabulary quiz already work.</div>
       <h3>Communication topic</h3><p>${esc(L.topic)}</p><h3>Grammar in this lesson</h3><ul>${grammarLinks()}</ul>
       <div class="row"><button class="btn" id="readOk">${p.done.learn ? '✓ Marked as read' : 'I’ve read the chapter'}</button></div></div>`;
     return `<div class="panel"><h2>What you will learn</h2><ol class="objectives">${C.objectives.map(o => `<li>${esc(o.text)} <span class="pill dim">${o.kind}</span></li>`).join('')}</ol>
-      <p class="muted" style="margin-top:10px">Lesson title and topic follow Momente ${esc(L.level)}. The explanations and exercises here are original and were not copied from the Kursbuch or Arbeitsbuch.</p></div>
+      <p class="muted" style="margin-top:10px">The explanations and exercises here are original.</p></div>
       <div class="panel">${C.learn.map(s => `<section class="learn-card" id="learn-${s.id}"><h3>${esc(s.title)}</h3>
         ${s.text ? `<p>${esc(s.text)}</p>` : ''}
         ${s.table ? `<div class="tw"><table lang="de">${s.table.map(r => `<tr><td>${esc(r[0])}</td><td lang="en">${esc(r[1])}</td></tr>`).join('')}</table></div>` : ''}
         ${s.examples ? `<ul class="ex-list">${s.examples.map(e => `<li><span class="de" lang="de">${esc(e[0])}</span> ${ENGINE.canSpeak ? `<button class="ex-link" data-say="${esc(e[0])}" aria-label="Listen">🔊</button>` : ''}<br><span class="en">${esc(e[1])}</span></li>`).join('')}</ul>` : ''}
         ${s.mistakes ? s.mistakes.map(m => `<div class="mistake">✗ <s lang="de">${esc(m[0])}</s> → ✓ <b lang="de">${esc(m[1])}</b> — ${esc(m[2])}</div>`).join('') : ''}
-        ${s.href ? `<a href="${s.href}">More in the Grammar Book →</a>` : ''}</section>`).join('')}
+        ${s.href ? `<a href="${s.href}">Practise it in the Grammar Lab →</a>` : ''}</section>`).join('')}
         <div class="row" style="margin-top:14px"><button class="btn" id="readOk">${p.done.learn ? '✓ Marked as read' : 'I’ve read this'}</button><button class="btn ghost" data-tabgo="practice">Go to Practice →</button></div></div>
       <div class="panel"><h3 style="margin-top:0">More resources</h3><ul>${grammarLinks()}<li><a href="speaking.html">Sprechen: speaking practice</a></li></ul></div>`;
   }
