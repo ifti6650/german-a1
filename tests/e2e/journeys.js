@@ -48,6 +48,7 @@ async function journey(name, fn) {
       const { ctx, page: p } = await context({ as: 'returning' });
       await p.goto(BASE + 'index.html'); await settle(p);
       ok(await p.isVisible('.lp-hero h1'), 'landing hero missing');
+      ok(await p.isVisible('.lp-cta [data-install-app]'), 'public install button not visible');
       ok(!(await p.$('.sh-side')), 'landing must not use the portal shell');
       ok(await p.isVisible('.lp-actions [data-signin]'), 'Sign in button not visible');
       await shot(p, 'j1-landing');
