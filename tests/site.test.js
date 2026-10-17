@@ -74,3 +74,13 @@ test('independent publisher-free branding on public pages', () => {
   const files = ['index.html','manifest.webmanifest','onboarding.html','shell.js','grammar-lab.html'];
   for (const file of files) assert.doesNotMatch(read(file), /Momente|Hueber|Kursbuch|Arbeitsbuch/i, file);
 });
+
+test('landing page offers installation before sign-in', () => {
+  const landing = read('index.html');
+  const install = read('install.js');
+  assert.match(landing, /<button[^>]*data-install-app/g);
+  assert.equal((landing.match(/data-install-app/g) || []).length, 2);
+  assert.ok(landing.includes('<script src="install.js"></script>'));
+  assert.ok(install.includes("querySelectorAll('[data-install-app]')"));
+  assert.ok(install.includes("beforeinstallprompt"));
+});
