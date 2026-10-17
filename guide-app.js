@@ -117,7 +117,7 @@
         <h3>In dieser Lektion übst du</h3><ol class="sg-sitlist">${L.situations.map((s, i) => `<li><a href="?l=${n}#situations-${i + 1}" data-sit="${i + 1}" lang="de">${esc(s.title.replace(/^Situation \d+\s*[—:-]\s*/, ''))}</a></li>`).join('')}</ol>`;
     }
     function related() {
-      const gb = x.steps.map(s => `<li><a href="grammar-book.html#${esc(STEPS[s])}">Grammar Book · Step ${s}<span>Die Regel ausführlich</span></a></li>`).join('');
+      const gb = x.steps.map(s => `<li><a href="${esc(STEPS[s])}">Grammar Lab · Step ${s}<span>Regel, Satzbau und Übungen</span></a></li>`).join('');
       return `<section class="sg-card" aria-labelledby="sgRelT"><h2 id="sgRelT" style="font-size:18px">Passt dazu <span class="en-sub">Related practice</span></h2><p class="cap">Grammar, words, exercises and the test for Lektion ${n}.</p>
         <ul class="sg-rel">${gb}
           <li><a href="wortschatz.html#L${n}">Wortschatz · Lektion ${n}<span>Wörter lernen und wiederholen</span></a></li>

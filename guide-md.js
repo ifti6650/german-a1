@@ -84,7 +84,7 @@
   function inline(t, opt) {
     let h = esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(^|[^\w*])\*(?!\s)([^*]+?)\*(?![\w*])/g, '$1<em>$2</em>');
     if (opt && opt.steps && /Grammar Book/.test(t)) h = h.replace(/\b(Steps?) (\d+)(?:–(\d+))?/g, (m, w, a, b) => {
-      const ln = x => opt.steps[x] ? `<a href="grammar-book.html#${esc(opt.steps[x])}">${x}</a>` : x;
+      const ln = x => opt.steps[x] ? `<a href="${esc(opt.steps[x])}">${x}</a>` : x; // opt.steps: step number → Grammar Lab URL
       return `${w} ${ln(a)}${b ? '–' + ln(b) : ''}`;
     });
     return h;

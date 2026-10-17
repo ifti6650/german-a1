@@ -81,7 +81,7 @@
     if (cp.wz.due) r.push({ ic: '🗂️', title: `${cp.wz.due} Wortschatz card${cp.wz.due === 1 ? ' is' : 's are'} due`, why: 'Spaced repetition from the Wortschatz trainer.', href: 'wortschatz.html', cta: 'Open Wortschatz' });
     if (an) {
       const weak = an.byTopic.filter(t => t.n >= 6 && t.acc < 70);
-      weak.slice(0, 2).forEach(t => r.push({ ic: '🎯', title: `Practise ${label(t.key)}`, why: `Your accuracy is ${t.acc}% over ${t.n} answers (below 70%).`, href: 'practice.html?topic=' + encodeURIComponent(t.key), cta: 'Practise' }));
+      weak.slice(0, 2).forEach(t => r.push({ ic: '🎯', title: `Practise ${label(t.key)}`, why: `Your accuracy is ${t.acc}% over ${t.n} answers (below 70%).`, href: topicHref(t.key), cta: 'Practise' }));
     }
     if (cur && !cur.completed) {
       const next = cur.sections.find(s => !cur.done[s]);
@@ -96,7 +96,9 @@
   }
   const SECTION_LABEL = { learn: 'Learn', wortschatz: 'Wortschatz', practice: 'Practice', apply: 'Apply', test: 'Lesson quiz', review: 'Review' };
   const TOPIC_LABEL = { articles: 'der / die / das', vocabulary: 'vocabulary', 'verb-endings': 'verb endings', sein: 'the verb sein', 'w-questions': 'W-questions', 'word-order': 'word order', greetings: 'greetings', 'how-are-you': '“How are you?”', pronouns: 'pronouns', countries: 'countries and aus', introductions: 'introducing yourself', alphabet: 'the alphabet', flashcard: 'vocabulary', write: 'vocabulary', mc: 'vocabulary' };
-  function label(t) { return TOPIC_LABEL[t] || String(t).replace(/-/g, ' ') }
+  function label(t) { const g = root.GRAMMAR_LAB && GRAMMAR_LAB.label(t); if (g) return g; const m = /^grammar-(\d+)$/.exec(t || ''); if (m) return 'Grammar step ' + (+m[1]); return TOPIC_LABEL[t] || String(t).replace(/-/g, ' ') }
+  // where to practise a weak topic: Grammar Lab steps have their own page
+  function topicHref(t) { const m = /^grammar-(\d+)$/.exec(t || ''); return m ? `grammar-lab.html?s=${+m[1]}#practice` : 'practice.html?topic=' + encodeURIComponent(t) }
 
-  root.PM = { wortschatz, lesson, course, analytics, recommend, label, SECTION_LABEL, WZ_DONE };
+  root.PM = { wortschatz, lesson, course, analytics, recommend, label, topicHref, SECTION_LABEL, WZ_DONE };
 })(typeof window !== 'undefined' ? window : globalThis);
