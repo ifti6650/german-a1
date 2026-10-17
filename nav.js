@@ -4,7 +4,7 @@
     ['index.html', 'Dashboard'], ['course.html', 'My Course'], ['wortschatz.html', 'Wortschatz'],
     ['practice.html', 'Practice'], ['tests.html', 'Tests'], ['mistakes.html', 'Mistakes'], ['progress.html', 'Progress']
   ];
-  const RES = [['grammar-book.html', 'Grammar Book'], ['study-guide.html', 'Study Guide'], ['speaking.html', 'Sprechen'], ['Momente_A1_Grammar_Book.pdf', 'Grammar Book (PDF)']];
+  const RES = [['grammar-lab.html', 'Grammar Lab'], ['study-guide.html', 'Study Guide'], ['speaking.html', 'Sprechen'], ['German_A1_Intensive_Grammar_Book.pdf', 'Grammar Lab (PDF)']];
   const ALIAS = { 'lesson.html': 'course.html', 'test.html': 'tests.html', '': 'index.html' };
   function build() {
     const nav = document.querySelector('nav.top .in'); if (!nav) return;

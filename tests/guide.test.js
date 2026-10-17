@@ -53,15 +53,18 @@ test('German characters survive: ä ö ü ß, no broken encoding', () => {
   assert.equal(G.parseLesson(lessons[1]).title, 'Arbeit, Wohnort und persönliche Angaben');
 });
 
-test('Grammar Book references link to real Grammar Book headings', () => {
-  const gb = read('grammar-book.html'); global.window = global; require(path.join(ROOT, 'guide/index.js'));
+test('Study Guide grammar references resolve to valid Grammar Lab steps', () => {
+  global.window = global; require(path.join(ROOT, 'guide/index.js'));
   const S = global.GUIDE_STEPS; let links = 0;
+  assert.equal(Object.keys(S).length, 25);
   lessons.forEach(md => {
     const h = G.render(md, { steps: S });
-    for (const m of h.matchAll(/href="grammar-book\.html#([^"]+)"/g)) { links++; assert.ok(gb.includes(`id="${m[1]}"`), m[1]) }
+    for (const m of h.matchAll(/href="grammar-lab\\.html\\?s=(\\d+)"/g)) {
+      links++; assert.ok(+m[1] >= 1 && +m[1] <= 25, m[1]);
+    }
   });
   assert.ok(links >= 48, 'links: ' + links);
-  global.GUIDE_INDEX.forEach(x => assert.ok(x.steps.length && x.steps.every(s => S[s]), `Lektion ${x.n} steps`));
+  global.GUIDE_INDEX.forEach(x => assert.ok(x.steps.length && x.steps.every(n => S[n]), `Lektion ${x.n} steps`));
 });
 
 test('overview index (guide/index.js) is up to date with the lesson files', () => {
