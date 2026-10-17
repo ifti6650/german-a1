@@ -56,7 +56,7 @@ async function journey(name, fn) {
       await Promise.all([p.waitForURL(/dashboard\.html/), p.click('[data-provider="google"]')]); await settle(p);
       ok(!/code=/.test(p.url()), 'OAuth code left in URL'); ok(file(p) === 'dashboard.html', 'not on dashboard: ' + p.url());
       ok((await p.textContent('#dbHello')).includes('Jade'), 'greeting without name');
-      ok((await p.textContent('#dbCourse')).includes('Momente A1.1'), 'course missing');
+      ok((await p.textContent('#dbCourse')).includes('German A1.1'), 'course missing');
       ok(await current(p) === 'Dashboard', 'Dashboard not active in sidebar');
       ok(/Lektion 2/.test(await p.textContent('.db-resume h2')), 'resume card is not Lektion 2');
       const txt = await p.textContent('#db'); const k = await kpis(p);
@@ -79,7 +79,7 @@ async function journey(name, fn) {
       await shot(p, 'j2-onboarding');
       await Promise.all([p.waitForURL(/dashboard\.html/), p.click('#obGo')]); await settle(p);
       const txt = (await p.textContent('main')).replace(/\s+/g, ' ');
-      ok(/You’re all set: Momente A1\.1/.test(txt), 'no success state after onboarding');
+      ok(/You’re all set: German A1\.1/.test(txt), 'no success state after onboarding');
       ok(/Lektion 1: Ich heiße Miriam/.test(txt) && /Start lesson/.test(txt), 'new learner should start Lektion 1');
       ok(/No activity yet/.test(txt) && /No tests yet/.test(txt), 'empty states missing');
       ok((await kpis(p))['Practice accuracy'] === '–', 'accuracy must not show a number without answers');
