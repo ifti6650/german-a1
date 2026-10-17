@@ -59,7 +59,7 @@ test('Study Guide grammar references resolve to valid Grammar Lab steps', () => 
   assert.equal(Object.keys(S).length, 25);
   lessons.forEach(md => {
     const h = G.render(md, { steps: S });
-    for (const m of h.matchAll(/href="grammar-lab\\.html\\?s=(\\d+)"/g)) {
+    for (const m of h.matchAll(/href="grammar-lab\.html\?s=(\d+)"/g)) {
       links++; assert.ok(+m[1] >= 1 && +m[1] <= 25, m[1]);
     }
   });
